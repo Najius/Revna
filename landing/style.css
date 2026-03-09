@@ -1,0 +1,296 @@
+/* Revna — Dark premium landing page */
+
+:root {
+  --bg: #1A1A2E;
+  --bg-card: #16213E;
+  --purple: #4C3BCF;
+  --purple-light: #6C5CE7;
+  --gold: #F0A500;
+  --text: #E8E8F0;
+  --text-muted: #9B9BB5;
+  --radius: 12px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Nav ─────────────────────────────────────────── */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.nav-logo {
+  flex-shrink: 0;
+}
+
+/* ─── Hero ────────────────────────────────────────── */
+
+.hero {
+  text-align: center;
+  padding: 5rem 1.5rem 4rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  border: 1px solid rgba(240, 165, 0, 0.3);
+  background: rgba(240, 165, 0, 0.08);
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.25rem;
+}
+
+.hero-sub {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  max-width: 540px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+
+.hero-note {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+}
+
+/* ─── Waitlist form ───────────────────────────────── */
+
+.waitlist-form {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.waitlist-form input[type="email"] {
+  flex: 1;
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.waitlist-form input[type="email"]::placeholder {
+  color: var(--text-muted);
+}
+
+.waitlist-form input[type="email"]:focus {
+  border-color: var(--purple);
+}
+
+.waitlist-form button {
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius);
+  border: none;
+  background: var(--purple);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.waitlist-form button:hover {
+  background: var(--purple-light);
+}
+
+.waitlist-form button:active {
+  transform: scale(0.97);
+}
+
+/* ─── Features ────────────────────────────────────── */
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.feature {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.feature:hover {
+  border-color: rgba(76, 59, 207, 0.3);
+  transform: translateY(-2px);
+}
+
+.feature-icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.feature h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.feature p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ─── How it works ────────────────────────────────── */
+
+.how {
+  text-align: center;
+  padding: 3rem 1.5rem 4rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.how h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 2.5rem;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+
+.step {
+  text-align: center;
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--purple);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.step h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.step p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+/* ─── CTA ─────────────────────────────────────────── */
+
+.cta {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cta h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+.cta p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  font-size: 1.05rem;
+}
+
+/* ─── Footer ──────────────────────────────────────── */
+
+footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ─── Mobile ──────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 3rem 1rem 2.5rem;
+  }
+
+  .waitlist-form {
+    flex-direction: column;
+  }
+
+  .waitlist-form button {
+    width: 100%;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+}
