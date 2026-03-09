@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.api import health, users, webhooks
 from backend.database import engine
+from backend.services.scheduler import setup_scheduler
 
 logger = structlog.get_logger()
 
@@ -16,7 +17,11 @@ logger = structlog.get_logger()
 async def lifespan(app: FastAPI):
     """Startup and shutdown logic."""
     logger.info("revna.startup", version="0.1.0")
+    sched = setup_scheduler()
+    sched.start()
+    logger.info("revna.scheduler_started", jobs=len(sched.get_jobs()))
     yield
+    sched.shutdown(wait=False)
     await engine.dispose()
     logger.info("revna.shutdown")
 

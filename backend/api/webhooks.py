@@ -7,7 +7,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.database import get_db
 from backend.models.user import User
-from backend.services.telegram import handle_start_command, process_reply
+from backend.services.telegram import handle_start_command, process_reply, send_telegram
+from backend.services.wearable import process_terra_webhook, verify_terra_signature
 
 logger = structlog.get_logger()
 
@@ -48,9 +49,6 @@ async def telegram_webhook(request: Request, db: AsyncSession = Depends(get_db))
 
     if not user:
         logger.warning("webhook.telegram.unknown_user", chat_id=chat_id)
-        # Prompt unknown user to register
-        from backend.services.telegram import send_telegram
-
         await send_telegram(
             chat_id,
             "Je ne te connais pas encore ! Envoie /start pour commencer.",
@@ -67,9 +65,17 @@ async def telegram_webhook(request: Request, db: AsyncSession = Depends(get_db))
 
 
 @router.post("/terra")
-async def terra_webhook(request: Request):
+async def terra_webhook(request: Request, db: AsyncSession = Depends(get_db)):
     """Receive Terra API data pushes (wearable sync)."""
+    raw_body = (await request.body()).decode()
+    signature = request.headers.get("terra-signature", "")
+
+    if signature and not verify_terra_signature(raw_body, signature):
+        logger.warning("webhook.terra.invalid_signature")
+        return {"ok": False, "error": "invalid signature"}
+
     body = await request.json()
     logger.info("webhook.terra", event_type=body.get("type"))
-    # TODO: dispatch to services.wearable (Phase 4)
-    return {"ok": True}
+
+    result = await process_terra_webhook(db, body)
+    return {"ok": True, **result}

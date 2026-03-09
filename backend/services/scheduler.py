@@ -1,4 +1,262 @@
-"""Background job scheduler — APScheduler orchestration."""
+"""Revna — Background job scheduler (replaces HA automations).
 
-# New service (replaces HA automations)
-# TODO Phase 4: implement scheduler with all cron jobs
+Uses APScheduler to run periodic coaching jobs for all active users:
+- Morning adapt + report
+- Health monitoring scans
+- Evening report / weekly summary
+- Check-ins (morning + evening)
+- Wearable data sync
+- System audit
+"""
+
+import datetime
+import logging
+
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
+from sqlalchemy import select
+
+from backend.database import async_session
+from backend.models.user import User
+from backend.services.health import (
+    get_latest_snapshot,
+    compute_readiness_score,
+)
+from backend.services.notifications import (
+    do_ai_notify,
+    do_health_monitor,
+    build_health_bilan_prompt,
+    format_health_bilan,
+)
+from backend.services.telegram import do_checkin, send_telegram
+from backend.services.tracking import (
+    record_notification_sent,
+    update_advice_outcomes,
+)
+from backend.services.wearable import sync_all_active_users
+from backend.services.ai import call_claude_api
+
+logger = logging.getLogger(__name__)
+
+scheduler = AsyncIOScheduler()
+
+
+# ─── Helpers ────────────────────────────────────────────────────────────────
+
+
+async def _get_active_users():
+    """Load all active users with a Telegram chat_id."""
+    async with async_session() as db:
+        result = await db.execute(
+            select(User).where(
+                User.is_active.is_(True),
+                User.telegram_chat_id.isnot(None),
+            )
+        )
+        return list(result.scalars().all())
+
+
+async def _for_each_user(func, *args, **kwargs):
+    """Run an async function for each active user with a fresh DB session."""
+    users = await _get_active_users()
+    for user in users:
+        try:
+            async with async_session() as db:
+                await func(db, user, *args, **kwargs)
+        except Exception:
+            logger.exception("Job failed for user %s", user.name)
+
+
+# ─── Jobs ───────────────────────────────────────────────────────────────────
+
+
+async def job_morning_adapt():
+    """07:30 — AI adapt + morning report for each active user."""
+    logger.info("JOB: morning_adapt started")
+
+    async def _run(db, user):
+        # Generate health bilan
+        system_prompt, user_prompt = await build_health_bilan_prompt(db, user.id, user)
+        bilan = call_claude_api(system_prompt, user_prompt)
+
+        if bilan:
+            message = format_health_bilan(bilan)
+            if user.telegram_chat_id:
+                await send_telegram(
+                    user.telegram_chat_id, message,
+                    db=db, user_id=user.id, msg_type="morning_report",
+                )
+            await record_notification_sent(db, user.id, "morning_report", message=message)
+
+            # Update yesterday's advice effectiveness
+            snapshot = await get_latest_snapshot(db, user.id)
+            if snapshot:
+                score, _, _ = compute_readiness_score(snapshot)
+                sleep = int(snapshot.sleep_score) if snapshot.sleep_score else 0
+                await update_advice_outcomes(db, user.id, score, sleep)
+        else:
+            # Fallback: send morning_report notification
+            await do_ai_notify(db, user.id, user, "morning_report")
+
+        logger.info("Morning adapt done for %s", user.name)
+
+    await _for_each_user(_run)
+
+
+async def job_morning_fallback():
+    """09:30 — Fallback if morning_adapt didn't run for some users."""
+    logger.info("JOB: morning_fallback started")
+
+    async def _run(db, user):
+        from backend.services.tracking import can_send_notification
+        if await can_send_notification(db, user.id, "morning_report"):
+            logger.info("Morning fallback: sending report for %s", user.name)
+            await do_ai_notify(db, user.id, user, "morning_report")
+
+    await _for_each_user(_run)
+
+
+async def job_health_monitor():
+    """11h, 14h, 17h, 20h — Multi-signal health scan."""
+    logger.info("JOB: health_monitor started")
+
+    async def _run(db, user):
+        await do_health_monitor(db, user.id, user)
+
+    await _for_each_user(_run)
+
+
+async def job_steps_evening():
+    """18:00 — Evening steps summary."""
+    logger.info("JOB: steps_evening started")
+
+    async def _run(db, user):
+        await do_ai_notify(db, user.id, user, "steps_evening")
+
+    await _for_each_user(_run)
+
+
+async def job_evening_report():
+    """20:00 — Full day report (or weekly summary on Sunday)."""
+    logger.info("JOB: evening_report started")
+
+    async def _run(db, user):
+        today = datetime.date.today()
+        if today.weekday() == 6:  # Sunday
+            await do_ai_notify(db, user.id, user, "weekly_summary")
+        else:
+            await do_ai_notify(db, user.id, user, "evening_report")
+
+    await _for_each_user(_run)
+
+
+async def job_morning_checkin():
+    """07:45 — Morning check-in."""
+    logger.info("JOB: morning_checkin started")
+
+    async def _run(db, user):
+        await do_checkin(db, user.id, user, "morning")
+
+    await _for_each_user(_run)
+
+
+async def job_evening_checkin():
+    """22:00 — Evening check-in."""
+    logger.info("JOB: evening_checkin started")
+
+    async def _run(db, user):
+        await do_checkin(db, user.id, user, "evening")
+
+    await _for_each_user(_run)
+
+
+async def job_monday_activity():
+    """Monday 09:00 — Weekly activity motivation."""
+    logger.info("JOB: monday_activity started")
+
+    async def _run(db, user):
+        await do_ai_notify(db, user.id, user, "monday_activity")
+
+    await _for_each_user(_run)
+
+
+async def job_sync_wearables():
+    """Every 30 min — Sync Terra data for all active users."""
+    logger.info("JOB: sync_wearables started")
+    async with async_session() as db:
+        results = await sync_all_active_users(db)
+        total = sum(r.get("snapshots", 0) for r in results)
+        logger.info("Wearable sync done: %d snapshots across %d users", total, len(results))
+
+
+async def job_daily_audit():
+    """03:00 — System audit (data freshness, API health)."""
+    logger.info("JOB: daily_audit started")
+
+    async with async_session() as db:
+        result = await db.execute(
+            select(User).where(
+                User.is_active.is_(True),
+                User.terra_user_id.isnot(None),
+            )
+        )
+        users = list(result.scalars().all())
+
+        stale_users = []
+        for user in users:
+            snapshot = await get_latest_snapshot(db, user.id)
+            if not snapshot:
+                stale_users.append(f"{user.name}: no data")
+            else:
+                days_old = (datetime.date.today() - snapshot.date).days
+                if days_old > 2:
+                    stale_users.append(f"{user.name}: {days_old}d old")
+
+        if stale_users:
+            logger.warning("Stale data users: %s", ", ".join(stale_users))
+        else:
+            logger.info("Daily audit: all users have fresh data")
+
+
+# ─── Scheduler setup ───────────────────────────────────────────────────────
+
+
+def setup_scheduler() -> AsyncIOScheduler:
+    """Configure and return the scheduler with all jobs.
+
+    Call scheduler.start() after FastAPI startup.
+    """
+    # Morning sequence
+    scheduler.add_job(job_morning_adapt, CronTrigger(hour=7, minute=30),
+                      id="morning_adapt", replace_existing=True)
+    scheduler.add_job(job_morning_checkin, CronTrigger(hour=7, minute=45),
+                      id="morning_checkin", replace_existing=True)
+    scheduler.add_job(job_morning_fallback, CronTrigger(hour=9, minute=30),
+                      id="morning_fallback", replace_existing=True)
+
+    # Health monitoring (4x/day)
+    scheduler.add_job(job_health_monitor, CronTrigger(hour="11,14,17,20", minute=0),
+                      id="health_monitor", replace_existing=True)
+
+    # Evening sequence
+    scheduler.add_job(job_steps_evening, CronTrigger(hour=18, minute=0),
+                      id="steps_evening", replace_existing=True)
+    scheduler.add_job(job_evening_report, CronTrigger(hour=20, minute=0),
+                      id="evening_report", replace_existing=True)
+    scheduler.add_job(job_evening_checkin, CronTrigger(hour=22, minute=0),
+                      id="evening_checkin", replace_existing=True)
+
+    # Weekly
+    scheduler.add_job(job_monday_activity, CronTrigger(day_of_week="mon", hour=9, minute=0),
+                      id="monday_activity", replace_existing=True)
+
+    # Wearable sync (every 30 min)
+    scheduler.add_job(job_sync_wearables, CronTrigger(minute="*/30"),
+                      id="sync_wearables", replace_existing=True)
+
+    # System audit (nightly)
+    scheduler.add_job(job_daily_audit, CronTrigger(hour=3, minute=0),
+                      id="daily_audit", replace_existing=True)
+
+    logger.info("Scheduler configured with %d jobs", len(scheduler.get_jobs()))
+    return scheduler

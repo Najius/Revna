@@ -45,6 +45,7 @@ from backend.services.tracking import (
     build_effectiveness_context,
     record_advice_given,
 )
+from backend.services.telegram import send_telegram
 from backend.models.user import User
 
 logger = logging.getLogger(__name__)
@@ -564,8 +565,11 @@ async def do_ai_notify(
 
     if message:
         message += MEDICAL_DISCLAIMER
-        # TODO Phase 3: send via telegram service
-        # await send_telegram(user.telegram_chat_id, message)
+        if user.telegram_chat_id:
+            await send_telegram(
+                user.telegram_chat_id, message,
+                db=db, user_id=user_id, msg_type=notif_type,
+            )
         logger.info("Generated %s for user %s", notif_type, user.name)
         await record_notification_sent(db, user_id, notif_type, message=message)
 
