@@ -455,16 +455,24 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   margin: 0 auto;
 }
 .logo-item {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--text);
-  opacity: 0.4;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.5;
   transition: opacity 0.3s;
-  letter-spacing: -0.01em;
 }
 .logo-item:hover {
-  opacity: 0.7;
+  opacity: 0.8;
+}
+.logo-item img {
+  width: 20px;
+  height: 20px;
+}
+.logo-item span {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
 }
 
 /* ═══════════════════════════════════════════════════
@@ -934,12 +942,14 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   box-shadow: 0 8px 24px rgba(26, 29, 46, 0.06);
 }
 .compat-logo {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--navy);
-  display: block;
-  letter-spacing: -0.01em;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 0.5rem;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+.compat-card:hover .compat-logo {
+  opacity: 1;
 }
 .compat-name {
   font-weight: 600;
