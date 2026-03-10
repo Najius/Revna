@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 24" fill="currentColor">
+  <circle cx="4" cy="8" r="2.5"/>
+  <circle cx="4" cy="14" r="2.5"/>
+  <circle cx="10" cy="5" r="2.5"/>
+  <circle cx="10" cy="11" r="2.5"/>
+  <circle cx="10" cy="17" r="2.5"/>
+  <circle cx="16" cy="8" r="2.5"/>
+  <circle cx="16" cy="14" r="2.5"/>
+  <circle cx="16" cy="20" r="2.5"/>
+  <path d="M26 5h3v14h-3z"/>
+  <path d="M32 5h3v3h-3zM32 11h3v8h-3z"/>
+  <path d="M38 5h7v3h-2v11h-3V8h-2z"/>
+  <path d="M48 5h6c2.5 0 4.5 1.8 4.5 4s-2 4-4.5 4h-3v6h-3V5zm5.5 5.5c1 0 1.5-.7 1.5-1.5s-.5-1.5-1.5-1.5H51v3h2.5z"/>
+  <path d="M61 5h3v14h-3z"/>
+  <path d="M67 5h7v3h-2v11h-3V8h-2z"/>
+</svg>

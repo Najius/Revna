@@ -455,14 +455,16 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   margin: 0 auto;
 }
 .logo-item {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--text);
-  opacity: 0.35;
+  height: 20px;
+  width: auto;
+  opacity: 0.4;
   transition: opacity 0.3s;
+  filter: grayscale(100%);
 }
-.logo-item:hover { opacity: 0.7; }
+.logo-item:hover {
+  opacity: 0.7;
+  filter: grayscale(0%);
+}
 
 /* ═══════════════════════════════════════════════════
    Stats
@@ -930,10 +932,16 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(26, 29, 46, 0.06);
 }
-.compat-icon {
-  font-size: 1.5rem;
-  display: block;
-  margin-bottom: 0.5rem;
+.compat-logo {
+  height: 24px;
+  width: auto;
+  max-width: 100%;
+  margin-bottom: 0.75rem;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+.compat-card:hover .compat-logo {
+  opacity: 1;
 }
 .compat-name {
   font-weight: 600;
