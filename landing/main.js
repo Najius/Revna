@@ -1,6 +1,6 @@
 /**
  * Revna v8 — Landing Page Interactions
- * Scroll reveals, animated counters, sleep bars
+ * Scroll reveals, animated counters, training bars
  */
 
 // ═══════════════════════════════════════════════════
@@ -67,34 +67,34 @@ document.querySelectorAll('[data-count]').forEach((el) => {
 });
 
 // ═══════════════════════════════════════════════════
-// Sleep Bars Width Animation
+// Training Bars Height Animation
 // ═══════════════════════════════════════════════════
 
-function animateSleepBars() {
-  const sleepBars = document.querySelector('.sleep-bars');
-  if (!sleepBars || sleepBars.dataset.animated) return;
-  sleepBars.dataset.animated = 'true';
+function animateTrainingBars() {
+  const trainingBars = document.querySelector('.training-bars');
+  if (!trainingBars || trainingBars.dataset.animated) return;
+  trainingBars.dataset.animated = 'true';
 
-  const fills = sleepBars.querySelectorAll('.sleep-fill');
-  fills.forEach((fill, i) => {
-    const target = parseInt(fill.dataset.target, 10);
+  const bars = trainingBars.querySelectorAll('.training-bar');
+  bars.forEach((bar, i) => {
+    const target = parseInt(bar.dataset.target, 10);
     setTimeout(() => {
-      fill.style.width = target + '%';
-    }, i * 150);
+      bar.style.height = target + '%';
+    }, i * 120);
   });
 }
 
-const sleepObserver = new IntersectionObserver((entries) => {
+const trainingObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      setTimeout(animateSleepBars, 300);
+      setTimeout(animateTrainingBars, 300);
     }
   });
 }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
 
-const sleepSection = document.querySelector('.sleep-bars');
-if (sleepSection) {
-  sleepObserver.observe(sleepSection);
+const trainingSection = document.querySelector('.training-bars');
+if (trainingSection) {
+  trainingObserver.observe(trainingSection);
 }
 
 // ═══════════════════════════════════════════════════

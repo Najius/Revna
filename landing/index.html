@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Revna &mdash; Ton wearable, enfin utile</title>
-  <meta name="description" content="Revna lit tes données de wearable et t'envoie le bon message au bon moment. Sommeil, stress, énergie. Via Telegram.">
+  <meta name="description" content="Revna lit tes données de wearable et t'envoie le bon message au bon moment. Sport, sommeil, stress, récupération. Via Telegram.">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,8 +49,8 @@
           </h1>
           <p class="hero-sub reveal delay-2">
             Ton Garmin collecte 200&nbsp;données par jour. Tu en regardes&nbsp;3.
-            Revna lit tout &mdash; sommeil, VFC, stress, Body&nbsp;Battery &mdash;
-            et t'envoie <strong>le bon message au bon moment</strong>.
+            Revna lit tout &mdash; sessions sport, sommeil, stress, récupération &mdash;
+            et t'envoie <strong>le bon conseil au bon moment</strong>.
           </p>
           <form id="waitlist" class="waitlist-form reveal delay-3" action="https://formspree.io/f/XXXXXXXX" method="POST">
             <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email" aria-label="Email">
@@ -85,19 +85,19 @@
             </div>
             <div class="chat">
               <div class="bubble bot">
-                <p><strong>Nuit de 7h32</strong> &mdash; score 82/100</p>
-                <p>1h24 de sommeil profond, pas de fragmentation. Body Battery remontée à 78.</p>
-                <p class="tip">Journée idéale pour un effort modéré.</p>
-                <span class="time">08:02</span>
+                <p><strong>Run de 8,4 km</strong> &mdash; bonne séance</p>
+                <p>FC moy 152 bpm, VO2max stable à 48. Training Load en hausse de 12% cette semaine.</p>
+                <p class="tip">Demain, privilégie une séance légère ou du repos.</p>
+                <span class="time">19:32</span>
               </div>
               <div class="bubble user">
-                <p>J'ai quand même l'impression d'être crevé</p>
-                <span class="time">08:14</span>
+                <p>Je peux quand même faire du fractionné demain ?</p>
+                <span class="time">19:45</span>
               </div>
               <div class="bubble bot">
-                <p>C'est normal &mdash; ton stress moyen hier était à 52, au-dessus de ta baseline.</p>
-                <p class="tip">Commence doucement. Un café, 10 min de marche, on reparle à midi.</p>
-                <span class="time">08:14</span>
+                <p>Ta VFC est 15% sous ta baseline et ton Body Battery est à 22. Ton corps a besoin de récupérer.</p>
+                <p class="tip">Un footing léger de 30 min max, zone 2. On réévalue après ta nuit.</p>
+                <span class="time">19:45</span>
               </div>
               <div class="typing-indicator">
                 <span></span><span></span><span></span>
@@ -171,8 +171,8 @@
               <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-          <h3>Revna analyse chaque nuit</h3>
-          <p>Sommeil, stress, VFC, Body Battery. Tes baselines se calibrent en 14 jours.</p>
+          <h3>Revna analyse en continu</h3>
+          <p>Sessions sport, sommeil, stress, récupération. Tes baselines se calibrent en 14 jours.</p>
         </div>
         <div class="how-card reveal delay-3">
           <div class="how-num">03</div>
@@ -198,8 +198,8 @@
       <div class="feature-row reveal">
         <div class="feature-text">
           <span class="feature-tag">Proactif</span>
-          <h3>14 types de messages</h3>
-          <p>Bilan matinal, alerte stress, check-in du soir&hellip; chacun déclenché par <strong>tes données</strong>, pas par une horloge.</p>
+          <h3>14 types de notifications</h3>
+          <p>Bilan matinal, debrief post-entraînement, alerte stress, conseil récupération&hellip; chacun déclenché par <strong>tes données</strong>, pas par une horloge.</p>
         </div>
         <div class="feature-visual">
           <div class="notif-timeline">
@@ -208,25 +208,25 @@
               <div class="notif-dot" style="--dot-color: var(--coral)"></div>
               <span class="notif-time">08:00</span>
               <span class="notif-label">Bilan matinal</span>
-              <span class="notif-preview">Nuit de 7h32, score 82/100</span>
-            </div>
-            <div class="notif-item">
-              <div class="notif-dot" style="--dot-color: #F59E0B"></div>
-              <span class="notif-time">11:30</span>
-              <span class="notif-label">Alerte stress</span>
-              <span class="notif-preview">Stress à 58, au-dessus de ta baseline</span>
+              <span class="notif-preview">Readiness 78 — bonne journée pour intensifier</span>
             </div>
             <div class="notif-item">
               <div class="notif-dot" style="--dot-color: var(--green)"></div>
-              <span class="notif-time">18:00</span>
-              <span class="notif-label">Bilan activité</span>
-              <span class="notif-preview">8 241 pas, objectif atteint</span>
+              <span class="notif-time">12:15</span>
+              <span class="notif-label">Post-entraînement</span>
+              <span class="notif-preview">Run 8,4 km — Training Load +12% cette semaine</span>
+            </div>
+            <div class="notif-item">
+              <div class="notif-dot" style="--dot-color: #F59E0B"></div>
+              <span class="notif-time">16:00</span>
+              <span class="notif-label">Alerte récupération</span>
+              <span class="notif-preview">Body Battery à 22, évite le fractionné ce soir</span>
             </div>
             <div class="notif-item">
               <div class="notif-dot" style="--dot-color: var(--purple)"></div>
-              <span class="notif-time">22:00</span>
-              <span class="notif-label">Check-in du soir</span>
-              <span class="notif-preview">Prêt pour une bonne nuit?</span>
+              <span class="notif-time">22:30</span>
+              <span class="notif-label">Bilan du jour</span>
+              <span class="notif-preview">Stress en baisse, bonne récup en vue</span>
             </div>
           </div>
         </div>
@@ -237,7 +237,7 @@
         <div class="feature-text">
           <span class="feature-tag">Personnel</span>
           <h3>Calibré sur ton corps</h3>
-          <p>Après 14 jours, Revna calcule tes moyennes. Un stress à 45 peut être normal <strong>pour toi</strong>.</p>
+          <p>Après 14 jours, Revna calcule tes baselines. Un stress à 45 peut être normal <strong>pour toi</strong> et inquiétant pour un autre.</p>
         </div>
         <div class="feature-visual">
           <div class="baseline-card">
@@ -281,44 +281,66 @@
         </div>
       </div>
 
-      <!-- Feature 3: Sleep -->
+      <!-- Feature 3: Sport & Recovery -->
       <div class="feature-row reveal">
         <div class="feature-text">
-          <span class="feature-tag">Sommeil</span>
-          <h3>Analyse détaillée chaque nuit</h3>
-          <p>Profond, léger, REM, éveillé &mdash; Revna décrypte tes cycles et t'explique ce qu'ils veulent dire.</p>
+          <span class="feature-tag">Sport</span>
+          <h3>Chaque session décortiquée</h3>
+          <p>Course, vélo, muscu, natation &mdash; Revna analyse la charge d'entraînement, la récupération et te dit quand pousser ou lever le pied.</p>
         </div>
         <div class="feature-visual">
-          <div class="sleep-card">
-            <div class="sleep-score">
-              <span class="sleep-score-num">82</span>
-              <span class="sleep-score-label">score sommeil</span>
+          <div class="training-card">
+            <div class="training-header">
+              <span class="training-title">Charge d'entraînement</span>
+              <span class="training-period">7 derniers jours</span>
             </div>
-            <div class="sleep-bars">
-              <div class="sleep-row">
-                <span class="sleep-stage">Profond</span>
-                <div class="sleep-track"><div class="sleep-fill" data-target="62" style="--bar-color: var(--navy)"></div></div>
-                <span class="sleep-dur">1h24</span>
+            <div class="training-bars">
+              <div class="training-day">
+                <div class="training-bar-wrap"><div class="training-bar" data-target="45" style="--bar-color: var(--green)"></div></div>
+                <span class="training-label">Lun</span>
               </div>
-              <div class="sleep-row">
-                <span class="sleep-stage">Léger</span>
-                <div class="sleep-track"><div class="sleep-fill" data-target="82" style="--bar-color: var(--coral)"></div></div>
-                <span class="sleep-dur">3h15</span>
+              <div class="training-day">
+                <div class="training-bar-wrap"><div class="training-bar" data-target="72" style="--bar-color: var(--coral)"></div></div>
+                <span class="training-label">Mar</span>
               </div>
-              <div class="sleep-row">
-                <span class="sleep-stage">REM</span>
-                <div class="sleep-track"><div class="sleep-fill" data-target="48" style="--bar-color: var(--green)"></div></div>
-                <span class="sleep-dur">1h48</span>
+              <div class="training-day">
+                <div class="training-bar-wrap"><div class="training-bar" data-target="0" style="--bar-color: var(--green)"></div></div>
+                <span class="training-label">Mer</span>
               </div>
-              <div class="sleep-row">
-                <span class="sleep-stage">Éveillé</span>
-                <div class="sleep-track"><div class="sleep-fill" data-target="12" style="--bar-color: #F87171"></div></div>
-                <span class="sleep-dur">0h22</span>
+              <div class="training-day">
+                <div class="training-bar-wrap"><div class="training-bar" data-target="58" style="--bar-color: var(--green)"></div></div>
+                <span class="training-label">Jeu</span>
+              </div>
+              <div class="training-day">
+                <div class="training-bar-wrap"><div class="training-bar" data-target="85" style="--bar-color: var(--coral)"></div></div>
+                <span class="training-label">Ven</span>
+              </div>
+              <div class="training-day">
+                <div class="training-bar-wrap"><div class="training-bar" data-target="30" style="--bar-color: var(--green)"></div></div>
+                <span class="training-label">Sam</span>
+              </div>
+              <div class="training-day">
+                <div class="training-bar-wrap"><div class="training-bar" data-target="0" style="--bar-color: var(--green)"></div></div>
+                <span class="training-label">Dim</span>
               </div>
             </div>
-            <div class="sleep-total">
-              <span>Durée totale</span>
-              <strong>7h32</strong>
+            <div class="training-stats">
+              <div class="training-stat">
+                <span class="training-stat-val">4</span>
+                <span class="training-stat-label">sessions</span>
+              </div>
+              <div class="training-stat">
+                <span class="training-stat-val">290</span>
+                <span class="training-stat-label">TSS total</span>
+              </div>
+              <div class="training-stat">
+                <span class="training-stat-val accent">+12%</span>
+                <span class="training-stat-label">vs semaine préc.</span>
+              </div>
+            </div>
+            <div class="training-advice">
+              <span class="training-advice-icon">💡</span>
+              <span>Charge en hausse. Prévois un jour de repos demain.</span>
             </div>
           </div>
         </div>
@@ -334,13 +356,13 @@
         <div class="feature-visual">
           <div class="empathy-visual">
             <div class="empathy-bubble">
-              <p class="empathy-quote">&laquo;&nbsp;J'ai quand même l'impression d'être crevé&nbsp;&raquo;</p>
+              <p class="empathy-quote">&laquo;&nbsp;J'ai mal aux jambes, je fais quand même ma séance ?&nbsp;&raquo;</p>
             </div>
             <div class="empathy-response">
               <div class="empathy-avatar">R</div>
               <div class="empathy-msg">
-                <p>C'est normal &mdash; ton stress moyen hier était à 52, 12&nbsp;points au-dessus de ta baseline. Le corps a récupéré mais le mental suit avec un décalage.</p>
-                <p class="tip">Commence doucement. Un café, 10&nbsp;min de marche, et on reparle à midi.</p>
+                <p>Ta VFC est basse et ta charge a grimpé de 20% cette semaine. Ton corps te parle &mdash; écoute-le.</p>
+                <p class="tip">Remplace par 30&nbsp;min de mobilité ou une marche. Tu seras plus fort demain.</p>
               </div>
             </div>
           </div>
@@ -400,7 +422,7 @@
         </p>
         <h2 class="cta-title">
           Celui-ci surveille<br>
-          <span class="accent">ton sommeil.</span>
+          <span class="accent">ton corps.</span>
         </h2>
         <form class="waitlist-form" action="https://formspree.io/f/XXXXXXXX" method="POST">
           <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email" aria-label="Email">
