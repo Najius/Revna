@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Revna &mdash; Ton wearable, enfin utile</title>
-  <meta name="description" content="Revna lit tes donn&eacute;es de wearable et t'envoie le bon message au bon moment. Sommeil, stress, &eacute;nergie. Via Telegram.">
+  <meta name="description" content="Revna lit tes données de wearable et t'envoie le bon message au bon moment. Sommeil, stress, énergie. Via Telegram.">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +14,12 @@
 
   <!-- Background layers -->
   <div class="aurora" aria-hidden="true"></div>
+  <div class="floating-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+  </div>
   <div class="dot-grid" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
@@ -28,30 +34,31 @@
     <!-- ════ Hero ════ -->
     <section class="hero">
       <div class="hero-glow" aria-hidden="true"></div>
-      <div class="hero-badge">
+      <div class="cursor-glow" aria-hidden="true"></div>
+      <div class="hero-badge reveal">
         <span class="hero-badge-dot"></span>
         Beta ouverte &mdash; 50 places
       </div>
-      <h1 class="hero-title">
+      <h1 class="hero-title reveal delay-1">
         Ton wearable parle.<br>
-        <span class="hero-gradient">Personne n'&eacute;coute.</span>
+        <span class="hero-gradient">Personne n'écoute.</span>
       </h1>
-      <p class="hero-sub">
-        Ton Garmin collecte 200 donn&eacute;es par jour. Tu en regardes&nbsp;3.
+      <p class="hero-sub reveal delay-2">
+        Ton Garmin collecte 200 données par jour. Tu en regardes&nbsp;3.
         Revna lit tout &mdash; sommeil, VFC, stress, Body Battery &mdash;
-        et t'envoie un message quand &ccedil;a compte vraiment.
+        et t'envoie un message quand ça compte vraiment.
       </p>
-      <form id="waitlist" class="waitlist-form" action="https://formspree.io/f/XXXXXXXX" method="POST">
+      <form id="waitlist" class="waitlist-form reveal delay-3" action="https://formspree.io/f/XXXXXXXX" method="POST">
         <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email" aria-label="Email">
         <button type="submit">
-          Acc&eacute;der &agrave; la beta
+          Accéder à la beta
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8h9m0 0L9 4.5M12.5 8 9 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </form>
     </section>
 
     <!-- ════ Phone Demo ════ -->
-    <section class="demo">
+    <section class="demo reveal delay-1">
       <div class="phone">
         <div class="phone-notch"></div>
         <div class="phone-statusbar">
@@ -71,29 +78,34 @@
         <div class="chat">
           <div class="bubble bot">
             <p><strong>Nuit de 7h32</strong> &mdash; score 82/100</p>
-            <p>1h24 de sommeil profond, pas de fragmentation. Body Battery remont&eacute;e &agrave; 78. Ton HRV est en hausse depuis 3 jours.</p>
-            <p class="tip">Journ&eacute;e id&eacute;ale pour un effort mod&eacute;r&eacute;.</p>
+            <p>1h24 de sommeil profond, pas de fragmentation. Body Battery remontée à 78. Ton HRV est en hausse depuis 3 jours.</p>
+            <p class="tip">Journée idéale pour un effort modéré.</p>
             <span class="time">08:02</span>
           </div>
           <div class="bubble user">
-            <p>J'ai quand m&ecirc;me l'impression d'&ecirc;tre crev&eacute;</p>
+            <p>J'ai quand même l'impression d'être crevé</p>
             <span class="time">08:14</span>
           </div>
           <div class="bubble bot">
-            <p>C'est normal &mdash; ton stress moyen hier &eacute;tait &agrave; 52, 12 points au-dessus de ta baseline. Le corps a r&eacute;cup&eacute;r&eacute; mais le mental suit avec un d&eacute;calage.</p>
-            <p class="tip">Commence doucement. Un caf&eacute;, 10 min de marche, et on reparle &agrave; midi.</p>
+            <p>C'est normal &mdash; ton stress moyen hier était à 52, 12 points au-dessus de ta baseline. Le corps a récupéré mais le mental suit avec un décalage.</p>
+            <p class="tip">Commence doucement. Un café, 10 min de marche, et on reparle à midi.</p>
             <span class="time">08:14</span>
+          </div>
+          <div class="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ════ How it works ════ -->
-    <section class="how">
-      <span class="section-label">Comment &ccedil;a marche</span>
-      <h2 class="section-title">Trois &eacute;tapes. Z&eacute;ro effort.</h2>
+    <section class="how reveal delay-2">
+      <span class="section-label">Comment ça marche</span>
+      <h2 class="section-title">Trois étapes. Zéro effort.</h2>
       <div class="how-grid">
-        <div class="how-card glass-card">
+        <div class="how-card glass-card reveal delay-1">
           <div class="how-num">01</div>
           <svg class="how-icon" width="28" height="28" viewBox="0 0 24 24" fill="none">
             <rect x="6" y="2" width="12" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/>
@@ -103,7 +115,7 @@
           <h3>Connecte ton wearable</h3>
           <p>Garmin, Apple Watch, Oura, Whoop&hellip; Revna se connecte en 30 secondes via Terra API.</p>
         </div>
-        <div class="how-card glass-card">
+        <div class="how-card glass-card reveal delay-2">
           <div class="how-num">02</div>
           <svg class="how-icon" width="28" height="28" viewBox="0 0 24 24" fill="none">
             <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -111,26 +123,26 @@
           <h3>Revna analyse chaque nuit</h3>
           <p>Sommeil, stress, VFC, Body Battery. Tes baselines se calibrent en 14 jours.</p>
         </div>
-        <div class="how-card glass-card">
+        <div class="how-card glass-card reveal delay-3">
           <div class="how-num">03</div>
           <svg class="how-icon" width="28" height="28" viewBox="0 0 24 24" fill="none">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <h3>Tu re&ccedil;ois le bon message</h3>
+          <h3>Tu reçois le bon message</h3>
           <p>Au bon moment, dans Telegram. Pas un dashboard. Un ami qui comprend la physio.</p>
         </div>
       </div>
     </section>
 
     <!-- ════ Bento Features ════ -->
-    <section class="features">
+    <section class="features reveal delay-3">
       <div class="bento">
 
         <!-- Card 1: Notifications timeline (span 2) -->
-        <div class="bento-card bento-wide glass-card">
+        <div class="bento-card bento-wide glass-card reveal delay-1">
           <span class="bento-tag">Proactif</span>
           <h3>14 types de messages</h3>
-          <p>Bilan matinal, alerte stress, check-in du soir&hellip; chacun d&eacute;clench&eacute; par tes donn&eacute;es, pas par une horloge.</p>
+          <p>Bilan matinal, alerte stress, check-in du soir&hellip; chacun déclenché par tes données, pas par une horloge.</p>
           <div class="notif-timeline">
             <div class="notif-line" aria-hidden="true"></div>
             <div class="notif-item">
@@ -157,7 +169,7 @@
         </div>
 
         <!-- Card 2: Readiness score ring -->
-        <div class="bento-card glass-card readiness-card">
+        <div class="bento-card glass-card readiness-card reveal delay-2">
           <div class="readiness-ring">
             <svg viewBox="0 0 120 120" class="readiness-svg">
               <circle cx="60" cy="60" r="52" stroke="rgba(255,255,255,0.04)" stroke-width="8" fill="none"/>
@@ -177,14 +189,14 @@
             </div>
           </div>
           <span class="readiness-label">Readiness score</span>
-          <span class="readiness-sub">Pr&ecirc;t pour un effort mod&eacute;r&eacute;</span>
+          <span class="readiness-sub">Prêt pour un effort modéré</span>
         </div>
 
         <!-- Card 3: Baselines + HRV (span 2) -->
-        <div class="bento-card bento-wide glass-card">
+        <div class="bento-card bento-wide glass-card reveal delay-3">
           <span class="bento-tag">Personnel</span>
-          <h3>Calibr&eacute; sur ton corps</h3>
-          <p>Apr&egrave;s 14 jours, Revna calcule tes moyennes. Un stress &agrave; 45 peut &ecirc;tre normal pour toi.</p>
+          <h3>Calibré sur ton corps</h3>
+          <p>Après 14 jours, Revna calcule tes moyennes. Un stress à 45 peut être normal pour toi.</p>
           <div class="hrv-chart">
             <svg viewBox="0 0 300 80" fill="none" class="hrv-svg">
               <line x1="0" y1="45" x2="300" y2="45" stroke="rgba(124,92,252,0.2)" stroke-width="1" stroke-dasharray="4 4"/>
@@ -220,55 +232,55 @@
         </div>
 
         <!-- Card 4: Psychology -->
-        <div class="bento-card glass-card">
+        <div class="bento-card glass-card reveal delay-4">
           <span class="bento-tag">Empathique</span>
           <h3>Il ne minimise jamais</h3>
-          <p>&laquo;&nbsp;C'est rien, &ccedil;a va passer&nbsp;&raquo; &mdash; pas ici. ACT, d&eacute;fusion cognitive, auto-compassion.</p>
+          <p>&laquo;&nbsp;C'est rien, ça va passer&nbsp;&raquo; &mdash; pas ici. ACT, défusion cognitive, auto-compassion.</p>
         </div>
 
         <!-- Card 5: Sleep (span 2) -->
-        <div class="bento-card bento-wide glass-card">
+        <div class="bento-card bento-wide glass-card reveal delay-5">
           <span class="bento-tag">Sommeil</span>
-          <h3>Analyse d&eacute;taill&eacute;e chaque nuit</h3>
+          <h3>Analyse détaillée chaque nuit</h3>
           <div class="sleep-bars">
             <div class="sleep-row">
               <span class="sleep-stage">Profond</span>
-              <div class="sleep-track"><div class="sleep-fill" style="width:62%; --bar-color: #7C5CFC"></div></div>
+              <div class="sleep-track"><div class="sleep-fill" data-target="62" style="--bar-color: #7C5CFC"></div></div>
               <span class="sleep-dur">1h24</span>
             </div>
             <div class="sleep-row">
-              <span class="sleep-stage">L&eacute;ger</span>
-              <div class="sleep-track"><div class="sleep-fill" style="width:82%; --bar-color: #4C7CF5"></div></div>
+              <span class="sleep-stage">Léger</span>
+              <div class="sleep-track"><div class="sleep-fill" data-target="82" style="--bar-color: #4C7CF5"></div></div>
               <span class="sleep-dur">3h15</span>
             </div>
             <div class="sleep-row">
               <span class="sleep-stage">REM</span>
-              <div class="sleep-track"><div class="sleep-fill" style="width:48%; --bar-color: #34D399"></div></div>
+              <div class="sleep-track"><div class="sleep-fill" data-target="48" style="--bar-color: #34D399"></div></div>
               <span class="sleep-dur">1h48</span>
             </div>
             <div class="sleep-row">
-              <span class="sleep-stage">&Eacute;veill&eacute;</span>
-              <div class="sleep-track"><div class="sleep-fill" style="width:12%; --bar-color: #F87171"></div></div>
+              <span class="sleep-stage">Éveillé</span>
+              <div class="sleep-track"><div class="sleep-fill" data-target="12" style="--bar-color: #F87171"></div></div>
               <span class="sleep-dur">0h22</span>
             </div>
           </div>
         </div>
 
         <!-- Card 6: Stat 150+ -->
-        <div class="bento-card glass-card bento-stat-card">
-          <span class="bento-stat">150<span class="stat-accent">+</span></span>
-          <span class="bento-stat-label">wearables support&eacute;s</span>
+        <div class="bento-card glass-card bento-stat-card reveal delay-1">
+          <span class="bento-stat" data-count="150"><span class="stat-accent">+</span></span>
+          <span class="bento-stat-label">wearables supportés</span>
         </div>
 
         <!-- Card 7: Stat 0 -->
-        <div class="bento-card glass-card bento-stat-card">
-          <span class="bento-stat">0</span>
-          <span class="bento-stat-label">apps &agrave; ouvrir</span>
+        <div class="bento-card glass-card bento-stat-card reveal delay-2">
+          <span class="bento-stat" data-count="0"></span>
+          <span class="bento-stat-label">apps à ouvrir</span>
         </div>
 
         <!-- Card 8: Stat 14 -->
-        <div class="bento-card glass-card bento-stat-card">
-          <span class="bento-stat">14</span>
+        <div class="bento-card glass-card bento-stat-card reveal delay-3">
+          <span class="bento-stat" data-count="14"></span>
           <span class="bento-stat-label">types de notifications</span>
         </div>
 
@@ -276,7 +288,7 @@
     </section>
 
     <!-- ════ Compatible ════ -->
-    <section class="compat">
+    <section class="compat reveal delay-4">
       <span class="section-label">Compatible avec</span>
       <div class="compat-list">
         <span>Garmin</span>
@@ -298,7 +310,7 @@
     </section>
 
     <!-- ════ CTA ════ -->
-    <section class="cta">
+    <section class="cta reveal delay-5">
       <p class="cta-origin">
         <span class="cta-em">Revna</span> &mdash; vieux norrois pour &laquo;&nbsp;corbeau&nbsp;&raquo;.<br>
         Les corbeaux d'Odin survolaient le monde et rapportaient ce qu'ils voyaient.
@@ -310,7 +322,7 @@
       <form class="waitlist-form" action="https://formspree.io/f/XXXXXXXX" method="POST">
         <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email" aria-label="Email">
         <button type="submit">
-          Acc&eacute;der &agrave; la beta
+          Accéder à la beta
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8h9m0 0L9 4.5M12.5 8 9 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </form>
@@ -322,5 +334,6 @@
     <span>&copy; 2026 Revna &middot; Antigravity</span>
   </footer>
 
+  <script src="main.js"></script>
 </body>
 </html>
