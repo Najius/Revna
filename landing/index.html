@@ -8,24 +8,23 @@
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Background layers -->
-  <div class="aurora" aria-hidden="true"></div>
-  <div class="floating-orbs" aria-hidden="true">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="orb orb-4"></div>
-  </div>
-  <div class="dot-grid" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
-
   <!-- Nav -->
   <nav class="nav">
-    <a href="#" class="nav-brand">Revna</a>
+    <a href="#" class="nav-brand">
+      <svg class="nav-logo" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Revna
+    </a>
+    <div class="nav-links">
+      <a href="#how">Comment ça marche</a>
+      <a href="#features">Fonctionnalités</a>
+      <a href="#compatible">Compatible</a>
+    </div>
     <a href="#waitlist" class="nav-cta">Rejoindre la beta</a>
   </nav>
 
@@ -33,311 +32,390 @@
 
     <!-- ════ Hero ════ -->
     <section class="hero">
-      <div class="hero-glow" aria-hidden="true"></div>
-      <div class="cursor-glow" aria-hidden="true"></div>
-      <div class="hero-badge reveal">
-        <span class="hero-badge-dot"></span>
-        Beta ouverte &mdash; 50 places
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-gradient-orb hero-orb-1"></div>
+        <div class="hero-gradient-orb hero-orb-2"></div>
+        <div class="hero-gradient-orb hero-orb-3"></div>
       </div>
-      <h1 class="hero-title reveal delay-1">
-        Ton wearable parle.<br>
-        <span class="hero-gradient">Personne n'écoute.</span>
-      </h1>
-      <p class="hero-sub reveal delay-2">
-        Ton Garmin collecte 200 données par jour. Tu en regardes&nbsp;3.
-        Revna lit tout &mdash; sommeil, VFC, stress, Body Battery &mdash;
-        et t'envoie un message quand ça compte vraiment.
-      </p>
-      <form id="waitlist" class="waitlist-form reveal delay-3" action="https://formspree.io/f/XXXXXXXX" method="POST">
-        <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email" aria-label="Email">
-        <button type="submit">
-          Accéder à la beta
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8h9m0 0L9 4.5M12.5 8 9 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </form>
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-badge reveal">
+            <span class="hero-badge-dot"></span>
+            Beta ouverte &mdash; 50 places
+          </div>
+          <h1 class="hero-title reveal delay-1">
+            Ton wearable parle.<br>
+            <span class="accent">Revna écoute.</span>
+          </h1>
+          <p class="hero-sub reveal delay-2">
+            Ton Garmin collecte 200&nbsp;données par jour. Tu en regardes&nbsp;3.
+            Revna lit tout &mdash; sommeil, VFC, stress, Body&nbsp;Battery &mdash;
+            et t'envoie <strong>le bon message au bon moment</strong>.
+          </p>
+          <form id="waitlist" class="waitlist-form reveal delay-3" action="https://formspree.io/f/XXXXXXXX" method="POST">
+            <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email" aria-label="Email">
+            <button type="submit">Accéder à la beta</button>
+          </form>
+          <div class="hero-proof reveal delay-3">
+            <div class="hero-avatars">
+              <div class="avatar" style="background: #E8B4B8;">M</div>
+              <div class="avatar" style="background: #A8D8EA;">T</div>
+              <div class="avatar" style="background: #C3B1E1;">L</div>
+              <div class="avatar" style="background: #B5EAD7;">S</div>
+            </div>
+            <span class="hero-proof-text">42 beta-testeurs actifs</span>
+          </div>
+        </div>
+        <div class="hero-phone reveal delay-2">
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-statusbar">
+              <span>9:41</span>
+              <div class="phone-statusbar-icons">
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><rect x="0" y="4" width="2.5" height="6" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="3.5" y="2.5" width="2.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.6)"/><rect x="7" y="1" width="2.5" height="9" rx="0.5" fill="rgba(255,255,255,0.7)"/><rect x="10.5" y="0" width="2.5" height="10" rx="0.5" fill="white"/></svg>
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><rect x="0.5" y="1" width="10" height="8" rx="1.5" stroke="rgba(255,255,255,0.5)" stroke-width="1"/><rect x="11" y="3.5" width="2" height="3" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="1.5" y="2" width="6" height="6" rx="0.5" fill="rgba(255,255,255,0.5)"/></svg>
+              </div>
+            </div>
+            <div class="phone-top">
+              <div class="phone-avatar">R</div>
+              <div class="phone-meta">
+                <span class="phone-name">Revna</span>
+                <span class="phone-status"><span class="phone-online"></span> en ligne</span>
+              </div>
+            </div>
+            <div class="chat">
+              <div class="bubble bot">
+                <p><strong>Nuit de 7h32</strong> &mdash; score 82/100</p>
+                <p>1h24 de sommeil profond, pas de fragmentation. Body Battery remontée à 78.</p>
+                <p class="tip">Journée idéale pour un effort modéré.</p>
+                <span class="time">08:02</span>
+              </div>
+              <div class="bubble user">
+                <p>J'ai quand même l'impression d'être crevé</p>
+                <span class="time">08:14</span>
+              </div>
+              <div class="bubble bot">
+                <p>C'est normal &mdash; ton stress moyen hier était à 52, au-dessus de ta baseline.</p>
+                <p class="tip">Commence doucement. Un café, 10 min de marche, on reparle à midi.</p>
+                <span class="time">08:14</span>
+              </div>
+              <div class="typing-indicator">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- ════ Phone Demo ════ -->
-    <section class="demo reveal delay-1">
-      <div class="phone">
-        <div class="phone-notch"></div>
-        <div class="phone-statusbar">
-          <span>9:41</span>
-          <div class="phone-statusbar-icons">
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><rect x="0" y="4" width="2.5" height="6" rx="0.5" fill="rgba(255,255,255,0.25)"/><rect x="3.5" y="2.5" width="2.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.35)"/><rect x="7" y="1" width="2.5" height="9" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="10.5" y="0" width="2.5" height="10" rx="0.5" fill="rgba(255,255,255,0.5)"/></svg>
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><rect x="0.5" y="1" width="10" height="8" rx="1.5" stroke="rgba(255,255,255,0.35)" stroke-width="1"/><rect x="11" y="3.5" width="2" height="3" rx="0.5" fill="rgba(255,255,255,0.25)"/><rect x="1.5" y="2" width="6" height="6" rx="0.5" fill="rgba(255,255,255,0.3)"/></svg>
-          </div>
+    <!-- ════ Logos ════ -->
+    <section class="logos">
+      <span class="logos-label">Compatible avec tes wearables</span>
+      <div class="logos-track">
+        <span class="logo-item">Garmin</span>
+        <span class="logo-item">Apple Watch</span>
+        <span class="logo-item">Oura</span>
+        <span class="logo-item">Whoop</span>
+        <span class="logo-item">Fitbit</span>
+        <span class="logo-item">Polar</span>
+        <span class="logo-item">Suunto</span>
+        <span class="logo-item">Withings</span>
+      </div>
+    </section>
+
+    <!-- ════ Stats ════ -->
+    <section class="stats">
+      <div class="stats-grid">
+        <div class="stat-block reveal">
+          <span class="stat-num" data-count="150">0</span><span class="stat-plus">+</span>
+          <span class="stat-label">wearables supportés</span>
         </div>
-        <div class="phone-top">
-          <div class="phone-avatar">R</div>
-          <div class="phone-meta">
-            <span class="phone-name">Revna</span>
-            <span class="phone-status"><span class="phone-online"></span> en ligne</span>
-          </div>
+        <div class="stat-block reveal delay-1">
+          <span class="stat-num" data-count="14">0</span>
+          <span class="stat-label">types de messages</span>
         </div>
-        <div class="chat">
-          <div class="bubble bot">
-            <p><strong>Nuit de 7h32</strong> &mdash; score 82/100</p>
-            <p>1h24 de sommeil profond, pas de fragmentation. Body Battery remontée à 78. Ton HRV est en hausse depuis 3 jours.</p>
-            <p class="tip">Journée idéale pour un effort modéré.</p>
-            <span class="time">08:02</span>
-          </div>
-          <div class="bubble user">
-            <p>J'ai quand même l'impression d'être crevé</p>
-            <span class="time">08:14</span>
-          </div>
-          <div class="bubble bot">
-            <p>C'est normal &mdash; ton stress moyen hier était à 52, 12 points au-dessus de ta baseline. Le corps a récupéré mais le mental suit avec un décalage.</p>
-            <p class="tip">Commence doucement. Un café, 10 min de marche, et on reparle à midi.</p>
-            <span class="time">08:14</span>
-          </div>
-          <div class="typing-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+        <div class="stat-block reveal delay-2">
+          <span class="stat-num" data-count="0">0</span>
+          <span class="stat-label">apps à ouvrir</span>
+        </div>
+        <div class="stat-block reveal delay-3">
+          <span class="stat-num special">24/7</span>
+          <span class="stat-label">surveillance passive</span>
         </div>
       </div>
     </section>
 
     <!-- ════ How it works ════ -->
-    <section class="how reveal delay-2">
-      <span class="section-label">Comment ça marche</span>
-      <h2 class="section-title">Trois étapes. Zéro effort.</h2>
+    <section id="how" class="how">
+      <div class="section-header reveal">
+        <span class="section-tag">Comment ça marche</span>
+        <h2 class="section-title">Trois étapes.<br><span class="accent">Zéro effort.</span></h2>
+      </div>
       <div class="how-grid">
-        <div class="how-card glass-card reveal delay-1">
+        <div class="how-card reveal delay-1">
           <div class="how-num">01</div>
-          <svg class="how-icon" width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <rect x="6" y="2" width="12" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="12" cy="18" r="1" fill="currentColor"/>
-            <path d="M9 6h6M9 9h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
+          <div class="how-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <rect x="6" y="2" width="12" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="12" cy="18" r="1" fill="currentColor"/>
+              <path d="M9 6h6M9 9h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
           <h3>Connecte ton wearable</h3>
-          <p>Garmin, Apple Watch, Oura, Whoop&hellip; Revna se connecte en 30 secondes via Terra API.</p>
+          <p>Garmin, Apple Watch, Oura, Whoop&hellip; Connexion en 30 secondes via Terra API.</p>
         </div>
-        <div class="how-card glass-card reveal delay-2">
+        <div class="how-card reveal delay-2">
           <div class="how-num">02</div>
-          <svg class="how-icon" width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <div class="how-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
           <h3>Revna analyse chaque nuit</h3>
           <p>Sommeil, stress, VFC, Body Battery. Tes baselines se calibrent en 14 jours.</p>
         </div>
-        <div class="how-card glass-card reveal delay-3">
+        <div class="how-card reveal delay-3">
           <div class="how-num">03</div>
-          <svg class="how-icon" width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <div class="how-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
           <h3>Tu reçois le bon message</h3>
           <p>Au bon moment, dans Telegram. Pas un dashboard. Un ami qui comprend la physio.</p>
         </div>
       </div>
     </section>
 
-    <!-- ════ Bento Features ════ -->
-    <section class="features reveal delay-3">
-      <div class="bento">
+    <!-- ════ Features ════ -->
+    <section id="features" class="features">
+      <div class="section-header reveal">
+        <span class="section-tag">Fonctionnalités</span>
+        <h2 class="section-title">Pas un dashboard de plus.<br><span class="accent">Un coach qui te connaît.</span></h2>
+      </div>
 
-        <!-- Card 1: Notifications timeline (span 2) -->
-        <div class="bento-card bento-wide glass-card reveal delay-1">
-          <span class="bento-tag">Proactif</span>
+      <!-- Feature 1: Proactive messaging -->
+      <div class="feature-row reveal">
+        <div class="feature-text">
+          <span class="feature-tag">Proactif</span>
           <h3>14 types de messages</h3>
-          <p>Bilan matinal, alerte stress, check-in du soir&hellip; chacun déclenché par tes données, pas par une horloge.</p>
+          <p>Bilan matinal, alerte stress, check-in du soir&hellip; chacun déclenché par <strong>tes données</strong>, pas par une horloge.</p>
+        </div>
+        <div class="feature-visual">
           <div class="notif-timeline">
             <div class="notif-line" aria-hidden="true"></div>
             <div class="notif-item">
-              <div class="notif-dot" style="--dot-color: #4C7CF5"></div>
+              <div class="notif-dot" style="--dot-color: var(--coral)"></div>
               <span class="notif-time">08:00</span>
               <span class="notif-label">Bilan matinal</span>
+              <span class="notif-preview">Nuit de 7h32, score 82/100</span>
             </div>
             <div class="notif-item">
               <div class="notif-dot" style="--dot-color: #F59E0B"></div>
               <span class="notif-time">11:30</span>
               <span class="notif-label">Alerte stress</span>
+              <span class="notif-preview">Stress à 58, au-dessus de ta baseline</span>
             </div>
             <div class="notif-item">
-              <div class="notif-dot" style="--dot-color: #34D399"></div>
+              <div class="notif-dot" style="--dot-color: var(--green)"></div>
               <span class="notif-time">18:00</span>
-              <span class="notif-label">Bilan pas</span>
+              <span class="notif-label">Bilan activité</span>
+              <span class="notif-preview">8 241 pas, objectif atteint</span>
             </div>
             <div class="notif-item">
-              <div class="notif-dot" style="--dot-color: #A78BFA"></div>
+              <div class="notif-dot" style="--dot-color: var(--purple)"></div>
               <span class="notif-time">22:00</span>
               <span class="notif-label">Check-in du soir</span>
+              <span class="notif-preview">Prêt pour une bonne nuit?</span>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Card 2: Readiness score ring -->
-        <div class="bento-card glass-card readiness-card reveal delay-2">
-          <div class="readiness-ring">
-            <svg viewBox="0 0 120 120" class="readiness-svg">
-              <circle cx="60" cy="60" r="52" stroke="rgba(255,255,255,0.04)" stroke-width="8" fill="none"/>
-              <circle cx="60" cy="60" r="52" stroke="url(#ring-gradient)" stroke-width="8" fill="none"
-                stroke-dasharray="326.7" stroke-dashoffset="71.9" stroke-linecap="round"
-                transform="rotate(-90 60 60)"/>
-              <defs>
-                <linearGradient id="ring-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#7C5CFC"/>
-                  <stop offset="100%" stop-color="#34D399"/>
-                </linearGradient>
-              </defs>
-            </svg>
-            <div class="readiness-value">
-              <span class="readiness-num">78</span>
-              <span class="readiness-unit">/100</span>
-            </div>
-          </div>
-          <span class="readiness-label">Readiness score</span>
-          <span class="readiness-sub">Prêt pour un effort modéré</span>
-        </div>
-
-        <!-- Card 3: Baselines + HRV (span 2) -->
-        <div class="bento-card bento-wide glass-card reveal delay-3">
-          <span class="bento-tag">Personnel</span>
+      <!-- Feature 2: Personalized baselines -->
+      <div class="feature-row reverse reveal">
+        <div class="feature-text">
+          <span class="feature-tag">Personnel</span>
           <h3>Calibré sur ton corps</h3>
-          <p>Après 14 jours, Revna calcule tes moyennes. Un stress à 45 peut être normal pour toi.</p>
-          <div class="hrv-chart">
+          <p>Après 14 jours, Revna calcule tes moyennes. Un stress à 45 peut être normal <strong>pour toi</strong>.</p>
+        </div>
+        <div class="feature-visual">
+          <div class="baseline-card">
+            <div class="baseline-header">
+              <span>VFC &mdash; 14 derniers jours</span>
+              <span class="baseline-trend">&uarr; en hausse</span>
+            </div>
             <svg viewBox="0 0 300 80" fill="none" class="hrv-svg">
-              <line x1="0" y1="45" x2="300" y2="45" stroke="rgba(124,92,252,0.2)" stroke-width="1" stroke-dasharray="4 4"/>
-              <text x="304" y="48" fill="rgba(124,92,252,0.35)" font-size="9" font-family="JetBrains Mono, monospace">baseline</text>
+              <line x1="0" y1="45" x2="300" y2="45" stroke="rgba(0,0,0,0.08)" stroke-width="1" stroke-dasharray="4 4"/>
+              <text x="304" y="48" fill="rgba(0,0,0,0.3)" font-size="9" font-family="JetBrains Mono, monospace">baseline</text>
               <polyline points="0,58 15,55 30,50 45,52 60,42 75,48 90,44 105,40 120,38 135,42 150,35 165,40 180,32 195,36 210,30 225,35 240,28 255,32 270,25 285,30 300,22"
-                stroke="url(#hrv-line-grad)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                stroke="var(--coral)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
               <polyline points="0,58 15,55 30,50 45,52 60,42 75,48 90,44 105,40 120,38 135,42 150,35 165,40 180,32 195,36 210,30 225,35 240,28 255,32 270,25 285,30 300,22 300,80 0,80"
-                fill="url(#hrv-fill-grad)" opacity="0.5"/>
-              <circle cx="300" cy="22" r="4" fill="#7C5CFC">
+                fill="url(#hrv-fill-v8)" opacity="0.3"/>
+              <circle cx="300" cy="22" r="4" fill="var(--coral)">
                 <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite"/>
-                <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
-              </circle>
-              <circle cx="300" cy="22" r="8" fill="none" stroke="#7C5CFC" stroke-width="1" opacity="0.2">
-                <animate attributeName="r" values="6;12;6" dur="2s" repeatCount="indefinite"/>
-                <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite"/>
               </circle>
               <defs>
-                <linearGradient id="hrv-line-grad" x1="0" y1="0" x2="300" y2="0">
-                  <stop offset="0%" stop-color="#7C5CFC" stop-opacity="0.15"/>
-                  <stop offset="100%" stop-color="#7C5CFC"/>
-                </linearGradient>
-                <linearGradient id="hrv-fill-grad" x1="0" y1="20" x2="0" y2="80">
-                  <stop offset="0%" stop-color="#7C5CFC" stop-opacity="0.2"/>
-                  <stop offset="100%" stop-color="#7C5CFC" stop-opacity="0"/>
+                <linearGradient id="hrv-fill-v8" x1="0" y1="20" x2="0" y2="80">
+                  <stop offset="0%" stop-color="var(--coral)" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="var(--coral)" stop-opacity="0"/>
                 </linearGradient>
               </defs>
             </svg>
-            <div class="hrv-meta">
-              <span class="hrv-label">VFC &mdash; 14 derniers jours</span>
-              <span class="hrv-trend">&uarr; en hausse</span>
+            <div class="baseline-readiness">
+              <div class="readiness-ring-mini">
+                <svg viewBox="0 0 60 60">
+                  <circle cx="30" cy="30" r="24" stroke="rgba(0,0,0,0.06)" stroke-width="5" fill="none"/>
+                  <circle cx="30" cy="30" r="24" stroke="var(--coral)" stroke-width="5" fill="none"
+                    stroke-dasharray="150.8" stroke-dashoffset="33.2" stroke-linecap="round"
+                    transform="rotate(-90 30 30)"/>
+                </svg>
+                <span class="readiness-mini-val">78</span>
+              </div>
+              <div class="readiness-mini-info">
+                <span class="readiness-mini-title">Readiness</span>
+                <span class="readiness-mini-sub">Prêt pour un effort modéré</span>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Card 4: Psychology -->
-        <div class="bento-card glass-card empathy-card reveal delay-4">
-          <span class="bento-tag">Empathique</span>
-          <div class="empathy-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="url(#heart-grad)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <defs><linearGradient id="heart-grad" x1="4" y1="4" x2="20" y2="20"><stop stop-color="#A78BFA"/><stop offset="1" stop-color="#34D399"/></linearGradient></defs>
-            </svg>
-          </div>
-          <h3>Il ne minimise jamais</h3>
-          <p>&laquo;&nbsp;C'est rien, ça va passer&nbsp;&raquo; &mdash; pas ici. ACT, défusion cognitive, auto-compassion.</p>
-        </div>
-
-        <!-- Card 5: Sleep (span 2) -->
-        <div class="bento-card bento-wide glass-card reveal delay-5">
-          <span class="bento-tag">Sommeil</span>
+      <!-- Feature 3: Sleep -->
+      <div class="feature-row reveal">
+        <div class="feature-text">
+          <span class="feature-tag">Sommeil</span>
           <h3>Analyse détaillée chaque nuit</h3>
-          <div class="sleep-bars">
-            <div class="sleep-row">
-              <span class="sleep-stage">Profond</span>
-              <div class="sleep-track"><div class="sleep-fill" data-target="62" style="--bar-color: #7C5CFC"></div></div>
-              <span class="sleep-dur">1h24</span>
+          <p>Profond, léger, REM, éveillé &mdash; Revna décrypte tes cycles et t'explique ce qu'ils veulent dire.</p>
+        </div>
+        <div class="feature-visual">
+          <div class="sleep-card">
+            <div class="sleep-score">
+              <span class="sleep-score-num">82</span>
+              <span class="sleep-score-label">score sommeil</span>
             </div>
-            <div class="sleep-row">
-              <span class="sleep-stage">Léger</span>
-              <div class="sleep-track"><div class="sleep-fill" data-target="82" style="--bar-color: #4C7CF5"></div></div>
-              <span class="sleep-dur">3h15</span>
+            <div class="sleep-bars">
+              <div class="sleep-row">
+                <span class="sleep-stage">Profond</span>
+                <div class="sleep-track"><div class="sleep-fill" data-target="62" style="--bar-color: var(--navy)"></div></div>
+                <span class="sleep-dur">1h24</span>
+              </div>
+              <div class="sleep-row">
+                <span class="sleep-stage">Léger</span>
+                <div class="sleep-track"><div class="sleep-fill" data-target="82" style="--bar-color: var(--coral)"></div></div>
+                <span class="sleep-dur">3h15</span>
+              </div>
+              <div class="sleep-row">
+                <span class="sleep-stage">REM</span>
+                <div class="sleep-track"><div class="sleep-fill" data-target="48" style="--bar-color: var(--green)"></div></div>
+                <span class="sleep-dur">1h48</span>
+              </div>
+              <div class="sleep-row">
+                <span class="sleep-stage">Éveillé</span>
+                <div class="sleep-track"><div class="sleep-fill" data-target="12" style="--bar-color: #F87171"></div></div>
+                <span class="sleep-dur">0h22</span>
+              </div>
             </div>
-            <div class="sleep-row">
-              <span class="sleep-stage">REM</span>
-              <div class="sleep-track"><div class="sleep-fill" data-target="48" style="--bar-color: #34D399"></div></div>
-              <span class="sleep-dur">1h48</span>
-            </div>
-            <div class="sleep-row">
-              <span class="sleep-stage">Éveillé</span>
-              <div class="sleep-track"><div class="sleep-fill" data-target="12" style="--bar-color: #F87171"></div></div>
-              <span class="sleep-dur">0h22</span>
+            <div class="sleep-total">
+              <span>Durée totale</span>
+              <strong>7h32</strong>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Card 6: Stat 150+ -->
-        <div class="bento-card glass-card bento-stat-card reveal delay-1">
-          <span class="bento-stat" data-count="150"><span class="stat-accent">+</span></span>
-          <span class="bento-stat-label">wearables supportés</span>
+      <!-- Feature 4: Empathy -->
+      <div class="feature-row reverse reveal">
+        <div class="feature-text">
+          <span class="feature-tag">Empathique</span>
+          <h3>Il ne minimise jamais</h3>
+          <p>&laquo;&nbsp;C'est rien, ça va passer&nbsp;&raquo; &mdash; tu n'entendras jamais ça. ACT, défusion cognitive, auto-compassion. <strong>Un vrai cadre thérapeutique.</strong></p>
         </div>
-
-        <!-- Card 7: Stat 0 -->
-        <div class="bento-card glass-card bento-stat-card reveal delay-2">
-          <span class="bento-stat" data-count="0"></span>
-          <span class="bento-stat-label">apps à ouvrir</span>
+        <div class="feature-visual">
+          <div class="empathy-visual">
+            <div class="empathy-bubble">
+              <p class="empathy-quote">&laquo;&nbsp;J'ai quand même l'impression d'être crevé&nbsp;&raquo;</p>
+            </div>
+            <div class="empathy-response">
+              <div class="empathy-avatar">R</div>
+              <div class="empathy-msg">
+                <p>C'est normal &mdash; ton stress moyen hier était à 52, 12&nbsp;points au-dessus de ta baseline. Le corps a récupéré mais le mental suit avec un décalage.</p>
+                <p class="tip">Commence doucement. Un café, 10&nbsp;min de marche, et on reparle à midi.</p>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <!-- Card 8: Stat 14 -->
-        <div class="bento-card glass-card bento-stat-card reveal delay-3">
-          <span class="bento-stat" data-count="14"></span>
-          <span class="bento-stat-label">types de notifications</span>
-        </div>
-
       </div>
     </section>
 
     <!-- ════ Compatible ════ -->
-    <section class="compat reveal delay-4">
-      <span class="section-label">Compatible avec</span>
-      <div class="compat-list">
-        <span>Garmin</span>
-        <span class="compat-dot"></span>
-        <span>Apple Watch</span>
-        <span class="compat-dot"></span>
-        <span>Oura</span>
-        <span class="compat-dot"></span>
-        <span>Whoop</span>
-        <span class="compat-dot"></span>
-        <span>Fitbit</span>
-        <span class="compat-dot"></span>
-        <span>Polar</span>
-        <span class="compat-dot"></span>
-        <span>Suunto</span>
-        <span class="compat-dot"></span>
-        <span>Withings</span>
+    <section id="compatible" class="compat">
+      <div class="section-header reveal">
+        <span class="section-tag">Intégrations</span>
+        <h2 class="section-title">Connecté à ce que<br><span class="accent">tu portes déjà.</span></h2>
       </div>
+      <div class="compat-grid reveal delay-1">
+        <div class="compat-card">
+          <span class="compat-icon">⌚</span>
+          <span class="compat-name">Garmin</span>
+        </div>
+        <div class="compat-card">
+          <span class="compat-icon">⌚</span>
+          <span class="compat-name">Apple Watch</span>
+        </div>
+        <div class="compat-card">
+          <span class="compat-icon">💍</span>
+          <span class="compat-name">Oura</span>
+        </div>
+        <div class="compat-card">
+          <span class="compat-icon">⌚</span>
+          <span class="compat-name">Whoop</span>
+        </div>
+        <div class="compat-card">
+          <span class="compat-icon">⌚</span>
+          <span class="compat-name">Fitbit</span>
+        </div>
+        <div class="compat-card">
+          <span class="compat-icon">⌚</span>
+          <span class="compat-name">Polar</span>
+        </div>
+        <div class="compat-card">
+          <span class="compat-icon">⌚</span>
+          <span class="compat-name">Suunto</span>
+        </div>
+        <div class="compat-card">
+          <span class="compat-icon">⌚</span>
+          <span class="compat-name">Withings</span>
+        </div>
+      </div>
+      <p class="compat-note reveal delay-2">Powered by <strong>Terra API</strong> &mdash; 150+ appareils supportés</p>
     </section>
 
     <!-- ════ CTA ════ -->
-    <section class="cta reveal delay-5">
-      <p class="cta-origin">
-        <span class="cta-em">Revna</span> &mdash; vieux norrois pour &laquo;&nbsp;corbeau&nbsp;&raquo;.<br>
-        Les corbeaux d'Odin survolaient le monde et rapportaient ce qu'ils voyaient.
-      </p>
-      <h2 class="cta-title">
-        Celui-ci surveille<br>
-        <span class="hero-gradient">ton sommeil.</span>
-      </h2>
-      <form class="waitlist-form" action="https://formspree.io/f/XXXXXXXX" method="POST">
-        <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email" aria-label="Email">
-        <button type="submit">
-          Accéder à la beta
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8h9m0 0L9 4.5M12.5 8 9 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </form>
+    <section class="cta">
+      <div class="cta-content reveal">
+        <p class="cta-origin">
+          <span class="cta-em">Revna</span> &mdash; vieux norrois pour &laquo;&nbsp;corbeau&nbsp;&raquo;.<br>
+          Les corbeaux d'Odin survolaient le monde et rapportaient ce qu'ils voyaient.
+        </p>
+        <h2 class="cta-title">
+          Celui-ci surveille<br>
+          <span class="accent">ton sommeil.</span>
+        </h2>
+        <form class="waitlist-form" action="https://formspree.io/f/XXXXXXXX" method="POST">
+          <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email" aria-label="Email">
+          <button type="submit">Accéder à la beta</button>
+        </form>
+      </div>
     </section>
 
   </main>
 
   <footer>
-    <span>&copy; 2026 Revna &middot; Antigravity</span>
+    <div class="footer-content">
+      <span class="footer-brand">Revna</span>
+      <span class="footer-copy">&copy; 2026 Antigravity</span>
+    </div>
   </footer>
 
   <script src="main.js"></script>
