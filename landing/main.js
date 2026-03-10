@@ -40,44 +40,40 @@ const countObserver = new IntersectionObserver((entries) => {
     if (entry.isIntersecting && !entry.target.dataset.counted) {
       entry.target.dataset.counted = 'true';
       const target = parseInt(entry.target.dataset.count, 10);
-      const isPlus = entry.target.querySelector('.stat-accent');
+      const isPlus = entry.target.textContent.includes('+') || entry.target.innerHTML.includes('stat-accent');
       animateCounter(entry.target, target, isPlus);
     }
   });
 }, countObserverOptions);
 
 function animateCounter(element, target, hasPlus = false) {
-  const duration = 2000; // 2 seconds
+  const duration = 1600;
   const startTime = performance.now();
-  const initialValue = 0;
 
   function frame(currentTime) {
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
-
-    // Easing function: cubic-bezier(0.16, 1, 0.3, 1)
-    const eased = easeOutElastic(progress);
-    const current = Math.floor(initialValue + (target - initialValue) * eased);
+    const eased = easeOutExpo(progress);
+    const current = Math.round(target * eased);
 
     element.textContent = current;
-    if (hasPlus) {
-      const span = document.createElement('span');
-      span.className = 'stat-accent';
-      span.textContent = '+';
-      element.appendChild(span);
+    if (hasPlus && progress >= 0.1) {
+      element.textContent = current + '+';
     }
 
     if (progress < 1) {
       requestAnimationFrame(frame);
+    } else {
+      // Final value
+      element.textContent = target + (hasPlus ? '+' : '');
     }
   }
 
   requestAnimationFrame(frame);
 }
 
-function easeOutElastic(t) {
-  const c5 = (2 * Math.PI) / 4.5;
-  return t === 0 ? 0 : t === 1 ? 1 : Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * c5) + 1;
+function easeOutExpo(t) {
+  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
 }
 
 // Observe all counter elements
@@ -89,22 +85,26 @@ document.querySelectorAll('[data-count]').forEach((element) => {
 // Sleep Bars Width Animation
 // ═══════════════════════════════════════════════════
 
-const sleepObserverOptions = {
-  threshold: 0.3
-};
+function animateSleepBars() {
+  const sleepBars = document.querySelector('.sleep-bars');
+  if (!sleepBars || sleepBars.dataset.animated) return;
+  sleepBars.dataset.animated = 'true';
+  const fills = sleepBars.querySelectorAll('.sleep-fill');
+  fills.forEach((fill, i) => {
+    const target = parseInt(fill.dataset.target, 10);
+    setTimeout(() => {
+      fill.style.width = target + '%';
+    }, i * 120);
+  });
+}
 
 const sleepObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
-    if (entry.isIntersecting && !entry.target.dataset.animated) {
-      entry.target.dataset.animated = 'true';
-      const fills = entry.target.querySelectorAll('.sleep-fill');
-      fills.forEach((fill) => {
-        const target = parseInt(fill.dataset.target, 10);
-        fill.style.width = target + '%';
-      });
+    if (entry.isIntersecting) {
+      setTimeout(animateSleepBars, 400);
     }
   });
-}, sleepObserverOptions);
+}, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
 
 const sleepBarsSection = document.querySelector('.sleep-bars');
 if (sleepBarsSection) {

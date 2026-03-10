@@ -30,9 +30,9 @@
   --space-xs: 0.5rem;
   --space-sm: 1rem;
   --space-md: 2rem;
-  --space-lg: 4rem;
-  --space-xl: 6rem;
-  --space-2xl: 10rem;
+  --space-lg: 3rem;
+  --space-xl: 4.5rem;
+  --space-2xl: 7rem;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1022,6 +1022,31 @@ h1, h2, h3 {
   font-weight: 500;
 }
 
+/* ── Empathy card ────────────────────────────────────── */
+
+.empathy-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.empathy-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(124, 92, 252, 0.06);
+  border: 1px solid rgba(124, 92, 252, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+  animation: pulse-heart 3s ease-in-out infinite;
+}
+
+@keyframes pulse-heart {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
 /* ── Sleep bars ──────────────────────────────────────── */
 
 .sleep-bars {
@@ -1182,7 +1207,7 @@ h1, h2, h3 {
   z-index: 1;
   max-width: 720px;
   margin: 0 auto;
-  padding: var(--space-xl) var(--space-md) var(--space-xl);
+  padding: var(--space-lg) var(--space-md) var(--space-xl);
   text-align: center;
 }
 
