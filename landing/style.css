@@ -929,6 +929,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 }
+.compat-grid-3 {
+  max-width: 600px;
+  grid-template-columns: repeat(3, 1fr);
+}
 .compat-card {
   background: white;
   border: 1px solid var(--border);
