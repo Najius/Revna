@@ -455,8 +455,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   margin: 0 auto;
 }
 .logo-item {
-  height: 28px;
+  height: 24px;
   width: auto;
+  max-width: 100px;
+  object-fit: contain;
   opacity: 0.6;
   transition: opacity 0.3s;
 }
