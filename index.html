@@ -30,22 +30,38 @@
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <!-- Nav -->
   <nav class="nav">
+    <div class="nav-progress"></div>
     <a href="#" class="nav-brand">
       <img src="img/logo-revna.svg" alt="Revna" class="nav-logo">
-      Revna
+      <span>Revna</span>
     </a>
     <div class="nav-links">
-      <a href="#how">Comment ça marche</a>
-      <a href="#features">Fonctionnalités</a>
+      <a href="#how" data-section="how">Comment ça marche</a>
+      <a href="#features" data-section="features">Fonctionnalités</a>
     </div>
-    <a href="#waitlist" class="nav-cta">Rejoindre la beta</a>
+    <div class="nav-right">
+      <span class="nav-spots"><span id="nav-spots">47</span> places</span>
+      <a href="#waitlist" class="nav-cta">Rejoindre la beta</a>
+      <button class="nav-hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu">
+    <a href="#how">Comment ça marche</a>
+    <a href="#features">Fonctionnalités</a>
+    <a href="#waitlist" class="mobile-menu-cta">Rejoindre la beta</a>
+  </div>
 
   <main>
 

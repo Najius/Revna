@@ -12,6 +12,112 @@ document.addEventListener('DOMContentLoaded', () => {
   gsap.registerPlugin(ScrollTrigger);
 
   // ═══════════════════════════════════════════════════
+  // Navigation Interactions
+  // ═══════════════════════════════════════════════════
+
+  const nav = document.querySelector('.nav');
+  const navProgress = document.querySelector('.nav-progress');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const hamburger = document.querySelector('.nav-hamburger');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
+
+  let lastScrollY = 0;
+  let ticking = false;
+
+  // Scroll handler for nav effects
+  const updateNav = () => {
+    const scrollY = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollY / docHeight) * 100;
+
+    // Progress bar
+    if (navProgress) {
+      navProgress.style.width = `${scrollPercent}%`;
+    }
+
+    // Scrolled state (blur effect)
+    if (scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+
+    // Hide/show on scroll direction
+    if (scrollY > 200) {
+      if (scrollY > lastScrollY && scrollY - lastScrollY > 5) {
+        nav.classList.add('hidden');
+      } else if (lastScrollY - scrollY > 5) {
+        nav.classList.remove('hidden');
+      }
+    } else {
+      nav.classList.remove('hidden');
+    }
+
+    lastScrollY = scrollY;
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateNav);
+      ticking = true;
+    }
+  });
+
+  // Active section indicator
+  const sections = ['how', 'features'];
+  const observerOptions = {
+    root: null,
+    rootMargin: '-50% 0px -50% 0px',
+    threshold: 0
+  };
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          if (link.getAttribute('data-section') === id) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(id => {
+    const section = document.getElementById(id);
+    if (section) sectionObserver.observe(section);
+  });
+
+  // Hamburger menu
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  // Sync nav spots with hero spots
+  const heroSpots = document.getElementById('spots-left');
+  const navSpots = document.getElementById('nav-spots');
+  if (heroSpots && navSpots) {
+    navSpots.textContent = heroSpots.textContent;
+  }
+
+  // ═══════════════════════════════════════════════════
   // Hero Title Word-by-Word Animation (keeps words intact)
   // ═══════════════════════════════════════════════════
 
