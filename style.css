@@ -1757,10 +1757,41 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   padding-bottom: 4rem;
 }
 
+/* Blur orbs behind the phone */
+.phone-sticky::before,
+.phone-sticky::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.phone-sticky::before {
+  width: 400px;
+  height: 400px;
+  background: var(--orange);
+  top: 0;
+  right: -50px;
+  animation: float-orb 15s ease-in-out infinite;
+}
+
+.phone-sticky::after {
+  width: 350px;
+  height: 350px;
+  background: var(--turquoise);
+  bottom: 100px;
+  left: -50px;
+  animation: float-orb 18s ease-in-out infinite reverse;
+}
+
 /* Phone in sticky column */
 .phone-sticky .hero-phone {
   position: relative;
   top: auto;
+  z-index: 1;
 }
 
 /* Scroll indicator positioning */
@@ -2731,8 +2762,8 @@ footer {
    ═══════════════════════════════════════════════════ */
 .smartwatch-float {
   position: absolute;
-  top: 160px;
-  left: -80px;
+  top: -20px;
+  left: -120px;
   z-index: 10;
   animation: float-watch 5s ease-in-out infinite;
 }
@@ -3147,8 +3178,8 @@ footer {
 
 /* HRV floating widget - top right of phone */
 .floating-hrv {
-  right: -30px;
-  top: -20px;
+  right: -80px;
+  top: 30px;
   animation: float-widget 6s ease-in-out infinite;
 }
 .floating-hrv .widget-label {
@@ -3201,8 +3232,8 @@ footer {
 
 /* Sleep score floating widget - bottom right of phone */
 .floating-sleep {
-  right: -20px;
-  bottom: 30px;
+  right: -90px;
+  bottom: 80px;
   animation: float-widget-alt 7s ease-in-out infinite;
 }
 .floating-sleep .sleep-ring-mini {
@@ -3305,8 +3336,8 @@ footer {
 
 /* Heart rate floating widget - left of phone, top */
 .floating-hr {
-  left: -40px;
-  top: 60px;
+  left: -100px;
+  top: 80px;
   animation: float-widget-alt 6s ease-in-out infinite 0.5s;
   display: flex;
   align-items: center;
@@ -3355,8 +3386,8 @@ footer {
 
 /* Steps floating widget - right of phone */
 .floating-steps {
-  right: -50px;
-  top: 200px;
+  right: -100px;
+  top: 220px;
   animation: float-widget 8s ease-in-out infinite 2s;
 }
 .floating-steps .steps-row {
@@ -3395,8 +3426,8 @@ footer {
 
 /* Calories floating widget - left bottom of phone */
 .floating-calories {
-  left: -30px;
-  bottom: 120px;
+  left: -100px;
+  bottom: 200px;
   animation: float-widget-alt 7s ease-in-out infinite 1.5s;
 }
 .floating-calories .cal-row {
@@ -3440,8 +3471,8 @@ footer {
 
 /* Stress floating widget - left of phone */
 .floating-stress {
-  left: -60px;
-  top: 320px;
+  left: -110px;
+  top: 350px;
   animation: float-widget 6s ease-in-out infinite 3s;
 }
 .floating-stress .stress-meter {
