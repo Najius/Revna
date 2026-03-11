@@ -29,7 +29,7 @@
   --border: rgba(255, 255, 255, 0.08);
   --border-light: rgba(255, 255, 255, 0.12);
 
-  --font-display: 'Syne', sans-serif;
+  --font-display: 'Migra', serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
@@ -498,7 +498,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 1; /* Behind the phone */
+  z-index: 2;
 }
 .data-flow-svg {
   position: absolute;
@@ -513,10 +513,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   stroke-dasharray: 4 8;
   animation: data-flow-dash 3s linear infinite;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.8s ease;
 }
 .data-flow-path.visible {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 .data-flow-path.turquoise {
   stroke: var(--turquoise);
@@ -977,6 +977,11 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   position: relative;
   display: flex;
   flex-direction: column;
+}
+/* Ensure all screen content is above glare effects */
+.iphone-screen > * {
+  position: relative;
+  z-index: 10;
 }
 
 .iphone-screen {
