@@ -1,13 +1,6 @@
 [build]
   publish = "."
 
-# Redirects for SPA (if needed later)
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  conditions = {Role = ["admin"]}
-
 # Headers for better performance and security
 [[headers]]
   for = "/*"
@@ -41,4 +34,3 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
-  included_files = ["node_modules/**"]
