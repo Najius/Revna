@@ -3532,8 +3532,8 @@ footer {
 
 /* Calories floating widget - left bottom of phone */
 .floating-calories {
-  left: -100px;
-  bottom: 200px;
+  left: -130px;
+  bottom: 180px;
   animation: float-widget-alt 7s ease-in-out infinite 1.5s;
 }
 .floating-calories .cal-row {
@@ -3575,10 +3575,10 @@ footer {
   color: var(--text-tertiary);
 }
 
-/* Stress floating widget - left of phone */
+/* Stress floating widget - left of phone, below heart rate */
 .floating-stress {
-  left: -110px;
-  top: 350px;
+  left: -125px;
+  top: 340px;
   animation: float-widget 6s ease-in-out infinite 3s;
 }
 .floating-stress .stress-meter {
@@ -3605,11 +3605,7 @@ footer {
   letter-spacing: 0.05em;
 }
 
-/* Hide extra widgets to reduce clutter */
-.phone-sticky .floating-stress,
-.phone-sticky .floating-calories {
-  display: none;
-}
+/* All 7 widgets now visible */
 
 /* Smartwatch and widgets responsive for split layout */
 @media (max-width: 1200px) {
