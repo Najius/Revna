@@ -404,13 +404,12 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   align-items: center;
   gap: 0.5rem;
   color: var(--text-tertiary);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-family: var(--font-mono);
   animation: scroll-fade 2s ease-in-out infinite;
   cursor: pointer;
   z-index: 10;
+}
+.scroll-indicator span {
+  display: none;
 }
 .scroll-indicator:hover {
   color: var(--text-secondary);
@@ -514,7 +513,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   transition: opacity 0.8s ease;
 }
 .data-flow-path.visible {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 .data-flow-path.turquoise {
   stroke: var(--turquoise);
@@ -556,6 +555,34 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   gap: 4rem;
   align-items: center;
 }
+/* Hero Entrance Animations */
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hero-badge-new,
+.hero-logo,
+.hero-title,
+.hero-sub,
+.waitlist-form,
+.hero-reassurance,
+.hero-wearables {
+  animation: hero-fade-up 0.8s ease-out forwards;
+}
+.hero-badge-new { animation-delay: 0.1s; opacity: 0; }
+.hero-logo { animation-delay: 0.2s; opacity: 0; }
+.hero-title { animation-delay: 0.3s; opacity: 0; }
+.hero-sub { animation-delay: 0.5s; opacity: 0; }
+.waitlist-form { animation-delay: 0.6s; opacity: 0; }
+.hero-reassurance { animation-delay: 0.7s; opacity: 0; }
+.hero-wearables { animation-delay: 0.8s; opacity: 0; }
+
 /* Hero Badge New */
 .hero-badge-new {
   display: inline-block;
@@ -612,25 +639,39 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   gap: 0.5rem;
   max-width: 420px;
 }
-.waitlist-form input {
+.input-wrapper {
+  position: relative;
   flex: 1;
-  padding: 0.9rem 1.2rem;
+}
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+.waitlist-form input {
+  width: 100%;
+  padding: 0.9rem 1.2rem 0.9rem 2.8rem;
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
   background: var(--bg-card);
   font-size: 0.95rem;
   color: var(--text-primary);
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 .waitlist-form input::placeholder { color: var(--text-tertiary); }
 .waitlist-form input:focus {
   outline: none;
   border-color: var(--orange);
   box-shadow: 0 0 0 3px var(--orange-glow);
-  transform: scale(1.02);
 }
-.waitlist-form input {
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+.waitlist-form input:focus + .input-icon,
+.input-wrapper:focus-within .input-icon {
+  color: var(--orange);
 }
 .waitlist-form button {
   padding: 0.9rem 1.5rem;
@@ -641,10 +682,16 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   border-radius: var(--radius-sm);
   white-space: nowrap;
   transition: transform 0.2s, box-shadow 0.2s;
+  animation: cta-pulse 2.5s ease-in-out infinite;
+}
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3); }
+  50% { box-shadow: 0 4px 25px rgba(255, 107, 53, 0.6); }
 }
 .waitlist-form button:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+  animation: none;
 }
 .waitlist-form button.loading {
   pointer-events: none;
