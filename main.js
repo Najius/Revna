@@ -21,33 +21,35 @@ document.addEventListener('DOMContentLoaded', () => {
     let charIndex = 0;
 
     lines.forEach(line => {
-      const text = line.innerHTML;
-      let newHTML = '';
-      let inTag = false;
-      let tagContent = '';
+      // Process each text node and element
+      const processNode = (node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.textContent;
+          const fragment = document.createDocumentFragment();
 
-      for (let i = 0; i < text.length; i++) {
-        const char = text[i];
+          for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            if (char === ' ' || char === '\n' || char === '\t') {
+              fragment.appendChild(document.createTextNode(char));
+            } else {
+              const span = document.createElement('span');
+              span.className = 'char';
+              span.style.animationDelay = `${charIndex * 0.04}s`;
+              span.textContent = char;
+              fragment.appendChild(span);
+              charIndex++;
+            }
+          }
 
-        if (char === '<') {
-          inTag = true;
-          tagContent += char;
-        } else if (char === '>') {
-          inTag = false;
-          tagContent += char;
-          newHTML += tagContent;
-          tagContent = '';
-        } else if (inTag) {
-          tagContent += char;
-        } else if (char === ' ') {
-          newHTML += ' ';
-        } else {
-          newHTML += `<span class="char" style="animation-delay: ${charIndex * 0.03}s">${char}</span>`;
-          charIndex++;
+          node.parentNode.replaceChild(fragment, node);
+        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'SPAN') {
+          // Process children of elements (like <span class="accent">)
+          Array.from(node.childNodes).forEach(child => processNode(child));
         }
-      }
+      };
 
-      line.innerHTML = newHTML;
+      // Clone children to avoid live collection issues
+      Array.from(line.childNodes).forEach(child => processNode(child));
     });
   }
 
