@@ -169,11 +169,11 @@ document.addEventListener('DOMContentLoaded', () => {
     start: 50,
     onUpdate: (self) => {
       if (self.scroll() > 50) {
-        nav.style.boxShadow = '0 1px 20px rgba(26, 29, 46, 0.08)';
-        nav.style.background = 'rgba(251, 248, 244, 0.95)';
+        nav.style.boxShadow = '0 1px 30px rgba(0, 0, 0, 0.3)';
+        nav.style.background = 'rgba(10, 10, 15, 0.95)';
       } else {
         nav.style.boxShadow = 'none';
-        nav.style.background = 'rgba(251, 248, 244, 0.85)';
+        nav.style.background = 'rgba(10, 10, 15, 0.8)';
       }
     }
   });
