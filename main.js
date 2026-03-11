@@ -1264,6 +1264,130 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ═══════════════════════════════════════════════════
+  // Interactive Charts & Graphs
+  // ═══════════════════════════════════════════════════
+
+  // HRV Sparkline - add interactive data points
+  const hrvSparkline = document.querySelector('.hrv-sparkline');
+  if (hrvSparkline) {
+    const hrvData = [35, 30, 25, 28, 20, 22, 18, 15, 12, 14, 8];
+    const hrvValues = [45, 48, 50, 49, 52, 51, 53, 55, 57, 56, 58]; // ms values
+
+    // Create interactive dots
+    hrvData.forEach((y, i) => {
+      const x = i * 10;
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('cx', x);
+      dot.setAttribute('cy', y);
+      dot.setAttribute('r', '0');
+      dot.setAttribute('fill', 'var(--turquoise)');
+      dot.setAttribute('class', 'hrv-dot');
+      dot.style.transition = 'r 0.2s ease, filter 0.2s ease';
+      dot.style.cursor = 'pointer';
+
+      // Tooltip
+      const tooltip = document.createElement('div');
+      tooltip.className = 'chart-tooltip';
+      tooltip.textContent = `${hrvValues[i]} ms`;
+      tooltip.style.cssText = `
+        position: fixed;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--turquoise);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s;
+        z-index: 100;
+      `;
+      document.body.appendChild(tooltip);
+
+      dot.addEventListener('mouseenter', (e) => {
+        dot.setAttribute('r', '6');
+        dot.style.filter = 'drop-shadow(0 0 6px var(--turquoise))';
+        tooltip.style.opacity = '1';
+      });
+
+      dot.addEventListener('mousemove', (e) => {
+        tooltip.style.left = e.clientX + 10 + 'px';
+        tooltip.style.top = e.clientY - 30 + 'px';
+      });
+
+      dot.addEventListener('mouseleave', () => {
+        dot.setAttribute('r', '0');
+        dot.style.filter = 'none';
+        tooltip.style.opacity = '0';
+      });
+
+      hrvSparkline.appendChild(dot);
+    });
+  }
+
+  // Readiness Ring - animate on scroll
+  const readinessRing = document.querySelector('.readiness-ring circle:last-of-type');
+  if (readinessRing) {
+    // Animate ring fill on scroll into view
+    ScrollTrigger.create({
+      trigger: '.readiness-display',
+      start: 'top 80%',
+      onEnter: () => {
+        gsap.fromTo(readinessRing,
+          { strokeDashoffset: 314 },
+          { strokeDashoffset: 69, duration: 1.5, ease: 'power2.out' }
+        );
+      },
+      once: true
+    });
+  }
+
+  // Training bars - animate on scroll
+  const trainingBars = document.querySelectorAll('.tmb');
+  if (trainingBars.length > 0) {
+    ScrollTrigger.create({
+      trigger: '.training-mini-bars',
+      start: 'top 80%',
+      onEnter: () => {
+        trainingBars.forEach((bar, i) => {
+          const height = bar.style.getPropertyValue('--h');
+          bar.style.setProperty('--h', '0%');
+          gsap.to(bar, {
+            '--h': height,
+            duration: 0.8,
+            delay: i * 0.1,
+            ease: 'power2.out'
+          });
+        });
+      },
+      once: true
+    });
+  }
+
+  // Sleep bars - animate on scroll
+  const sleepBars = document.querySelectorAll('.sbm');
+  if (sleepBars.length > 0) {
+    ScrollTrigger.create({
+      trigger: '.sleep-bars-mini',
+      start: 'top 80%',
+      onEnter: () => {
+        sleepBars.forEach((bar, i) => {
+          const width = bar.style.getPropertyValue('--w');
+          bar.style.setProperty('--w', '0%');
+          gsap.to(bar, {
+            '--w': width,
+            duration: 0.8,
+            delay: i * 0.15,
+            ease: 'power2.out'
+          });
+        });
+      },
+      once: true
+    });
+  }
+
+  // ═══════════════════════════════════════════════════
   // Mouse Follower Glow Effect
   // ═══════════════════════════════════════════════════
 
