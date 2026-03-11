@@ -34,3 +34,6 @@ dump.rdb
 
 # Local Netlify folder
 .netlify
+
+# Node
+node_modules/
