@@ -387,8 +387,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-height: 340px;
+  max-height: 400px;
   overflow: hidden;
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
 }
 .bubble {
   padding: 10px 12px;
@@ -446,6 +448,98 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 @keyframes typing {
   0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
   30% { transform: translateY(-4px); opacity: 0.8; }
+}
+
+/* ─── Activity Card ─── */
+.activity-alert {
+  background: linear-gradient(135deg, rgba(232, 115, 74, 0.15), rgba(255,255,255,0.08)) !important;
+  border: 1px solid rgba(232, 115, 74, 0.3);
+}
+.activity-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.activity-icon {
+  font-size: 1.1rem;
+}
+.activity-badge {
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--coral);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+.activity-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 10px !important;
+}
+.activity-metrics {
+  display: flex;
+  gap: 12px;
+  background: rgba(0,0,0,0.2);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+.metric {
+  flex: 1;
+  text-align: center;
+}
+.metric-val {
+  display: block;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: white;
+}
+.metric-label {
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+}
+
+/* ─── Chat Enhancements ─── */
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--coral-light);
+  margin-bottom: 6px !important;
+}
+.insight-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 4px 0;
+}
+.insight-list li {
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.75rem;
+}
+.insight-list li:last-child {
+  border-bottom: none;
+}
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.quick-btn {
+  font-size: 0.65rem;
+  padding: 6px 10px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.quick-btn:hover {
+  background: rgba(255,255,255,0.2);
 }
 
 /* ═══════════════════════════════════════════════════
