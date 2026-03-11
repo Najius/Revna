@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Active section indicator
-  const sections = ['how', 'features'];
+  const navSectionIds = ['how', 'features'];
   const observerOptions = {
     root: null,
     rootMargin: '-50% 0px -50% 0px',
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, observerOptions);
 
-  sections.forEach(id => {
+  navSectionIds.forEach(id => {
     const section = document.getElementById(id);
     if (section) sectionObserver.observe(section);
   });
