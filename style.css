@@ -522,12 +522,31 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   opacity: 0.8;
 }
 .waitlist-form button.success {
-  background: var(--green);
+  background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
   pointer-events: none;
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
 }
 .waitlist-form button.error {
   background: var(--red);
 }
+
+/* Success state - hide input, expand button */
+.waitlist-form.submitted {
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.waitlist-form.submitted input {
+  display: none;
+}
+.waitlist-form.submitted button {
+  width: 100%;
+  max-width: 280px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  border-radius: var(--radius-md);
+}
+
 .btn-spinner {
   display: inline-block;
   width: 18px;
@@ -544,14 +563,16 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   border-color: var(--red);
 }
 .form-success {
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: var(--radius-sm);
-  color: var(--green);
-  font-size: 0.9rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 /* Confetti animation */

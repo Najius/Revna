@@ -732,11 +732,10 @@ document.addEventListener('DOMContentLoaded', () => {
           // Success!
           createConfetti();
 
+          form.classList.add('submitted');
           button.classList.remove('loading');
           button.classList.add('success');
-          button.innerHTML = '✓ Inscrit !';
-          input.value = '';
-          input.disabled = true;
+          button.innerHTML = '✓ Bienvenue dans la beta !';
 
           // Update spots count
           const spotsElement = document.getElementById('spots-left');
@@ -754,12 +753,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
           const successMsg = document.createElement('div');
           successMsg.className = 'form-success';
-          successMsg.innerHTML = '🎉 Bienvenue dans la beta ! Check tes emails.';
+          successMsg.textContent = 'Check tes emails pour la suite.';
           form.appendChild(successMsg);
 
           gsap.fromTo(successMsg,
-            { opacity: 0, y: -10 },
-            { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.5, delay: 0.3, ease: 'power3.out' }
           );
         } else {
           throw new Error('Erreur serveur');
