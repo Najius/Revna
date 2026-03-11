@@ -370,23 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ═══════════════════════════════════════════════════
-  // Nav scroll effect
-  // ═══════════════════════════════════════════════════
-
-  const nav = document.querySelector('.nav');
-
-  ScrollTrigger.create({
-    start: 50,
-    onUpdate: (self) => {
-      if (self.scroll() > 50) {
-        nav.style.boxShadow = '0 1px 30px rgba(0, 0, 0, 0.3)';
-        nav.style.background = 'rgba(10, 10, 15, 0.95)';
-      } else {
-        nav.style.boxShadow = 'none';
-        nav.style.background = 'rgba(10, 10, 15, 0.8)';
-      }
-    }
-  });
+  // Nav scroll effect (handled by updateNav function above)
 
   // ═══════════════════════════════════════════════════
   // Stats counter animation
