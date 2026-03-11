@@ -329,7 +329,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .hero {
   position: relative;
   min-height: 100vh;
-  padding: 8rem 2rem 6rem;
+  padding: 4rem 2rem 6rem;
   overflow: visible;
 }
 .hero-bg {
@@ -558,20 +558,22 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 }
 /* Hero Logo */
 .hero-logo {
-  margin-bottom: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 .hero-logo-img {
-  width: 64px;
-  height: 64px;
-  filter: drop-shadow(0 0 30px rgba(255, 107, 53, 0.6));
-  animation: logo-float 4s ease-in-out infinite;
-}
-@keyframes logo-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  width: 48px;
+  height: 48px;
+  filter: brightness(0) invert(1) drop-shadow(0 0 20px rgba(255, 107, 53, 0.5));
 }
 .hero-logo-text {
-  display: none;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 .hero-title {
   font-size: clamp(2.5rem, 5.5vw, 4rem);
