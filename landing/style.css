@@ -38,23 +38,94 @@ body {
   background: var(--cream);
   line-height: 1.6;
   overflow-x: hidden;
-  position: relative;
 }
-body::before {
-  content: '';
-  position: fixed;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background-image: url('img/logo-revna.svg');
-  background-size: 200px;
-  background-repeat: repeat;
-  background-position: center;
-  opacity: 0.025;
+
+/* ─── Custom Cursor ─── */
+@media (pointer: fine) {
+  body, body * { cursor: none !important; }
+}
+.cursor {
   pointer-events: none;
-  z-index: 0;
-  transform: rotate(-15deg);
-  filter: sepia(1) saturate(5) hue-rotate(-15deg);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+.cursor-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, opacity 0.2s;
+}
+.cursor-ring {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s;
+}
+.cursor.hover .cursor-ring {
+  width: 60px;
+  height: 60px;
+  border-color: var(--coral);
+}
+.cursor.hover .cursor-dot {
+  transform: translate(-50%, -50%) scale(1.5);
+  background: var(--coral);
+}
+.cursor.clicking .cursor-ring {
+  width: 30px;
+  height: 30px;
+}
+@media (pointer: coarse) {
+  .cursor { display: none; }
+}
+
+/* ─── Text Animations ─── */
+[data-animate="split"] .line {
+  display: block;
+  overflow: hidden;
+}
+[data-animate="split"] .line-inner {
+  display: block;
+  transform: translateY(105%);
+}
+[data-animate="split"].animated .line-inner {
+  transform: translateY(0);
+}
+
+/* ─── Magnetic Buttons ─── */
+.magnetic {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ─── Smooth reveal animations ─── */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(60px);
+}
+.reveal-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Parallax containers ─── */
+.parallax-section {
+  position: relative;
+  overflow: hidden;
+}
+.parallax-bg {
+  position: absolute;
+  inset: -20%;
+  will-change: transform;
 }
 img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
