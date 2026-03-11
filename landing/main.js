@@ -160,6 +160,75 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 }
 
 // ═══════════════════════════════════════════════════
+// 3D iPhone Mouse Tracking
+// ═══════════════════════════════════════════════════
+
+const iphoneWrapper = document.querySelector('.iphone-wrapper');
+const heroPhone = document.querySelector('.hero-phone');
+const iphoneScreen = document.querySelector('.iphone-screen');
+
+if (iphoneWrapper && heroPhone) {
+  let isHovering = false;
+  let animationFrame;
+  let currentRotateX = 2;
+  let currentRotateY = -8;
+  let targetRotateX = 2;
+  let targetRotateY = -8;
+
+  heroPhone.addEventListener('mouseenter', () => {
+    isHovering = true;
+    iphoneWrapper.style.animation = 'none';
+  });
+
+  heroPhone.addEventListener('mouseleave', () => {
+    isHovering = false;
+    // Smoothly return to default position
+    targetRotateX = 2;
+    targetRotateY = -8;
+    iphoneWrapper.style.animation = 'float-phone 6s ease-in-out infinite';
+  });
+
+  heroPhone.addEventListener('mousemove', (e) => {
+    if (!isHovering) return;
+
+    const rect = heroPhone.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    // Calculate mouse position relative to center (-1 to 1)
+    const mouseX = (e.clientX - centerX) / (rect.width / 2);
+    const mouseY = (e.clientY - centerY) / (rect.height / 2);
+
+    // Set target rotation (max ±20 degrees)
+    targetRotateY = mouseX * 20;
+    targetRotateX = -mouseY * 15;
+
+    // Update glare position
+    if (iphoneScreen) {
+      const glareX = 50 + mouseX * 30;
+      const glareY = 50 + mouseY * 30;
+      iphoneScreen.style.setProperty('--glare-x', `${glareX}%`);
+      iphoneScreen.style.setProperty('--glare-y', `${glareY}%`);
+    }
+  });
+
+  // Smooth animation loop
+  function animatePhone() {
+    // Lerp towards target
+    currentRotateX += (targetRotateX - currentRotateX) * 0.1;
+    currentRotateY += (targetRotateY - currentRotateY) * 0.1;
+
+    if (isHovering) {
+      iphoneWrapper.style.transform = `rotateY(${currentRotateY}deg) rotateX(${currentRotateX}deg)`;
+    }
+
+    animationFrame = requestAnimationFrame(animatePhone);
+  }
+
+  animatePhone();
+}
+
+// ═══════════════════════════════════════════════════
 // Interactive Chat Simulation
 // ═══════════════════════════════════════════════════
 

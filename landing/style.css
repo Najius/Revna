@@ -329,6 +329,11 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   position: relative;
   transform-style: preserve-3d;
   animation: float-phone 6s ease-in-out infinite;
+  cursor: grab;
+  transition: transform 0.1s ease-out;
+}
+.iphone-wrapper:active {
+  cursor: grabbing;
 }
 
 @keyframes float-phone {
@@ -417,6 +422,31 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+/* Screen glare effect */
+.iphone-screen {
+  --glare-x: 30%;
+  --glare-y: 30%;
+}
+.iphone-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--glare-x) var(--glare-y),
+    rgba(255,255,255,0.15) 0%,
+    rgba(255,255,255,0.05) 20%,
+    transparent 50%
+  );
+  pointer-events: none;
+  z-index: 100;
+  border-radius: 38px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.iphone-wrapper:hover .iphone-screen::before {
+  opacity: 1;
 }
 
 /* Dynamic Island */
