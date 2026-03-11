@@ -12,39 +12,48 @@ document.addEventListener('DOMContentLoaded', () => {
   gsap.registerPlugin(ScrollTrigger);
 
   // ═══════════════════════════════════════════════════
-  // Hero Title Letter-by-Letter Animation
+  // Hero Title Word-by-Word Animation (keeps words intact)
   // ═══════════════════════════════════════════════════
 
   const heroTitle = document.querySelector('.hero-title');
   if (heroTitle) {
     const lines = heroTitle.querySelectorAll('.line');
-    let charIndex = 0;
+    let wordIndex = 0;
 
     lines.forEach(line => {
       // Process each text node and element
       const processNode = (node) => {
         if (node.nodeType === Node.TEXT_NODE) {
           const text = node.textContent;
+          // Split by spaces but keep spaces
+          const parts = text.split(/(\s+)/);
           const fragment = document.createDocumentFragment();
 
-          for (let i = 0; i < text.length; i++) {
-            const char = text[i];
-            if (char === ' ' || char === '\n' || char === '\t') {
-              fragment.appendChild(document.createTextNode(char));
-            } else {
-              const span = document.createElement('span');
-              span.className = 'char';
-              span.style.animationDelay = `${charIndex * 0.04}s`;
-              span.textContent = char;
-              fragment.appendChild(span);
-              charIndex++;
+          parts.forEach(part => {
+            if (/^\s+$/.test(part)) {
+              // It's whitespace, keep as is
+              fragment.appendChild(document.createTextNode(part));
+            } else if (part.length > 0) {
+              // It's a word, wrap it
+              const wordSpan = document.createElement('span');
+              wordSpan.className = 'word';
+              wordSpan.style.animationDelay = `${wordIndex * 0.1}s`;
+              wordSpan.textContent = part;
+              fragment.appendChild(wordSpan);
+              wordIndex++;
             }
-          }
+          });
 
           node.parentNode.replaceChild(fragment, node);
-        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'SPAN') {
-          // Process children of elements (like <span class="accent">)
-          Array.from(node.childNodes).forEach(child => processNode(child));
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          // For elements like <span class="accent">, wrap the whole element
+          if (node.classList.contains('accent')) {
+            node.classList.add('word');
+            node.style.animationDelay = `${wordIndex * 0.1}s`;
+            wordIndex++;
+          } else {
+            Array.from(node.childNodes).forEach(child => processNode(child));
+          }
         }
       };
 

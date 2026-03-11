@@ -593,17 +593,17 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   }
 }
 
-/* Title letter animation */
-.hero-title .char {
+/* Title word animation */
+.hero-title .word {
   display: inline-block;
   opacity: 0;
-  transform: translateY(20px);
-  animation: char-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: translateY(30px);
+  animation: word-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-@keyframes char-reveal {
+@keyframes word-reveal {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   100% {
     opacity: 1;
@@ -612,9 +612,6 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 }
 .hero-title .line {
   display: block;
-}
-.hero-title .word {
-  display: inline-block;
 }
 
 /* Fallback if JS doesn't load - show title immediately */
