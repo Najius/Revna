@@ -38,6 +38,18 @@ body {
   background: var(--cream);
   line-height: 1.6;
   overflow-x: hidden;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('img/logo-revna.svg');
+  background-size: 120px;
+  background-repeat: repeat;
+  opacity: 0.018;
+  pointer-events: none;
+  z-index: 0;
 }
 img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
