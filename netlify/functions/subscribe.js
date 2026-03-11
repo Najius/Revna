@@ -1,11 +1,24 @@
-// Netlify Function for handling email subscriptions
-// This can connect to a database like Supabase, MongoDB, etc.
+import { neon } from '@neondatabase/serverless';
 
-exports.handler = async (event, context) => {
-  // Only allow POST requests
+export const handler = async (event, context) => {
+  // CORS headers
+  const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS'
+  };
+
+  // Handle preflight
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers };
+  }
+
+  // Only allow POST
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers,
       body: JSON.stringify({ error: 'Method not allowed' })
     };
   }
@@ -16,24 +29,24 @@ exports.handler = async (event, context) => {
     if (!email || !email.includes('@')) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ error: 'Invalid email address' })
       };
     }
 
-    // TODO: Add your database logic here
-    // Example with Supabase:
-    // const { data, error } = await supabase
-    //   .from('subscribers')
-    //   .insert([{ email, created_at: new Date() }]);
+    // Connect to Neon
+    const sql = neon(process.env.DATABASE_URL);
 
-    console.log(`New subscription: ${email}`);
+    // Insert subscriber
+    await sql`
+      INSERT INTO subscribers (email, created_at)
+      VALUES (${email}, NOW())
+      ON CONFLICT (email) DO NOTHING
+    `;
 
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
+      headers,
       body: JSON.stringify({
         success: true,
         message: 'Successfully subscribed!'
@@ -43,6 +56,7 @@ exports.handler = async (event, context) => {
     console.error('Subscription error:', error);
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({ error: 'Internal server error' })
     };
   }

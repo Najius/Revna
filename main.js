@@ -722,10 +722,10 @@ document.addEventListener('DOMContentLoaded', () => {
       button.classList.add('loading');
 
       try {
-        const response = await fetch(form.action, {
+        const response = await fetch('/.netlify/functions/subscribe', {
           method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
+          body: JSON.stringify({ email: input.value }),
+          headers: { 'Content-Type': 'application/json' }
         });
 
         if (response.ok) {
