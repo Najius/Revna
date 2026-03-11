@@ -1158,10 +1158,10 @@ document.addEventListener('DOMContentLoaded', () => {
         { selector: '.smartwatch-float', color: 'turquoise' }
       ];
 
-      // Get all widget elements that exist
+      // Get all widget elements that exist AND are visible
       const widgets = widgetConfigs
         .map(config => ({ el: heroPhoneEl.querySelector(config.selector), config }))
-        .filter(item => item.el);
+        .filter(item => item.el && getComputedStyle(item.el).display !== 'none');
 
       if (widgets.length === 0) return;
 
