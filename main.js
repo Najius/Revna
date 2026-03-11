@@ -12,6 +12,99 @@ document.addEventListener('DOMContentLoaded', () => {
   gsap.registerPlugin(ScrollTrigger);
 
   // ═══════════════════════════════════════════════════
+  // Hero Title Letter-by-Letter Animation
+  // ═══════════════════════════════════════════════════
+
+  const heroTitle = document.querySelector('.hero-title');
+  if (heroTitle) {
+    const lines = heroTitle.querySelectorAll('.line');
+    let charIndex = 0;
+
+    lines.forEach(line => {
+      const text = line.innerHTML;
+      let newHTML = '';
+      let inTag = false;
+      let tagContent = '';
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+
+        if (char === '<') {
+          inTag = true;
+          tagContent += char;
+        } else if (char === '>') {
+          inTag = false;
+          tagContent += char;
+          newHTML += tagContent;
+          tagContent = '';
+        } else if (inTag) {
+          tagContent += char;
+        } else if (char === ' ') {
+          newHTML += ' ';
+        } else {
+          newHTML += `<span class="char" style="animation-delay: ${charIndex * 0.03}s">${char}</span>`;
+          charIndex++;
+        }
+      }
+
+      line.innerHTML = newHTML;
+    });
+  }
+
+  // ═══════════════════════════════════════════════════
+  // Badge Countdown (Places Left)
+  // ═══════════════════════════════════════════════════
+
+  const spotsElement = document.getElementById('spots-left');
+  if (spotsElement) {
+    let spots = 47;
+
+    // Randomly decrease spots occasionally
+    setInterval(() => {
+      if (Math.random() > 0.7 && spots > 12) {
+        spots--;
+        gsap.to(spotsElement, {
+          scale: 1.3,
+          color: '#EF4444',
+          duration: 0.15,
+          yoyo: true,
+          repeat: 1,
+          ease: 'power2.out',
+          onStart: () => {
+            spotsElement.textContent = spots;
+          }
+        });
+      }
+    }, 8000);
+  }
+
+  // ═══════════════════════════════════════════════════
+  // Testers Count Animation
+  // ═══════════════════════════════════════════════════
+
+  const testersElement = document.getElementById('testers-count');
+  if (testersElement) {
+    let testers = 42;
+
+    // Occasionally increase testers count
+    setInterval(() => {
+      if (Math.random() > 0.6 && testers < 99) {
+        testers++;
+        gsap.to(testersElement, {
+          scale: 1.2,
+          duration: 0.15,
+          yoyo: true,
+          repeat: 1,
+          ease: 'power2.out',
+          onStart: () => {
+            testersElement.textContent = testers;
+          }
+        });
+      }
+    }, 12000);
+  }
+
+  // ═══════════════════════════════════════════════════
   // Split Text for H2 Titles
   // ═══════════════════════════════════════════════════
 
@@ -552,6 +645,32 @@ document.addEventListener('DOMContentLoaded', () => {
   runChatAnimation();
 
   // ═══════════════════════════════════════════════════
+  // Confetti Animation
+  // ═══════════════════════════════════════════════════
+
+  function createConfetti() {
+    const container = document.createElement('div');
+    container.className = 'confetti-container';
+    document.body.appendChild(container);
+
+    const colors = ['#FF6B35', '#06B6D4', '#A855F7', '#10B981', '#FFD93D', '#EF4444'];
+    const shapes = ['circle', 'square', 'triangle'];
+
+    for (let i = 0; i < 80; i++) {
+      const confetti = document.createElement('div');
+      const shape = shapes[Math.floor(Math.random() * shapes.length)];
+      confetti.className = `confetti ${shape}`;
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      confetti.style.animationDelay = Math.random() * 0.5 + 's';
+      container.appendChild(confetti);
+    }
+
+    setTimeout(() => container.remove(), 4000);
+  }
+
+  // ═══════════════════════════════════════════════════
   // Form interactions
   // ═══════════════════════════════════════════════════
 
@@ -559,6 +678,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const button = form.querySelector('button[type="submit"]');
     const input = form.querySelector('input[type="email"]');
     const originalButtonText = button ? button.textContent : '';
+
+    // Input focus glow effect
+    if (input) {
+      input.addEventListener('focus', () => {
+        gsap.to(input, { scale: 1.02, duration: 0.2, ease: 'power2.out' });
+      });
+      input.addEventListener('blur', () => {
+        gsap.to(input, { scale: 1, duration: 0.2, ease: 'power2.out' });
+      });
+    }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -589,11 +718,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (response.ok) {
+          // Success!
+          createConfetti();
+
           button.classList.remove('loading');
           button.classList.add('success');
           button.innerHTML = '✓ Inscrit !';
           input.value = '';
           input.disabled = true;
+
+          // Update spots count
+          const spotsElement = document.getElementById('spots-left');
+          if (spotsElement) {
+            const currentSpots = parseInt(spotsElement.textContent);
+            spotsElement.textContent = currentSpots - 1;
+            gsap.to(spotsElement, {
+              scale: 1.5,
+              color: '#EF4444',
+              duration: 0.2,
+              yoyo: true,
+              repeat: 1
+            });
+          }
 
           const successMsg = document.createElement('div');
           successMsg.className = 'form-success';
@@ -936,6 +1082,105 @@ document.addEventListener('DOMContentLoaded', () => {
       ease: 'back.out(1.7)'
     });
   });
+
+  // ═══════════════════════════════════════════════════
+  // Data Flow Lines (Widget to Phone connections)
+  // ═══════════════════════════════════════════════════
+
+  const heroPhoneEl = document.querySelector('.hero-phone');
+  const iphoneEl = document.querySelector('.iphone-frame');
+
+  if (heroPhoneEl && iphoneEl) {
+    // Create SVG container for data flow lines
+    const svgContainer = document.createElement('div');
+    svgContainer.className = 'data-flow-container';
+    svgContainer.innerHTML = `
+      <svg class="data-flow-svg" viewBox="0 0 800 700" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="data-flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="var(--turquoise)" stop-opacity="0.2"/>
+            <stop offset="50%" stop-color="var(--turquoise)" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="var(--turquoise)" stop-opacity="0.2"/>
+          </linearGradient>
+          <linearGradient id="data-flow-gradient-orange" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="var(--orange)" stop-opacity="0.2"/>
+            <stop offset="50%" stop-color="var(--orange)" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="var(--orange)" stop-opacity="0.2"/>
+          </linearGradient>
+        </defs>
+        <g class="data-flow-paths"></g>
+        <g class="data-dots"></g>
+      </svg>
+    `;
+    heroPhoneEl.insertBefore(svgContainer, heroPhoneEl.firstChild);
+
+    // Animate data dots flowing along paths
+    function createFlowingDot(pathElement, isOrange = false) {
+      const svg = svgContainer.querySelector('.data-flow-svg');
+      const dotsGroup = svg.querySelector('.data-dots');
+
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('r', '3');
+      dot.setAttribute('class', isOrange ? 'data-dot-orange' : 'data-dot');
+      dotsGroup.appendChild(dot);
+
+      const pathLength = pathElement.getTotalLength();
+      const duration = 2 + Math.random();
+
+      gsap.to({ progress: 0 }, {
+        progress: 1,
+        duration: duration,
+        ease: 'none',
+        repeat: -1,
+        onUpdate: function() {
+          const point = pathElement.getPointAtLength(this.targets()[0].progress * pathLength);
+          dot.setAttribute('cx', point.x);
+          dot.setAttribute('cy', point.y);
+        }
+      });
+    }
+
+    // Create paths after widgets are positioned
+    setTimeout(() => {
+      const pathsGroup = svgContainer.querySelector('.data-flow-paths');
+      const widgets = heroPhoneEl.querySelectorAll('.floating-widget');
+      const phoneRect = iphoneEl.getBoundingClientRect();
+      const containerRect = heroPhoneEl.getBoundingClientRect();
+
+      const phoneCenterX = phoneRect.left - containerRect.left + phoneRect.width / 2;
+      const phoneCenterY = phoneRect.top - containerRect.top + phoneRect.height / 2;
+
+      widgets.forEach((widget, index) => {
+        const widgetRect = widget.getBoundingClientRect();
+        const widgetCenterX = widgetRect.left - containerRect.left + widgetRect.width / 2;
+        const widgetCenterY = widgetRect.top - containerRect.top + widgetRect.height / 2;
+
+        // Create curved path
+        const midX = (widgetCenterX + phoneCenterX) / 2;
+        const midY = (widgetCenterY + phoneCenterY) / 2;
+        const curve = (Math.random() - 0.5) * 80;
+
+        const pathD = `M ${widgetCenterX} ${widgetCenterY} Q ${midX + curve} ${midY - curve} ${phoneCenterX} ${phoneCenterY}`;
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', pathD);
+        path.setAttribute('class', 'data-flow-path');
+        path.style.animationDelay = `${index * 0.3}s`;
+
+        // Alternate colors
+        if (index % 2 === 1) {
+          path.style.stroke = 'url(#data-flow-gradient-orange)';
+        }
+
+        pathsGroup.appendChild(path);
+
+        // Add flowing dots
+        setTimeout(() => {
+          createFlowingDot(path, index % 2 === 1);
+        }, 500 + index * 200);
+      });
+    }, 2500);
+  }
 
   // Animate mini chart bars in HRV widget (after widget appears)
   const hrvChart = document.querySelector('.floating-hrv .mini-chart');

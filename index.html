@@ -57,12 +57,27 @@
         <div class="hero-gradient-orb hero-orb-3"></div>
         <div class="hero-noise"></div>
         <img src="img/logo-revna.svg" alt="" class="hero-raven-watermark" aria-hidden="true">
+        <!-- Floating particles -->
+        <div class="hero-particles">
+          <div class="hero-particle"></div>
+          <div class="hero-particle"></div>
+          <div class="hero-particle"></div>
+          <div class="hero-particle"></div>
+          <div class="hero-particle"></div>
+          <div class="hero-particle"></div>
+          <div class="hero-particle"></div>
+          <div class="hero-particle"></div>
+          <div class="hero-particle"></div>
+          <div class="hero-particle"></div>
+          <div class="hero-particle"></div>
+          <div class="hero-particle"></div>
+        </div>
       </div>
       <div class="hero-content">
         <div class="hero-text">
           <div class="hero-badge reveal">
             <span class="hero-badge-dot"></span>
-            Beta ouverte &mdash; 50 places
+            Beta ouverte &mdash; <span class="hero-badge-count" id="spots-left">47</span> places
           </div>
           <h1 class="hero-title" data-animate="split">
             <span class="line">Ton wearable parle.</span>
@@ -83,8 +98,10 @@
               <div class="avatar" style="background: #A8D8EA;">T</div>
               <div class="avatar" style="background: #C3B1E1;">L</div>
               <div class="avatar" style="background: #B5EAD7;">S</div>
+              <div class="avatar" style="background: #FFD93D;">A</div>
+              <div class="avatar" style="background: #6BCB77;">J</div>
             </div>
-            <span class="hero-proof-text">42 beta-testeurs actifs</span>
+            <span class="hero-proof-text"><span id="testers-count">42</span> beta-testeurs actifs</span>
           </div>
         </div>
         <div class="hero-phone reveal delay-2">
@@ -290,6 +307,12 @@
           </div>
         </div>
       </div>
+
+      <!-- Scroll indicator -->
+      <a href="#how" class="scroll-indicator">
+        <div class="scroll-mouse"></div>
+        <span>Scroll</span>
+      </a>
     </section>
 
     <!-- ════ Logos ════ -->
