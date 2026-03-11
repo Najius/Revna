@@ -1326,31 +1326,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Readiness Ring - animate on scroll
-  const readinessRing = document.querySelector('.readiness-ring circle:last-of-type');
-  if (readinessRing) {
-    // Animate ring fill on scroll into view
-    ScrollTrigger.create({
-      trigger: '.readiness-display',
-      start: 'top 80%',
-      onEnter: () => {
-        gsap.fromTo(readinessRing,
-          { strokeDashoffset: 314 },
-          { strokeDashoffset: 69, duration: 1.5, ease: 'power2.out' }
-        );
-      },
-      once: true
-    });
-  }
-
-  // Training bars - animate on scroll
-  const trainingBars = document.querySelectorAll('.tmb');
-  if (trainingBars.length > 0) {
+  // Training mini bars (bento grid) - animate on scroll
+  const trainingMiniBars = document.querySelectorAll('.tmb');
+  if (trainingMiniBars.length > 0) {
     ScrollTrigger.create({
       trigger: '.training-mini-bars',
       start: 'top 80%',
       onEnter: () => {
-        trainingBars.forEach((bar, i) => {
+        trainingMiniBars.forEach((bar, i) => {
           const height = bar.style.getPropertyValue('--h');
           bar.style.setProperty('--h', '0%');
           gsap.to(bar, {
@@ -1365,14 +1348,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Sleep bars - animate on scroll
-  const sleepBars = document.querySelectorAll('.sbm');
-  if (sleepBars.length > 0) {
+  // Sleep mini bars (bento grid) - animate on scroll
+  const sleepMiniBars = document.querySelectorAll('.sbm');
+  if (sleepMiniBars.length > 0) {
     ScrollTrigger.create({
       trigger: '.sleep-bars-mini',
       start: 'top 80%',
       onEnter: () => {
-        sleepBars.forEach((bar, i) => {
+        sleepMiniBars.forEach((bar, i) => {
           const width = bar.style.getPropertyValue('--w');
           bar.style.setProperty('--w', '0%');
           gsap.to(bar, {
