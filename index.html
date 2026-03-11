@@ -36,8 +36,10 @@
 
   <main>
 
-    <!-- ════ Hero ════ -->
-    <section class="hero hero-intro">
+    <!-- ════ Sticky Phone Container (Hero through Features) ════ -->
+    <div class="sticky-phone-container">
+
+      <!-- Hero Background (full width) -->
       <div class="hero-bg" aria-hidden="true">
         <div class="hero-gradient-orb hero-orb-1"></div>
         <div class="hero-gradient-orb hero-orb-2"></div>
@@ -60,50 +62,478 @@
           <div class="hero-particle"></div>
         </div>
       </div>
-      <div class="hero-content hero-content-intro">
-        <div class="hero-text">
-          <div class="hero-badge-new reveal">Beta gratuite</div>
-          <div class="hero-logo reveal">
-            <img src="img/logo-revna.svg" alt="Revna" class="hero-logo-img">
-            <span class="hero-logo-text">Revna</span>
-          </div>
-          <h1 class="hero-title" data-animate="split">
-            <span class="line">Ton corps t'envoie&nbsp;des&nbsp;signaux.</span>
-            <span class="line"><span class="accent">Revna les&nbsp;décode.</span></span>
-          </h1>
-          <p class="hero-sub reveal delay-2">
-            Sommeil, stress, récupération, performance &mdash; Revna lit tes données
-            et te dit <strong>exactement quoi faire</strong>. Sans ouvrir une seule app.
-          </p>
-          <form id="waitlist" class="waitlist-form reveal delay-3" action="https://formspree.io/f/XXXXXXXX" method="POST">
-            <div class="input-wrapper">
-              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                <polyline points="22,6 12,13 2,6"/>
-              </svg>
-              <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email" aria-label="Email">
-            </div>
-            <button type="submit">Essayer gratuitement</button>
-          </form>
-          <p class="hero-reassurance reveal delay-3">Gratuit pendant la beta • Aucune carte requise</p>
-          <div class="hero-wearables reveal delay-3">
-            <span>Compatible avec</span>
-            <div class="wearable-logos">
-              <img src="img/logos/garmin.svg" alt="Garmin">
-              <img src="img/logos/suunto.svg" alt="Suunto">
-              <img src="img/logos/coros.png" alt="Coros">
-              <span class="wearable-more">+150</span>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Scroll indicator -->
+      <!-- Two Column Layout -->
+      <div class="sticky-layout">
+
+        <!-- Left: Scrolling Content -->
+        <div class="scroll-column">
+
+          <!-- Hero Content -->
+          <section class="hero-section">
+            <div class="hero-text">
+              <div class="hero-badge-new reveal">Beta gratuite</div>
+              <div class="hero-logo reveal">
+                <img src="img/logo-revna.svg" alt="Revna" class="hero-logo-img">
+                <span class="hero-logo-text">Revna</span>
+              </div>
+              <h1 class="hero-title" data-animate="split">
+                <span class="line">Ton corps t'envoie&nbsp;des&nbsp;signaux.</span>
+                <span class="line"><span class="accent">Revna les&nbsp;décode.</span></span>
+              </h1>
+              <p class="hero-sub reveal delay-2">
+                Sommeil, stress, récupération, performance &mdash; Revna lit tes données
+                et te dit <strong>exactement quoi faire</strong>. Sans ouvrir une seule app.
+              </p>
+              <form id="waitlist" class="waitlist-form reveal delay-3" action="https://formspree.io/f/XXXXXXXX" method="POST">
+                <div class="input-wrapper">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                  <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email" aria-label="Email">
+                </div>
+                <button type="submit">Essayer gratuitement</button>
+              </form>
+              <p class="hero-reassurance reveal delay-3">Gratuit pendant la beta • Aucune carte requise</p>
+              <div class="hero-wearables reveal delay-3">
+                <span>Compatible avec</span>
+                <div class="wearable-logos">
+                  <img src="img/logos/garmin.svg" alt="Garmin">
+                  <img src="img/logos/suunto.svg" alt="Suunto">
+                  <img src="img/logos/coros.png" alt="Coros">
+                  <span class="wearable-more">+150</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Stats -->
+          <section class="stats">
+            <div class="floating-shape-1" aria-hidden="true"></div>
+            <div class="floating-shape-2" aria-hidden="true"></div>
+            <div class="stats-grid">
+              <div class="stat-block reveal">
+                <span class="stat-num" data-count="150">0</span><span class="stat-plus">+</span>
+                <span class="stat-label">wearables supportés</span>
+              </div>
+              <div class="stat-block reveal delay-1">
+                <span class="stat-num" data-count="14">0</span>
+                <span class="stat-label">types de messages</span>
+              </div>
+              <div class="stat-block reveal delay-2">
+                <span class="stat-num" data-count="0">0</span>
+                <span class="stat-label">apps à ouvrir</span>
+              </div>
+              <div class="stat-block reveal delay-3">
+                <span class="stat-num special">24/7</span>
+                <span class="stat-label">surveillance passive</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- How it works -->
+          <section id="how" class="how">
+            <div class="grid-bg" aria-hidden="true"></div>
+            <div class="section-header reveal">
+              <span class="section-tag">Comment ça marche</span>
+              <h2 class="section-title">Trois étapes.<br><span class="accent">Zéro effort.</span></h2>
+            </div>
+            <div class="how-grid">
+              <div class="how-card reveal delay-1">
+                <div class="how-num">01</div>
+                <div class="how-icon-wrap">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                    <rect x="6" y="2" width="12" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                    <circle cx="12" cy="18" r="1" fill="currentColor"/>
+                    <path d="M9 6h6M9 9h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <h3>Connecte ton wearable</h3>
+                <p>Garmin, Apple Watch, Oura, Whoop&hellip; Connexion en 30 secondes via Terra API.</p>
+              </div>
+              <div class="how-card reveal delay-2">
+                <div class="how-num">02</div>
+                <div class="how-icon-wrap">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <h3>Revna analyse en continu</h3>
+                <p>Sessions sport, sommeil, stress, récupération. Tes baselines se calibrent en 14 jours.</p>
+              </div>
+              <div class="how-card reveal delay-3">
+                <div class="how-num">03</div>
+                <div class="how-icon-wrap how-icon-final">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <h3>Tu reçois le bon message</h3>
+                <p>Au bon moment, dans Telegram. Pas un dashboard. Un ami qui comprend la physio.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Features — Bento Grid -->
+          <section id="features" class="features">
+            <div class="section-header reveal">
+              <span class="section-tag">Fonctionnalités</span>
+              <h2 class="section-title">Pas un dashboard de plus.<br><span class="accent">Un coach qui te connaît.</span></h2>
+            </div>
+
+            <div class="bento-grid">
+              <!-- Large card: Notifications -->
+              <div class="bento-card bento-large reveal">
+                <div class="scan-effect" aria-hidden="true"></div>
+                <span class="bento-tag">Proactif</span>
+                <h3>14 types de messages</h3>
+                <p>Chacun déclenché par <strong>tes données</strong>, pas par une horloge.</p>
+                <div class="bento-visual">
+                  <div class="notif-stack">
+                    <div class="notif-card notif-1">
+                      <span class="notif-icon">☀️</span>
+                      <div class="notif-content">
+                        <span class="notif-title">Bilan matinal</span>
+                        <span class="notif-desc">Readiness 78 — go intensifier</span>
+                      </div>
+                      <span class="notif-badge">08:00</span>
+                    </div>
+                    <div class="notif-card notif-2">
+                      <span class="notif-icon">🏃</span>
+                      <div class="notif-content">
+                        <span class="notif-title">Post-run</span>
+                        <span class="notif-desc">8,4 km — Charge +12%</span>
+                      </div>
+                      <span class="notif-badge turquoise">12:15</span>
+                    </div>
+                    <div class="notif-card notif-3">
+                      <span class="notif-icon">⚡</span>
+                      <div class="notif-content">
+                        <span class="notif-title">Alerte récup</span>
+                        <span class="notif-desc">Body Battery à 22</span>
+                      </div>
+                      <span class="notif-badge warning">16:00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Small card: Readiness -->
+              <div class="bento-card bento-small reveal">
+                <div class="readiness-display">
+                  <svg viewBox="0 0 120 120" class="readiness-ring">
+                    <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="none"/>
+                    <circle cx="60" cy="60" r="50" stroke="url(#readiness-gradient)" stroke-width="8" fill="none"
+                      stroke-dasharray="314" stroke-dashoffset="69" stroke-linecap="round"
+                      transform="rotate(-90 60 60)"/>
+                    <defs>
+                      <linearGradient id="readiness-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="var(--orange)"/>
+                        <stop offset="100%" stop-color="var(--turquoise)"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <div class="readiness-value">
+                    <span class="readiness-num">78</span>
+                    <span class="readiness-label">Readiness</span>
+                  </div>
+                </div>
+                <p class="bento-caption">Prêt pour un effort modéré</p>
+              </div>
+
+              <!-- Small card: HRV -->
+              <div class="bento-card bento-small bento-dark reveal">
+                <span class="bento-tag">VFC</span>
+                <div class="hrv-mini">
+                  <span class="hrv-value">52<small>ms</small></span>
+                  <span class="hrv-trend up">↑ 8%</span>
+                </div>
+                <svg viewBox="0 0 100 40" class="hrv-sparkline">
+                  <polyline points="0,35 10,30 20,25 30,28 40,20 50,22 60,18 70,15 80,12 90,14 100,8"
+                    stroke="var(--turquoise)" stroke-width="2" fill="none" stroke-linecap="round"/>
+                </svg>
+                <p class="bento-caption">14 derniers jours</p>
+              </div>
+
+              <!-- Medium card: Training load -->
+              <div class="bento-card bento-medium reveal">
+                <span class="bento-tag">Sport</span>
+                <h3>Charge semaine</h3>
+                <div class="training-mini-bars">
+                  <div class="tmb" style="--h: 45%; --c: var(--turquoise)"><span>L</span></div>
+                  <div class="tmb" style="--h: 72%; --c: var(--orange)"><span>M</span></div>
+                  <div class="tmb" style="--h: 0%; --c: var(--turquoise)"><span>M</span></div>
+                  <div class="tmb" style="--h: 58%; --c: var(--turquoise)"><span>J</span></div>
+                  <div class="tmb" style="--h: 85%; --c: var(--orange)"><span>V</span></div>
+                  <div class="tmb" style="--h: 30%; --c: var(--turquoise)"><span>S</span></div>
+                  <div class="tmb" style="--h: 0%; --c: var(--turquoise)"><span>D</span></div>
+                </div>
+                <div class="training-mini-stats">
+                  <span><strong>4</strong> sessions</span>
+                  <span><strong class="accent">+12%</strong> charge</span>
+                </div>
+              </div>
+
+              <!-- Wide card: Empathy -->
+              <div class="bento-card bento-wide reveal">
+                <div class="empathy-mini">
+                  <div class="empathy-q">
+                    <span class="empathy-q-icon">💬</span>
+                    <p>"J'ai mal aux jambes, je fais quand même ma séance ?"</p>
+                  </div>
+                  <div class="empathy-a">
+                    <div class="empathy-a-avatar">
+                      <img src="img/logo-revna.svg" alt="" class="empathy-a-logo">
+                    </div>
+                    <div class="empathy-a-content">
+                      <p>Ta VFC est basse et ta charge a grimpé de 20%. <strong>Ton corps te parle</strong> — écoute-le.</p>
+                      <span class="empathy-tip">💡 30 min de mobilité à la place</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Small card: Sleep -->
+              <div class="bento-card bento-small bento-purple reveal">
+                <span class="bento-tag">Sommeil</span>
+                <div class="sleep-mini">
+                  <span class="sleep-score">84</span>
+                  <div class="sleep-bars-mini">
+                    <div class="sbm" style="--w: 22%"><span>Profond</span></div>
+                    <div class="sbm light" style="--w: 55%"><span>Léger</span></div>
+                    <div class="sbm rem" style="--w: 23%"><span>REM</span></div>
+                  </div>
+                </div>
+                <p class="bento-caption">6h42 cette nuit</p>
+              </div>
+            </div>
+          </section>
+
+        </div><!-- End scroll-column -->
+
+        <!-- Right: Sticky Phone -->
+        <div class="phone-column">
+          <div class="phone-sticky">
+            <div class="hero-phone reveal delay-2">
+              <!-- Floating Data Widgets around phone -->
+
+              <!-- HRV Widget - top right -->
+              <div class="floating-widget floating-hrv pulse-orange" aria-hidden="true">
+                <div class="widget-label">VFC</div>
+                <div>
+                  <span class="widget-value">52<small>ms</small></span>
+                  <span class="widget-trend">↑ 8%</span>
+                </div>
+                <div class="mini-chart">
+                  <span style="height: 40%"></span>
+                  <span style="height: 60%"></span>
+                  <span style="height: 45%"></span>
+                  <span style="height: 75%"></span>
+                  <span style="height: 55%"></span>
+                  <span style="height: 85%"></span>
+                  <span style="height: 70%"></span>
+                </div>
+              </div>
+
+              <!-- Sleep Widget - bottom right -->
+              <div class="floating-widget floating-sleep pulse-purple" aria-hidden="true">
+                <div class="widget-row">
+                  <div class="sleep-ring-mini">
+                    <svg viewBox="0 0 50 50">
+                      <circle cx="25" cy="25" r="20" stroke="rgba(255,255,255,0.1)" stroke-width="4" fill="none"/>
+                      <circle cx="25" cy="25" r="20" stroke="var(--purple)" stroke-width="4" fill="none"
+                        stroke-dasharray="126" stroke-dashoffset="20" stroke-linecap="round" transform="rotate(-90 25 25)"/>
+                    </svg>
+                    <span class="sleep-score-val">84</span>
+                  </div>
+                  <div class="sleep-info">
+                    <span class="sleep-label">Sommeil</span>
+                    <span class="sleep-duration">6h 42min</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Heart Rate Widget - top left -->
+              <div class="floating-widget floating-hr" aria-hidden="true">
+                <div class="hr-icon">
+                  <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="hr-info">
+                  <span class="hr-val">72 <small>bpm</small></span>
+                  <span class="hr-label">Repos</span>
+                </div>
+              </div>
+
+              <!-- Steps Widget - right middle -->
+              <div class="floating-widget floating-steps" aria-hidden="true">
+                <div class="steps-row">
+                  <span class="steps-icon">👟</span>
+                  <span class="steps-val">7,234</span>
+                </div>
+                <div class="steps-progress">
+                  <div class="steps-progress-bar"></div>
+                </div>
+                <span class="steps-goal">72% de 10,000</span>
+              </div>
+
+              <!-- Calories Widget - left bottom -->
+              <div class="floating-widget floating-calories pulse-orange" aria-hidden="true">
+                <div class="cal-row">
+                  <div class="cal-ring">
+                    <svg viewBox="0 0 36 36">
+                      <circle cx="18" cy="18" r="15" stroke="rgba(255,255,255,0.1)" stroke-width="3" fill="none"/>
+                      <circle cx="18" cy="18" r="15" stroke="var(--orange)" stroke-width="3" fill="none"
+                        stroke-dasharray="94" stroke-dashoffset="30" stroke-linecap="round"/>
+                    </svg>
+                    <span class="cal-icon">🔥</span>
+                  </div>
+                  <div class="cal-info">
+                    <span class="cal-val">1,842</span>
+                    <span class="cal-label">kcal brûlées</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Stress Widget - left middle -->
+              <div class="floating-widget floating-stress" aria-hidden="true">
+                <div class="stress-meter">
+                  <span class="active"></span>
+                  <span class="active"></span>
+                  <span class="active"></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <span class="stress-label">Stress bas</span>
+              </div>
+
+              <!-- Smartwatch floating -->
+              <div class="smartwatch-float">
+                <div class="smartwatch">
+                  <div class="smartwatch-screen">
+                    <div class="sw-time">9:41</div>
+                    <div class="sw-metric">
+                      <svg viewBox="0 0 36 36" class="sw-ring">
+                        <circle cx="18" cy="18" r="15" stroke="rgba(255,255,255,0.1)" stroke-width="3" fill="none"/>
+                        <circle cx="18" cy="18" r="15" stroke="var(--turquoise)" stroke-width="3" fill="none"
+                          stroke-dasharray="94" stroke-dashoffset="21" stroke-linecap="round" transform="rotate(-90 18 18)"/>
+                      </svg>
+                      <span class="sw-value">78</span>
+                    </div>
+                    <div class="sw-label">Readiness</div>
+                    <div class="sw-bars">
+                      <span style="height: 40%"></span>
+                      <span style="height: 65%"></span>
+                      <span style="height: 45%"></span>
+                      <span style="height: 80%"></span>
+                      <span style="height: 55%"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="sw-pulse"></div>
+                <div class="sw-pulse sw-pulse-2"></div>
+              </div>
+
+              <div class="iphone-wrapper">
+                <div class="iphone">
+                  <!-- iPhone Frame -->
+                  <div class="iphone-frame">
+                    <!-- Side buttons -->
+                    <div class="iphone-btn iphone-btn-silent"></div>
+                    <div class="iphone-btn iphone-btn-volume-up"></div>
+                    <div class="iphone-btn iphone-btn-volume-down"></div>
+                    <div class="iphone-btn iphone-btn-power"></div>
+
+                    <!-- Screen -->
+                    <div class="iphone-screen">
+                      <!-- Dynamic Island -->
+                      <div class="dynamic-island"></div>
+
+                      <!-- Status bar -->
+                      <div class="iphone-statusbar">
+                        <span class="iphone-time">9:41</span>
+                        <div class="iphone-status-icons">
+                          <svg class="signal-icon" width="18" height="12" viewBox="0 0 18 12" fill="none">
+                            <rect x="0" y="6" width="3" height="6" rx="1" fill="white"/>
+                            <rect x="5" y="4" width="3" height="8" rx="1" fill="white"/>
+                            <rect x="10" y="2" width="3" height="10" rx="1" fill="white"/>
+                            <rect x="15" y="0" width="3" height="12" rx="1" fill="white"/>
+                          </svg>
+                          <svg class="wifi-icon" width="16" height="12" viewBox="0 0 16 12" fill="none">
+                            <path d="M8 9.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" fill="white"/>
+                            <path d="M4.5 7.5a5 5 0 017 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M2 5a8 8 0 0112 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                          </svg>
+                          <div class="battery-icon">
+                            <div class="battery-level"></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- App Header (Telegram-like) -->
+                      <div class="app-header">
+                        <div class="app-back">
+                          <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
+                            <path d="M9 1L2 8l7 7" stroke="var(--coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </div>
+                        <div class="app-avatar">
+                          <img src="img/logo-revna.svg" alt="Revna" class="app-avatar-img">
+                        </div>
+                        <div class="app-info">
+                          <span class="app-name">Revna</span>
+                          <span class="app-status"><span class="online-dot"></span>en ligne</span>
+                        </div>
+                        <div class="app-actions">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+                            <path d="M12 8v8M8 12h8" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+                          </svg>
+                        </div>
+                      </div>
+
+                      <!-- Chat area -->
+                      <div class="chat" id="hero-chat">
+                        <!-- Initial message visible before JS loads -->
+                        <div class="bubble bot">
+                          <p>Salut ! Je suis Revna, ton coach personnel.</p>
+                          <span class="time">9:41</span>
+                        </div>
+                      </div>
+
+                      <!-- Input bar -->
+                      <div class="chat-input-bar">
+                        <div class="chat-input-field">
+                          <span>Message</span>
+                        </div>
+                        <div class="chat-send-btn">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </div>
+                      </div>
+
+                      <!-- Home indicator -->
+                      <div class="home-indicator"></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 3D Shadow -->
+                <div class="iphone-shadow"></div>
+              </div>
+            </div>
+          </div>
+        </div><!-- End phone-column -->
+
+      </div><!-- End sticky-layout -->
+
+      <!-- Scroll indicator (positioned at bottom of hero area) -->
       <a href="#how" class="scroll-indicator">
         <div class="scroll-mouse"></div>
         <span>Scroll</span>
       </a>
-    </section>
+
+    </div><!-- End sticky-phone-container -->
 
     <!-- ════ Logos ════ -->
     <section class="logos">
@@ -115,437 +545,6 @@
         <span class="logo-more">+147</span>
       </div>
     </section>
-
-    <!-- ════ Split Layout Container ════ -->
-    <div class="split-layout">
-      <!-- Left: Scrolling content -->
-      <div class="content-column">
-
-    <!-- ════ Stats ════ -->
-    <section class="stats">
-      <!-- Decorative elements -->
-      <div class="floating-shape-1" aria-hidden="true"></div>
-      <div class="floating-shape-2" aria-hidden="true"></div>
-      <div class="stats-grid">
-        <div class="stat-block reveal">
-          <span class="stat-num" data-count="150">0</span><span class="stat-plus">+</span>
-          <span class="stat-label">wearables supportés</span>
-        </div>
-        <div class="stat-block reveal delay-1">
-          <span class="stat-num" data-count="14">0</span>
-          <span class="stat-label">types de messages</span>
-        </div>
-        <div class="stat-block reveal delay-2">
-          <span class="stat-num" data-count="0">0</span>
-          <span class="stat-label">apps à ouvrir</span>
-        </div>
-        <div class="stat-block reveal delay-3">
-          <span class="stat-num special">24/7</span>
-          <span class="stat-label">surveillance passive</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ How it works ════ -->
-    <section id="how" class="how">
-      <!-- Grid background decoration -->
-      <div class="grid-bg" aria-hidden="true"></div>
-      <div class="section-header reveal">
-        <span class="section-tag">Comment ça marche</span>
-        <h2 class="section-title">Trois étapes.<br><span class="accent">Zéro effort.</span></h2>
-      </div>
-      <div class="how-grid">
-        <div class="how-card reveal delay-1">
-          <div class="how-num">01</div>
-          <div class="how-icon-wrap">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <rect x="6" y="2" width="12" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/>
-              <circle cx="12" cy="18" r="1" fill="currentColor"/>
-              <path d="M9 6h6M9 9h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3>Connecte ton wearable</h3>
-          <p>Garmin, Apple Watch, Oura, Whoop&hellip; Connexion en 30 secondes via Terra API.</p>
-          <div class="how-connector" aria-hidden="true">
-            <svg viewBox="0 0 100 20"><path d="M0 10 H90 M85 5 L95 10 L85 15" stroke="currentColor" stroke-width="2" fill="none"/></svg>
-          </div>
-        </div>
-        <div class="how-card reveal delay-2">
-          <div class="how-num">02</div>
-          <div class="how-icon-wrap">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <h3>Revna analyse en continu</h3>
-          <p>Sessions sport, sommeil, stress, récupération. Tes baselines se calibrent en 14 jours.</p>
-          <div class="how-connector" aria-hidden="true">
-            <svg viewBox="0 0 100 20"><path d="M0 10 H90 M85 5 L95 10 L85 15" stroke="currentColor" stroke-width="2" fill="none"/></svg>
-          </div>
-        </div>
-        <div class="how-card reveal delay-3">
-          <div class="how-num">03</div>
-          <div class="how-icon-wrap how-icon-final">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <h3>Tu reçois le bon message</h3>
-          <p>Au bon moment, dans Telegram. Pas un dashboard. Un ami qui comprend la physio.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ Features — Bento Grid ════ -->
-    <section id="features" class="features">
-      <div class="section-header reveal">
-        <span class="section-tag">Fonctionnalités</span>
-        <h2 class="section-title">Pas un dashboard de plus.<br><span class="accent">Un coach qui te connaît.</span></h2>
-      </div>
-
-      <div class="bento-grid">
-        <!-- Large card: Notifications -->
-        <div class="bento-card bento-large reveal">
-          <div class="scan-effect" aria-hidden="true"></div>
-          <span class="bento-tag">Proactif</span>
-          <h3>14 types de messages</h3>
-          <p>Chacun déclenché par <strong>tes données</strong>, pas par une horloge.</p>
-          <div class="bento-visual">
-            <div class="notif-stack">
-              <div class="notif-card notif-1">
-                <span class="notif-icon">☀️</span>
-                <div class="notif-content">
-                  <span class="notif-title">Bilan matinal</span>
-                  <span class="notif-desc">Readiness 78 — go intensifier</span>
-                </div>
-                <span class="notif-badge">08:00</span>
-              </div>
-              <div class="notif-card notif-2">
-                <span class="notif-icon">🏃</span>
-                <div class="notif-content">
-                  <span class="notif-title">Post-run</span>
-                  <span class="notif-desc">8,4 km — Charge +12%</span>
-                </div>
-                <span class="notif-badge turquoise">12:15</span>
-              </div>
-              <div class="notif-card notif-3">
-                <span class="notif-icon">⚡</span>
-                <div class="notif-content">
-                  <span class="notif-title">Alerte récup</span>
-                  <span class="notif-desc">Body Battery à 22</span>
-                </div>
-                <span class="notif-badge warning">16:00</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Small card: Readiness -->
-        <div class="bento-card bento-small reveal">
-          <div class="readiness-display">
-            <svg viewBox="0 0 120 120" class="readiness-ring">
-              <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="none"/>
-              <circle cx="60" cy="60" r="50" stroke="url(#readiness-gradient)" stroke-width="8" fill="none"
-                stroke-dasharray="314" stroke-dashoffset="69" stroke-linecap="round"
-                transform="rotate(-90 60 60)"/>
-              <defs>
-                <linearGradient id="readiness-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="var(--orange)"/>
-                  <stop offset="100%" stop-color="var(--turquoise)"/>
-                </linearGradient>
-              </defs>
-            </svg>
-            <div class="readiness-value">
-              <span class="readiness-num">78</span>
-              <span class="readiness-label">Readiness</span>
-            </div>
-          </div>
-          <p class="bento-caption">Prêt pour un effort modéré</p>
-        </div>
-
-        <!-- Small card: HRV -->
-        <div class="bento-card bento-small bento-dark reveal">
-          <span class="bento-tag">VFC</span>
-          <div class="hrv-mini">
-            <span class="hrv-value">52<small>ms</small></span>
-            <span class="hrv-trend up">↑ 8%</span>
-          </div>
-          <svg viewBox="0 0 100 40" class="hrv-sparkline">
-            <polyline points="0,35 10,30 20,25 30,28 40,20 50,22 60,18 70,15 80,12 90,14 100,8"
-              stroke="var(--turquoise)" stroke-width="2" fill="none" stroke-linecap="round"/>
-          </svg>
-          <p class="bento-caption">14 derniers jours</p>
-        </div>
-
-        <!-- Medium card: Training load -->
-        <div class="bento-card bento-medium reveal">
-          <span class="bento-tag">Sport</span>
-          <h3>Charge semaine</h3>
-          <div class="training-mini-bars">
-            <div class="tmb" style="--h: 45%; --c: var(--turquoise)"><span>L</span></div>
-            <div class="tmb" style="--h: 72%; --c: var(--orange)"><span>M</span></div>
-            <div class="tmb" style="--h: 0%; --c: var(--turquoise)"><span>M</span></div>
-            <div class="tmb" style="--h: 58%; --c: var(--turquoise)"><span>J</span></div>
-            <div class="tmb" style="--h: 85%; --c: var(--orange)"><span>V</span></div>
-            <div class="tmb" style="--h: 30%; --c: var(--turquoise)"><span>S</span></div>
-            <div class="tmb" style="--h: 0%; --c: var(--turquoise)"><span>D</span></div>
-          </div>
-          <div class="training-mini-stats">
-            <span><strong>4</strong> sessions</span>
-            <span><strong class="accent">+12%</strong> charge</span>
-          </div>
-        </div>
-
-        <!-- Wide card: Empathy -->
-        <div class="bento-card bento-wide reveal">
-          <div class="empathy-mini">
-            <div class="empathy-q">
-              <span class="empathy-q-icon">💬</span>
-              <p>"J'ai mal aux jambes, je fais quand même ma séance ?"</p>
-            </div>
-            <div class="empathy-a">
-              <div class="empathy-a-avatar">
-                <img src="img/logo-revna.svg" alt="" class="empathy-a-logo">
-              </div>
-              <div class="empathy-a-content">
-                <p>Ta VFC est basse et ta charge a grimpé de 20%. <strong>Ton corps te parle</strong> — écoute-le.</p>
-                <span class="empathy-tip">💡 30 min de mobilité à la place</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Small card: Sleep -->
-        <div class="bento-card bento-small bento-purple reveal">
-          <span class="bento-tag">Sommeil</span>
-          <div class="sleep-mini">
-            <span class="sleep-score">84</span>
-            <div class="sleep-bars-mini">
-              <div class="sbm" style="--w: 22%"><span>Profond</span></div>
-              <div class="sbm light" style="--w: 55%"><span>Léger</span></div>
-              <div class="sbm rem" style="--w: 23%"><span>REM</span></div>
-            </div>
-          </div>
-          <p class="bento-caption">6h42 cette nuit</p>
-        </div>
-      </div>
-    </section>
-
-      </div><!-- End content-column -->
-
-      <!-- Right: Sticky phone -->
-      <div class="phone-column">
-        <div class="phone-sticky">
-          <div class="hero-phone reveal">
-            <!-- Floating Data Widgets around phone -->
-
-            <!-- HRV Widget - top right -->
-            <div class="floating-widget floating-hrv pulse-orange" aria-hidden="true">
-              <div class="widget-label">VFC</div>
-              <div>
-                <span class="widget-value">52<small>ms</small></span>
-                <span class="widget-trend">↑ 8%</span>
-              </div>
-              <div class="mini-chart">
-                <span style="height: 40%"></span>
-                <span style="height: 60%"></span>
-                <span style="height: 45%"></span>
-                <span style="height: 75%"></span>
-                <span style="height: 55%"></span>
-                <span style="height: 85%"></span>
-                <span style="height: 70%"></span>
-              </div>
-            </div>
-
-            <!-- Sleep Widget - bottom right -->
-            <div class="floating-widget floating-sleep pulse-purple" aria-hidden="true">
-              <div class="widget-row">
-                <div class="sleep-ring-mini">
-                  <svg viewBox="0 0 50 50">
-                    <circle cx="25" cy="25" r="20" stroke="rgba(255,255,255,0.1)" stroke-width="4" fill="none"/>
-                    <circle cx="25" cy="25" r="20" stroke="var(--purple)" stroke-width="4" fill="none"
-                      stroke-dasharray="126" stroke-dashoffset="20" stroke-linecap="round" transform="rotate(-90 25 25)"/>
-                  </svg>
-                  <span class="sleep-score-val">84</span>
-                </div>
-                <div class="sleep-info">
-                  <span class="sleep-label">Sommeil</span>
-                  <span class="sleep-duration">6h 42min</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Heart Rate Widget - top left -->
-            <div class="floating-widget floating-hr" aria-hidden="true">
-              <div class="hr-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-              </div>
-              <div class="hr-info">
-                <span class="hr-val">72 <small>bpm</small></span>
-                <span class="hr-label">Repos</span>
-              </div>
-            </div>
-
-            <!-- Steps Widget - right middle -->
-            <div class="floating-widget floating-steps" aria-hidden="true">
-              <div class="steps-row">
-                <span class="steps-icon">👟</span>
-                <span class="steps-val">7,234</span>
-              </div>
-              <div class="steps-progress">
-                <div class="steps-progress-bar"></div>
-              </div>
-              <span class="steps-goal">72% de 10,000</span>
-            </div>
-
-            <!-- Calories Widget - left bottom -->
-            <div class="floating-widget floating-calories pulse-orange" aria-hidden="true">
-              <div class="cal-row">
-                <div class="cal-ring">
-                  <svg viewBox="0 0 36 36">
-                    <circle cx="18" cy="18" r="15" stroke="rgba(255,255,255,0.1)" stroke-width="3" fill="none"/>
-                    <circle cx="18" cy="18" r="15" stroke="var(--orange)" stroke-width="3" fill="none"
-                      stroke-dasharray="94" stroke-dashoffset="30" stroke-linecap="round"/>
-                  </svg>
-                  <span class="cal-icon">🔥</span>
-                </div>
-                <div class="cal-info">
-                  <span class="cal-val">1,842</span>
-                  <span class="cal-label">kcal brûlées</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Stress Widget - left middle -->
-            <div class="floating-widget floating-stress" aria-hidden="true">
-              <div class="stress-meter">
-                <span class="active"></span>
-                <span class="active"></span>
-                <span class="active"></span>
-                <span></span>
-                <span></span>
-              </div>
-              <span class="stress-label">Stress bas</span>
-            </div>
-
-            <!-- Smartwatch floating -->
-            <div class="smartwatch-float">
-              <div class="smartwatch">
-                <div class="smartwatch-screen">
-                  <div class="sw-time">9:41</div>
-                  <div class="sw-metric">
-                    <svg viewBox="0 0 36 36" class="sw-ring">
-                      <circle cx="18" cy="18" r="15" stroke="rgba(255,255,255,0.1)" stroke-width="3" fill="none"/>
-                      <circle cx="18" cy="18" r="15" stroke="var(--turquoise)" stroke-width="3" fill="none"
-                        stroke-dasharray="94" stroke-dashoffset="21" stroke-linecap="round" transform="rotate(-90 18 18)"/>
-                    </svg>
-                    <span class="sw-value">78</span>
-                  </div>
-                  <div class="sw-label">Readiness</div>
-                  <div class="sw-bars">
-                    <span style="height: 40%"></span>
-                    <span style="height: 65%"></span>
-                    <span style="height: 45%"></span>
-                    <span style="height: 80%"></span>
-                    <span style="height: 55%"></span>
-                  </div>
-                </div>
-              </div>
-              <div class="sw-pulse"></div>
-              <div class="sw-pulse sw-pulse-2"></div>
-            </div>
-            <div class="iphone-wrapper">
-              <div class="iphone">
-                <!-- iPhone Frame -->
-                <div class="iphone-frame">
-                  <!-- Side buttons -->
-                  <div class="iphone-btn iphone-btn-silent"></div>
-                  <div class="iphone-btn iphone-btn-volume-up"></div>
-                  <div class="iphone-btn iphone-btn-volume-down"></div>
-                  <div class="iphone-btn iphone-btn-power"></div>
-
-                  <!-- Screen -->
-                  <div class="iphone-screen">
-                    <!-- Dynamic Island -->
-                    <div class="dynamic-island"></div>
-
-                    <!-- Status bar -->
-                    <div class="iphone-statusbar">
-                      <span class="iphone-time">9:41</span>
-                      <div class="iphone-status-icons">
-                        <svg class="signal-icon" width="18" height="12" viewBox="0 0 18 12" fill="none">
-                          <rect x="0" y="6" width="3" height="6" rx="1" fill="white"/>
-                          <rect x="5" y="4" width="3" height="8" rx="1" fill="white"/>
-                          <rect x="10" y="2" width="3" height="10" rx="1" fill="white"/>
-                          <rect x="15" y="0" width="3" height="12" rx="1" fill="white"/>
-                        </svg>
-                        <svg class="wifi-icon" width="16" height="12" viewBox="0 0 16 12" fill="none">
-                          <path d="M8 9.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" fill="white"/>
-                          <path d="M4.5 7.5a5 5 0 017 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-                          <path d="M2 5a8 8 0 0112 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-                        </svg>
-                        <div class="battery-icon">
-                          <div class="battery-level"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- App Header (Telegram-like) -->
-                    <div class="app-header">
-                      <div class="app-back">
-                        <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
-                          <path d="M9 1L2 8l7 7" stroke="var(--coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </div>
-                      <div class="app-avatar">
-                        <img src="img/logo-revna.svg" alt="Revna" class="app-avatar-img">
-                      </div>
-                      <div class="app-info">
-                        <span class="app-name">Revna</span>
-                        <span class="app-status"><span class="online-dot"></span>en ligne</span>
-                      </div>
-                      <div class="app-actions">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                          <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
-                          <path d="M12 8v8M8 12h8" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
-                        </svg>
-                      </div>
-                    </div>
-
-                    <!-- Chat area -->
-                    <div class="chat" id="hero-chat">
-                      <!-- Initial message visible before JS loads -->
-                      <div class="bubble bot">
-                        <p>Salut ! Je suis Revna, ton coach personnel.</p>
-                        <span class="time">9:41</span>
-                      </div>
-                    </div>
-
-                    <!-- Input bar -->
-                    <div class="chat-input-bar">
-                      <div class="chat-input-field">
-                        <span>Message</span>
-                      </div>
-                      <div class="chat-send-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                          <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </div>
-                    </div>
-
-                    <!-- Home indicator -->
-                    <div class="home-indicator"></div>
-                  </div>
-                </div>
-              </div>
-              <!-- 3D Shadow -->
-              <div class="iphone-shadow"></div>
-            </div>
-          </div>
-        </div>
-      </div><!-- End phone-column -->
-
-    </div><!-- End split-layout -->
 
     <!-- ════ Testimonials ════ -->
     <section class="testimonials">

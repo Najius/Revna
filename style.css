@@ -1630,100 +1630,146 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 }
 
 /* ═══════════════════════════════════════════════════
-   Split Layout (Two-Column)
+   Sticky Phone Container (Hero through Features)
    ═══════════════════════════════════════════════════ */
-.split-layout {
+.sticky-phone-container {
+  position: relative;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+/* Hero background spans full width behind both columns */
+.sticky-phone-container > .hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Two-column sticky layout */
+.sticky-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 0 2rem;
   position: relative;
+  z-index: 1;
 }
 
-.content-column {
+/* Left column: scrolling content */
+.scroll-column {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  padding-top: 8rem;
+  padding-bottom: 4rem;
 }
 
-/* Reset section padding within content column */
-.content-column .stats,
-.content-column .how,
-.content-column .features {
-  padding-left: 0;
-  padding-right: 0;
+/* Hero section within scroll column */
+.hero-section {
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 4rem;
+}
+
+.hero-section .hero-text {
+  max-width: 100%;
+}
+
+/* Reset section padding within scroll column */
+.scroll-column .stats,
+.scroll-column .how,
+.scroll-column .features {
+  padding: 4rem 0;
+  background: transparent;
+}
+
+.scroll-column .stats::before {
+  display: none;
+}
+
+.scroll-column .stats-grid,
+.scroll-column .how-grid,
+.scroll-column .bento-grid {
   max-width: none;
 }
 
-.content-column .stats-grid,
-.content-column .how-grid,
-.content-column .bento-grid {
-  max-width: none;
-}
-
-.content-column .section-header {
+.scroll-column .section-header {
   text-align: left;
 }
 
+/* Stats in scroll column - 2x2 grid */
+.scroll-column .stats-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* How in scroll column - vertical stack */
+.scroll-column .how {
+  background: transparent;
+}
+
+.scroll-column .how-grid {
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.scroll-column .how-connector {
+  display: none;
+}
+
+/* Bento in scroll column - 2 columns */
+.scroll-column .bento-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.scroll-column .bento-large {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.scroll-column .bento-wide {
+  grid-column: span 2;
+}
+
+.scroll-column .bento-medium {
+  grid-column: span 2;
+}
+
+/* Right column: sticky phone */
 .phone-column {
   position: relative;
+  padding-top: 8rem;
 }
 
 .phone-sticky {
   position: sticky;
-  top: 100px;
+  top: 80px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   height: fit-content;
+  padding-bottom: 4rem;
 }
 
 /* Phone in sticky column */
 .phone-sticky .hero-phone {
   position: relative;
   top: auto;
-  transform: none;
 }
 
-/* ═══════════════════════════════════════════════════
-   Hero Intro (Full Width)
-   ═══════════════════════════════════════════════════ */
-.hero-intro {
-  min-height: auto;
-  padding-bottom: 4rem;
-}
-
-.hero-content-intro {
-  grid-template-columns: 1fr;
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.hero-content-intro .hero-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.hero-content-intro .hero-sub {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero-content-intro .waitlist-form {
-  margin: 0 auto;
-}
-
-.hero-content-intro .hero-wearables {
-  justify-content: center;
-}
-
-/* Hide raven watermark in intro hero (phone moved to split layout) */
-.hero-intro .hero-raven-watermark {
-  display: none;
+/* Scroll indicator positioning */
+.sticky-phone-container .scroll-indicator {
+  position: absolute;
+  bottom: auto;
+  top: calc(85vh + 6rem);
+  left: 25%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -1754,11 +1800,6 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   text-align: center;
 }
 
-/* Stats in split layout - 2x2 grid */
-.content-column .stats-grid {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-}
 .stat-block {
   padding: 2rem;
   background: var(--bg-card);
@@ -1830,18 +1871,6 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   gap: 2rem;
 }
 
-/* How in split layout - vertical stack */
-.content-column .how {
-  border-radius: var(--radius);
-  padding: 2rem;
-}
-.content-column .how-grid {
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-.content-column .how-connector {
-  display: none;
-}
 .how-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -1945,21 +1974,6 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   gap: 1.5rem;
 }
 
-/* Bento in split layout - 2 columns */
-.content-column .bento-grid {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-.content-column .bento-large {
-  grid-column: span 2;
-  grid-row: span 1;
-}
-.content-column .bento-wide {
-  grid-column: span 2;
-}
-.content-column .bento-medium {
-  grid-column: span 2;
-}
 
 .bento-card {
   background: var(--bg-card);
@@ -2548,11 +2562,11 @@ footer {
    Responsive
    ═══════════════════════════════════════════════════ */
 
-/* Large screens - adjust split layout gap */
+/* Large screens - adjust sticky layout gap */
 @media (max-width: 1200px) {
-  .split-layout {
+  .sticky-layout {
     gap: 2rem;
-    padding: 3rem 1.5rem;
+    padding: 0 1.5rem;
   }
   .phone-sticky .iphone-frame {
     width: 260px;
@@ -2562,51 +2576,68 @@ footer {
 
 /* Medium screens - single column, phone hidden */
 @media (max-width: 900px) {
-  .split-layout {
+  .sticky-layout {
     grid-template-columns: 1fr;
     gap: 0;
-    padding: 0;
+  }
+
+  .scroll-column {
+    padding-top: 6rem;
+  }
+
+  .hero-section {
+    min-height: 60vh;
+    text-align: center;
+  }
+
+  .hero-section .hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-section .hero-sub {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-section .waitlist-form {
+    margin: 0 auto;
+  }
+
+  .hero-section .hero-wearables {
+    justify-content: center;
   }
 
   .phone-column {
     display: none;
   }
 
-  .content-column .stats,
-  .content-column .how,
-  .content-column .features {
-    padding-left: 2rem;
-    padding-right: 2rem;
+  .sticky-phone-container .scroll-indicator {
+    left: 50%;
+    top: calc(60vh + 4rem);
   }
 
-  .content-column .stats-grid {
+  .scroll-column .stats,
+  .scroll-column .how,
+  .scroll-column .features {
+    padding: 4rem 0;
+  }
+
+  .scroll-column .stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 
-  .content-column .how {
-    padding: 4rem 2rem;
-    border-radius: 0;
-  }
-
-  .content-column .how-grid {
+  .scroll-column .how-grid {
     max-width: 480px;
     margin: 0 auto;
   }
 
-  .content-column .bento-grid {
+  .scroll-column .bento-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .hero-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  .hero-text { order: 1; }
-  .hero-phone { order: 2; }
-  .hero-sub { margin-left: auto; margin-right: auto; }
-  .waitlist-form { margin: 0 auto; }
-  .hero-proof { justify-content: center; }
   .hero-title { font-size: clamp(2rem, 7vw, 3rem); }
   .hero-raven-watermark { display: none; }
 
@@ -2627,40 +2658,48 @@ footer {
   .nav-cta { display: none; }
   .nav-hamburger { display: flex; }
 }
+
 @media (max-width: 600px) {
   .nav { padding: 0.75rem 1rem; }
   .nav-brand { font-size: 1.1rem; }
   .nav-brand span { display: none; }
 
-  .hero { padding: 6rem 1.25rem 3rem; }
-  .hero-intro { padding-bottom: 2rem; }
+  .sticky-layout {
+    padding: 0 1.25rem;
+  }
+
+  .scroll-column {
+    padding-top: 5rem;
+  }
+
+  .hero-section {
+    min-height: 50vh;
+  }
 
   .waitlist-form { flex-direction: column; }
   .waitlist-form button { width: 100%; padding: 0.9rem; }
 
   .iphone-frame { width: 250px; height: 510px; }
   .iphone-wrapper { animation: none; transform: rotateY(0) rotateX(0); }
-  .hero-phone { position: relative; top: 0; }
 
-  .content-column .stats,
-  .content-column .how,
-  .content-column .features {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+  .scroll-column .stats,
+  .scroll-column .how,
+  .scroll-column .features {
+    padding: 3rem 0;
   }
 
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-  .content-column .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .scroll-column .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 
   .how, .features, .testimonials { padding: 4rem 1.25rem; }
-  .content-column .how { padding: 3rem 1.25rem; }
+  .scroll-column .how { padding: 3rem 0; }
   .section-header { margin-bottom: 2.5rem; }
 
   .bento-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  .content-column .bento-grid {
+  .scroll-column .bento-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
@@ -2668,9 +2707,9 @@ footer {
   .bento-wide,
   .bento-medium,
   .bento-small,
-  .content-column .bento-large,
-  .content-column .bento-wide,
-  .content-column .bento-medium {
+  .scroll-column .bento-large,
+  .scroll-column .bento-wide,
+  .scroll-column .bento-medium {
     grid-column: span 1;
     grid-row: span 1;
   }
