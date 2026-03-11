@@ -1778,8 +1778,8 @@ footer {
 }
 .sw-value {
   font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 0.75rem;
   color: var(--text-primary);
 }
 .sw-label {
@@ -2066,6 +2066,349 @@ footer {
   .bento-card .scan-effect { animation: none; display: none; }
 }
 
+/* ═══════════════════════════════════════════════════
+   Floating Data Widgets
+   ═══════════════════════════════════════════════════ */
+
+/* Base floating widget styles */
+.floating-widget {
+  position: absolute;
+  background: rgba(26, 26, 36, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px 16px;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(6, 182, 212, 0.08);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* HRV floating widget */
+.floating-hrv {
+  right: 5%;
+  top: 20%;
+  animation: float-widget 6s ease-in-out infinite;
+}
+.floating-hrv .widget-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--turquoise);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+.floating-hrv .widget-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.floating-hrv .widget-value small {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+.floating-hrv .widget-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--green);
+  margin-left: 8px;
+}
+.floating-hrv .mini-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 20px;
+  margin-top: 8px;
+}
+.floating-hrv .mini-chart span {
+  width: 4px;
+  background: var(--turquoise);
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+@keyframes float-widget {
+  0%, 100% { transform: translateY(0) rotate(2deg); }
+  50% { transform: translateY(-12px) rotate(-1deg); }
+}
+
+/* Sleep score floating widget */
+.floating-sleep {
+  left: 3%;
+  bottom: 25%;
+  animation: float-widget-alt 7s ease-in-out infinite;
+}
+.floating-sleep .sleep-ring-mini {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.floating-sleep .sleep-ring-mini svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.floating-sleep .sleep-score-val {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--purple);
+}
+.floating-sleep .widget-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.floating-sleep .sleep-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.floating-sleep .sleep-label {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.floating-sleep .sleep-duration {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+@keyframes float-widget-alt {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-15px) rotate(1deg); }
+}
+
+/* Body battery floating widget */
+.floating-battery {
+  right: 8%;
+  bottom: 30%;
+  animation: float-widget 5s ease-in-out infinite 1s;
+}
+.floating-battery .battery-visual {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.floating-battery .battery-bar {
+  width: 40px;
+  height: 18px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.floating-battery .battery-bar::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 8px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 0 2px 2px 0;
+}
+.floating-battery .battery-level-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--orange), var(--green));
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+.floating-battery .battery-info {
+  display: flex;
+  flex-direction: column;
+}
+.floating-battery .battery-val {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.floating-battery .battery-label {
+  font-size: 0.55rem;
+  color: var(--text-tertiary);
+}
+
+/* Heart rate floating widget */
+.floating-hr {
+  left: 10%;
+  top: 40%;
+  animation: float-widget-alt 6s ease-in-out infinite 0.5s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.floating-hr .hr-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(239, 68, 68, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: hr-pulse 1s ease-in-out infinite;
+}
+@keyframes hr-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+.floating-hr .hr-icon svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--red);
+}
+.floating-hr .hr-info {
+  display: flex;
+  flex-direction: column;
+}
+.floating-hr .hr-val {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.floating-hr .hr-val small {
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+.floating-hr .hr-label {
+  font-size: 0.55rem;
+  color: var(--red);
+  text-transform: uppercase;
+}
+
+/* Steps floating widget */
+.floating-steps {
+  right: 12%;
+  top: 15%;
+  animation: float-widget 8s ease-in-out infinite 2s;
+}
+.floating-steps .steps-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.floating-steps .steps-icon {
+  font-size: 1.2rem;
+}
+.floating-steps .steps-val {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+.floating-steps .steps-progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+.floating-steps .steps-progress-bar {
+  height: 100%;
+  width: 72%;
+  background: linear-gradient(90deg, var(--turquoise), var(--orange));
+  border-radius: 2px;
+}
+.floating-steps .steps-goal {
+  font-size: 0.55rem;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+/* Calories floating widget */
+.floating-calories {
+  left: 6%;
+  bottom: 15%;
+  animation: float-widget-alt 7s ease-in-out infinite 1.5s;
+}
+.floating-calories .cal-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.floating-calories .cal-ring {
+  width: 36px;
+  height: 36px;
+  position: relative;
+}
+.floating-calories .cal-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.floating-calories .cal-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+.floating-calories .cal-info {
+  display: flex;
+  flex-direction: column;
+}
+.floating-calories .cal-val {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.floating-calories .cal-label {
+  font-size: 0.55rem;
+  color: var(--text-tertiary);
+}
+
+/* Stress floating widget */
+.floating-stress {
+  right: 4%;
+  top: 55%;
+  animation: float-widget 6s ease-in-out infinite 3s;
+}
+.floating-stress .stress-meter {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 4px;
+}
+.floating-stress .stress-meter span {
+  width: 8px;
+  height: 16px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+}
+.floating-stress .stress-meter span.active {
+  background: var(--green);
+}
+.floating-stress .stress-meter span.active.medium {
+  background: var(--orange);
+}
+.floating-stress .stress-label {
+  font-size: 0.6rem;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 /* Smartwatch responsive */
 @media (max-width: 900px) {
   .smartwatch-float {
@@ -2083,4 +2426,29 @@ footer {
 }
 @media (max-width: 600px) {
   .smartwatch-float { display: none; }
+  .floating-widget { display: none; }
+}
+
+@media (max-width: 1200px) {
+  .floating-widget {
+    transform: scale(0.85);
+  }
+}
+
+@media (max-width: 900px) {
+  .floating-hrv,
+  .floating-sleep,
+  .floating-battery,
+  .floating-hr,
+  .floating-calories,
+  .floating-stress {
+    display: none;
+  }
+  .floating-steps {
+    position: relative;
+    right: auto;
+    top: auto;
+    margin: 1rem auto;
+    width: fit-content;
+  }
 }

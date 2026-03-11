@@ -217,6 +217,43 @@
       <!-- Decorative elements -->
       <div class="floating-shape-1" aria-hidden="true"></div>
       <div class="floating-shape-2" aria-hidden="true"></div>
+
+      <!-- Floating HRV Widget -->
+      <div class="floating-widget floating-hrv" aria-hidden="true">
+        <div class="widget-label">VFC</div>
+        <div>
+          <span class="widget-value">52<small>ms</small></span>
+          <span class="widget-trend">↑ 8%</span>
+        </div>
+        <div class="mini-chart">
+          <span style="height: 40%"></span>
+          <span style="height: 60%"></span>
+          <span style="height: 45%"></span>
+          <span style="height: 75%"></span>
+          <span style="height: 55%"></span>
+          <span style="height: 85%"></span>
+          <span style="height: 70%"></span>
+        </div>
+      </div>
+
+      <!-- Floating Sleep Widget -->
+      <div class="floating-widget floating-sleep" aria-hidden="true">
+        <div class="widget-row">
+          <div class="sleep-ring-mini">
+            <svg viewBox="0 0 50 50">
+              <circle cx="25" cy="25" r="20" stroke="rgba(255,255,255,0.1)" stroke-width="4" fill="none"/>
+              <circle cx="25" cy="25" r="20" stroke="var(--purple)" stroke-width="4" fill="none"
+                stroke-dasharray="126" stroke-dashoffset="20" stroke-linecap="round" transform="rotate(-90 25 25)"/>
+            </svg>
+            <span class="sleep-score-val">84</span>
+          </div>
+          <div class="sleep-info">
+            <span class="sleep-label">Sommeil</span>
+            <span class="sleep-duration">6h 42min</span>
+          </div>
+        </div>
+      </div>
+
       <div class="stats-grid">
         <div class="stat-block reveal">
           <span class="stat-num" data-count="150">0</span><span class="stat-plus">+</span>
@@ -241,6 +278,31 @@
     <section id="how" class="how">
       <!-- Grid background decoration -->
       <div class="grid-bg" aria-hidden="true"></div>
+
+      <!-- Floating Heart Rate Widget -->
+      <div class="floating-widget floating-hr" aria-hidden="true">
+        <div class="hr-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+        <div class="hr-info">
+          <span class="hr-val">72 <small>bpm</small></span>
+          <span class="hr-label">Repos</span>
+        </div>
+      </div>
+
+      <!-- Floating Body Battery Widget -->
+      <div class="floating-widget floating-battery" aria-hidden="true">
+        <div class="battery-visual">
+          <div class="battery-bar">
+            <div class="battery-level-bar" style="width: 65%"></div>
+          </div>
+          <div class="battery-info">
+            <span class="battery-val">65</span>
+            <span class="battery-label">Body Battery</span>
+          </div>
+        </div>
+      </div>
+
       <div class="section-header reveal">
         <span class="section-tag">Comment ça marche</span>
         <h2 class="section-title">Trois étapes.<br><span class="accent">Zéro effort.</span></h2>
@@ -283,6 +345,49 @@
 
     <!-- ════ Features — Bento Grid ════ -->
     <section id="features" class="features">
+
+      <!-- Floating Steps Widget -->
+      <div class="floating-widget floating-steps" aria-hidden="true">
+        <div class="steps-row">
+          <span class="steps-icon">👟</span>
+          <span class="steps-val">7,234</span>
+        </div>
+        <div class="steps-progress">
+          <div class="steps-progress-bar"></div>
+        </div>
+        <span class="steps-goal">72% de 10,000</span>
+      </div>
+
+      <!-- Floating Stress Widget -->
+      <div class="floating-widget floating-stress" aria-hidden="true">
+        <div class="stress-meter">
+          <span class="active"></span>
+          <span class="active"></span>
+          <span class="active"></span>
+          <span></span>
+          <span></span>
+        </div>
+        <span class="stress-label">Stress bas</span>
+      </div>
+
+      <!-- Floating Calories Widget -->
+      <div class="floating-widget floating-calories" aria-hidden="true">
+        <div class="cal-row">
+          <div class="cal-ring">
+            <svg viewBox="0 0 36 36">
+              <circle cx="18" cy="18" r="15" stroke="rgba(255,255,255,0.1)" stroke-width="3" fill="none"/>
+              <circle cx="18" cy="18" r="15" stroke="var(--orange)" stroke-width="3" fill="none"
+                stroke-dasharray="94" stroke-dashoffset="30" stroke-linecap="round"/>
+            </svg>
+            <span class="cal-icon">🔥</span>
+          </div>
+          <div class="cal-info">
+            <span class="cal-val">1,842</span>
+            <span class="cal-label">kcal brûlées</span>
+          </div>
+        </div>
+      </div>
+
       <div class="section-header reveal">
         <span class="section-tag">Fonctionnalités</span>
         <h2 class="section-title">Pas un dashboard de plus.<br><span class="accent">Un coach qui te connaît.</span></h2>

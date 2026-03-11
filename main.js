@@ -840,6 +840,95 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ═══════════════════════════════════════════════════
+  // Floating Widgets Animations
+  // ═══════════════════════════════════════════════════
+
+  document.querySelectorAll('.floating-widget').forEach((widget, index) => {
+    gsap.set(widget, { opacity: 0, scale: 0.8 });
+
+    ScrollTrigger.create({
+      trigger: widget.closest('section'),
+      start: 'top 70%',
+      once: true,
+      onEnter: () => {
+        gsap.to(widget, {
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          delay: index * 0.15,
+          ease: 'back.out(1.7)'
+        });
+      }
+    });
+  });
+
+  // Animate mini chart bars in HRV widget
+  const hrvChart = document.querySelector('.floating-hrv .mini-chart');
+  if (hrvChart) {
+    const bars = hrvChart.querySelectorAll('span');
+    bars.forEach((bar, i) => {
+      const originalHeight = bar.style.height;
+      gsap.set(bar, { height: '0%' });
+
+      ScrollTrigger.create({
+        trigger: hrvChart,
+        start: 'top 80%',
+        once: true,
+        onEnter: () => {
+          gsap.to(bar, {
+            height: originalHeight,
+            duration: 0.5,
+            delay: i * 0.08,
+            ease: 'power2.out'
+          });
+        }
+      });
+    });
+  }
+
+  // Animate stress meter
+  const stressMeter = document.querySelector('.floating-stress .stress-meter');
+  if (stressMeter) {
+    const bars = stressMeter.querySelectorAll('span');
+    bars.forEach((bar, i) => {
+      gsap.set(bar, { scaleY: 0 });
+
+      ScrollTrigger.create({
+        trigger: stressMeter,
+        start: 'top 80%',
+        once: true,
+        onEnter: () => {
+          gsap.to(bar, {
+            scaleY: 1,
+            duration: 0.3,
+            delay: i * 0.1,
+            ease: 'power2.out'
+          });
+        }
+      });
+    });
+  }
+
+  // Steps progress bar animation
+  const stepsProgress = document.querySelector('.floating-steps .steps-progress-bar');
+  if (stepsProgress) {
+    gsap.set(stepsProgress, { width: '0%' });
+
+    ScrollTrigger.create({
+      trigger: stepsProgress,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.to(stepsProgress, {
+          width: '72%',
+          duration: 1.2,
+          ease: 'power2.out'
+        });
+      }
+    });
+  }
+
+  // ═══════════════════════════════════════════════════
   // Mouse Follower Glow Effect
   // ═══════════════════════════════════════════════════
 
