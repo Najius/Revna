@@ -948,12 +948,15 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .hero-phone {
   display: flex;
   justify-content: center;
-  position: sticky;
-  top: 100px;
-  align-self: flex-start;
   perspective: 1000px;
   /* Container for floating widgets */
   position: relative;
+}
+
+/* Hero phone in split layout sticky column */
+.phone-sticky .hero-phone {
+  position: relative;
+  top: auto;
 }
 
 .iphone-wrapper {
@@ -1627,10 +1630,107 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 }
 
 /* ═══════════════════════════════════════════════════
+   Split Layout (Two-Column)
+   ═══════════════════════════════════════════════════ */
+.split-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  position: relative;
+}
+
+.content-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Reset section padding within content column */
+.content-column .stats,
+.content-column .how,
+.content-column .features {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: none;
+}
+
+.content-column .stats-grid,
+.content-column .how-grid,
+.content-column .bento-grid {
+  max-width: none;
+}
+
+.content-column .section-header {
+  text-align: left;
+}
+
+.phone-column {
+  position: relative;
+}
+
+.phone-sticky {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: fit-content;
+}
+
+/* Phone in sticky column */
+.phone-sticky .hero-phone {
+  position: relative;
+  top: auto;
+  transform: none;
+}
+
+/* ═══════════════════════════════════════════════════
+   Hero Intro (Full Width)
+   ═══════════════════════════════════════════════════ */
+.hero-intro {
+  min-height: auto;
+  padding-bottom: 4rem;
+}
+
+.hero-content-intro {
+  grid-template-columns: 1fr;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero-content-intro .hero-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-content-intro .hero-sub {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-content-intro .waitlist-form {
+  margin: 0 auto;
+}
+
+.hero-content-intro .hero-wearables {
+  justify-content: center;
+}
+
+/* Hide raven watermark in intro hero (phone moved to split layout) */
+.hero-intro .hero-raven-watermark {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════════
    Stats
    ═══════════════════════════════════════════════════ */
 .stats {
-  padding: 5rem 2rem;
+  padding: 4rem 0;
   background: var(--bg-primary);
   position: relative;
 }
@@ -1652,6 +1752,12 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   text-align: center;
+}
+
+/* Stats in split layout - 2x2 grid */
+.content-column .stats-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
 }
 .stat-block {
   padding: 2rem;
@@ -1713,7 +1819,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
    How It Works
    ═══════════════════════════════════════════════════ */
 .how {
-  padding: 6rem 2rem;
+  padding: 4rem 0;
   background: var(--bg-secondary);
 }
 .how-grid {
@@ -1722,6 +1828,19 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+}
+
+/* How in split layout - vertical stack */
+.content-column .how {
+  border-radius: var(--radius);
+  padding: 2rem;
+}
+.content-column .how-grid {
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+.content-column .how-connector {
+  display: none;
 }
 .how-card {
   background: var(--bg-card);
@@ -1812,7 +1931,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
    Features — Bento Grid
    ═══════════════════════════════════════════════════ */
 .features {
-  padding: 6rem 2rem;
+  padding: 4rem 0;
   background: var(--bg-primary);
 }
 
@@ -1824,6 +1943,22 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto auto auto;
   gap: 1.5rem;
+}
+
+/* Bento in split layout - 2 columns */
+.content-column .bento-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.content-column .bento-large {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+.content-column .bento-wide {
+  grid-column: span 2;
+}
+.content-column .bento-medium {
+  grid-column: span 2;
 }
 
 .bento-card {
@@ -2412,7 +2547,57 @@ footer {
 /* ═══════════════════════════════════════════════════
    Responsive
    ═══════════════════════════════════════════════════ */
+
+/* Large screens - adjust split layout gap */
+@media (max-width: 1200px) {
+  .split-layout {
+    gap: 2rem;
+    padding: 3rem 1.5rem;
+  }
+  .phone-sticky .iphone-frame {
+    width: 260px;
+    height: 530px;
+  }
+}
+
+/* Medium screens - single column, phone hidden */
 @media (max-width: 900px) {
+  .split-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 0;
+  }
+
+  .phone-column {
+    display: none;
+  }
+
+  .content-column .stats,
+  .content-column .how,
+  .content-column .features {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .content-column .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .content-column .how {
+    padding: 4rem 2rem;
+    border-radius: 0;
+  }
+
+  .content-column .how-grid {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .content-column .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .hero-content {
     grid-template-columns: 1fr;
     text-align: center;
@@ -2448,6 +2633,7 @@ footer {
   .nav-brand span { display: none; }
 
   .hero { padding: 6rem 1.25rem 3rem; }
+  .hero-intro { padding-bottom: 2rem; }
 
   .waitlist-form { flex-direction: column; }
   .waitlist-form button { width: 100%; padding: 0.9rem; }
@@ -2456,19 +2642,35 @@ footer {
   .iphone-wrapper { animation: none; transform: rotateY(0) rotateX(0); }
   .hero-phone { position: relative; top: 0; }
 
+  .content-column .stats,
+  .content-column .how,
+  .content-column .features {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .content-column .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 
   .how, .features, .testimonials { padding: 4rem 1.25rem; }
+  .content-column .how { padding: 3rem 1.25rem; }
   .section-header { margin-bottom: 2.5rem; }
 
   .bento-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+  .content-column .bento-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
   .bento-large,
   .bento-wide,
   .bento-medium,
-  .bento-small {
+  .bento-small,
+  .content-column .bento-large,
+  .content-column .bento-wide,
+  .content-column .bento-medium {
     grid-column: span 1;
     grid-row: span 1;
   }
@@ -3226,51 +3428,30 @@ footer {
   letter-spacing: 0.05em;
 }
 
-/* Smartwatch responsive */
-@media (max-width: 900px) {
-  .smartwatch-float {
-    position: relative;
-    top: 0;
-    left: 0;
-    margin: 0 auto 2rem;
-    transform: rotate(0deg);
-    animation: float-watch-mobile 4s ease-in-out infinite;
-  }
-  @keyframes float-watch-mobile {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-}
-@media (max-width: 600px) {
-  .smartwatch-float { display: none; }
-  .floating-widget { display: none; }
-}
-
+/* Smartwatch and widgets responsive for split layout */
 @media (max-width: 1200px) {
-  .floating-widget {
+  .phone-sticky .floating-widget {
     transform: scale(0.85);
   }
-}
-
-@media (max-width: 1200px) {
-  .floating-widget {
-    transform: scale(0.85);
+  .phone-sticky .smartwatch-float {
+    transform: scale(0.9) rotate(-5deg);
   }
 }
 
 @media (max-width: 1100px) {
-  .floating-widget {
+  .phone-sticky .floating-widget {
     transform: scale(0.75);
   }
   /* Hide some widgets to reduce clutter */
-  .floating-stress,
-  .floating-calories {
+  .phone-sticky .floating-stress,
+  .phone-sticky .floating-calories {
     display: none;
   }
 }
 
+/* Phone column hidden on mobile - widgets go with it */
 @media (max-width: 900px) {
-  .floating-widget {
+  .phone-column {
     display: none;
   }
 }
