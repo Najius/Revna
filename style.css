@@ -3440,10 +3440,10 @@ footer {
   color: var(--text-tertiary);
 }
 
-/* Heart rate floating widget - left of phone, top */
+/* Heart rate floating widget - left of phone, middle */
 .floating-hr {
-  left: -100px;
-  top: 80px;
+  left: -120px;
+  top: 200px;
   animation: float-widget-alt 6s ease-in-out infinite 0.5s;
   display: flex;
   align-items: center;
@@ -3605,8 +3605,7 @@ footer {
   letter-spacing: 0.05em;
 }
 
-/* Hide extra widgets to reduce clutter - keep only Smartwatch, HRV, Steps, Sleep */
-.phone-sticky .floating-hr,
+/* Hide extra widgets to reduce clutter */
 .phone-sticky .floating-stress,
 .phone-sticky .floating-calories {
   display: none;
