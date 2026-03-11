@@ -1635,7 +1635,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .sticky-phone-container {
   position: relative;
   background: var(--bg-primary);
-  overflow: hidden;
+  /* Note: overflow must NOT be hidden/auto/scroll for sticky to work */
 }
 
 /* Hero background spans full width behind both columns */
@@ -1644,6 +1644,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   inset: 0;
   pointer-events: none;
   z-index: 0;
+  overflow: hidden; /* Contain particles/orbs here instead of parent */
 }
 
 /* Two-column sticky layout */
