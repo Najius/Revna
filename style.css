@@ -871,16 +871,17 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   gap: 1.25rem;
 }
 .wearable-logos img {
-  height: 24px;
+  height: 22px;
   width: auto;
-  min-width: 24px;
   opacity: 0.5;
   filter: brightness(0) invert(1);
   transition: opacity 0.2s ease;
   object-fit: contain;
 }
 .wearable-logos img[alt="Garmin"] {
-  height: 28px;
+  height: 18px;
+  transform: scale(1.8);
+  margin: 0 0.5rem;
 }
 .wearable-logos img:hover {
   opacity: 0.9;
