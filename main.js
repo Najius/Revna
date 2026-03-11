@@ -733,9 +733,7 @@ document.addEventListener('DOMContentLoaded', () => {
           createConfetti();
 
           form.classList.add('submitted');
-          button.classList.remove('loading');
           button.classList.add('success');
-          button.innerHTML = '✓ Bienvenue dans la beta !';
 
           // Update spots count
           const spotsElement = document.getElementById('spots-left');
@@ -751,14 +749,19 @@ document.addEventListener('DOMContentLoaded', () => {
             });
           }
 
-          const successMsg = document.createElement('div');
-          successMsg.className = 'form-success';
-          successMsg.textContent = 'Check tes emails pour la suite.';
-          form.appendChild(successMsg);
+          // Create elegant success card
+          const successCard = document.createElement('div');
+          successCard.className = 'success-card';
+          successCard.innerHTML = `
+            <div class="success-icon">✓</div>
+            <div class="success-title">Bienvenue dans la beta !</div>
+            <div class="success-text">Tu recevras un email avec les <strong>prochaines étapes</strong> pour connecter ton wearable.</div>
+          `;
+          form.appendChild(successCard);
 
-          gsap.fromTo(successMsg,
-            { opacity: 0, y: 10 },
-            { opacity: 1, y: 0, duration: 0.5, delay: 0.3, ease: 'power3.out' }
+          gsap.fromTo(successCard,
+            { opacity: 0, y: 20, scale: 0.95 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'power3.out' }
           );
         } else {
           throw new Error('Erreur serveur');

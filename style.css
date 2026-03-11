@@ -522,29 +522,68 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   opacity: 0.8;
 }
 .waitlist-form button.success {
-  background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
-  pointer-events: none;
-  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
+  display: none;
 }
 .waitlist-form button.error {
   background: var(--red);
 }
 
-/* Success state - hide input, expand button */
+/* Success state - elegant card */
 .waitlist-form.submitted {
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  display: block;
+  max-width: 420px;
 }
-.waitlist-form.submitted input {
+.waitlist-form.submitted input,
+.waitlist-form.submitted button {
   display: none;
 }
-.waitlist-form.submitted button {
-  width: 100%;
-  max-width: 280px;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
+
+.success-card {
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+  border: 1px solid rgba(255, 107, 53, 0.3);
   border-radius: var(--radius-md);
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.success-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(255, 107, 53, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+.success-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 1rem;
+  background: linear-gradient(135deg, var(--orange) 0%, var(--turquoise) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  animation: success-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes success-pop {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.success-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+.success-text {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.success-text strong {
+  color: var(--orange);
 }
 
 .btn-spinner {
@@ -563,16 +602,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   border-color: var(--red);
 }
 .form-success {
-  padding: 0;
-  background: transparent;
-  border: none;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  display: none;
 }
 
 /* Confetti animation */
