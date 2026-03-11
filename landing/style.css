@@ -43,13 +43,18 @@ body {
 body::before {
   content: '';
   position: fixed;
-  inset: 0;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
   background-image: url('img/logo-revna.svg');
-  background-size: 120px;
+  background-size: 200px;
   background-repeat: repeat;
-  opacity: 0.018;
+  background-position: center;
+  opacity: 0.025;
   pointer-events: none;
   z-index: 0;
+  transform: rotate(-15deg);
+  filter: sepia(1) saturate(5) hue-rotate(-15deg);
 }
 img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
