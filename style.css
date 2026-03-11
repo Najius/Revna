@@ -355,7 +355,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 4;
+  z-index: 1; /* Behind the phone */
 }
 .data-flow-svg {
   position: absolute;
@@ -365,24 +365,45 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 }
 .data-flow-path {
   fill: none;
-  stroke: url(#data-flow-gradient);
-  stroke-width: 2;
+  stroke-width: 1.5;
   stroke-linecap: round;
-  stroke-dasharray: 8 12;
-  animation: data-flow-dash 2s linear infinite;
-  opacity: 0.4;
+  stroke-dasharray: 4 8;
+  animation: data-flow-dash 3s linear infinite;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.data-flow-path.visible {
+  opacity: 0.5;
+}
+.data-flow-path.turquoise {
+  stroke: var(--turquoise);
+  filter: drop-shadow(0 0 3px var(--turquoise));
+}
+.data-flow-path.orange {
+  stroke: var(--orange);
+  filter: drop-shadow(0 0 3px var(--orange));
+}
+.data-flow-path.purple {
+  stroke: var(--purple);
+  filter: drop-shadow(0 0 3px var(--purple));
 }
 @keyframes data-flow-dash {
-  0% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: -40; }
+  0% { stroke-dashoffset: 24; }
+  100% { stroke-dashoffset: 0; }
 }
 .data-dot {
+  r: 4;
   fill: var(--turquoise);
-  filter: drop-shadow(0 0 4px var(--turquoise));
+  filter: drop-shadow(0 0 6px var(--turquoise));
+  opacity: 0.9;
 }
-.data-dot-orange {
+.data-dot.orange {
   fill: var(--orange);
-  filter: drop-shadow(0 0 4px var(--orange));
+  filter: drop-shadow(0 0 6px var(--orange));
+}
+.data-dot.purple {
+  fill: var(--purple);
+  filter: drop-shadow(0 0 6px var(--purple));
 }
 .hero-content {
   position: relative;

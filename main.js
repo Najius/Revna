@@ -1095,89 +1095,154 @@ document.addEventListener('DOMContentLoaded', () => {
     const svgContainer = document.createElement('div');
     svgContainer.className = 'data-flow-container';
     svgContainer.innerHTML = `
-      <svg class="data-flow-svg" viewBox="0 0 800 700" preserveAspectRatio="none">
+      <svg class="data-flow-svg">
         <defs>
-          <linearGradient id="data-flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="var(--turquoise)" stop-opacity="0.2"/>
-            <stop offset="50%" stop-color="var(--turquoise)" stop-opacity="0.8"/>
-            <stop offset="100%" stop-color="var(--turquoise)" stop-opacity="0.2"/>
-          </linearGradient>
-          <linearGradient id="data-flow-gradient-orange" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="var(--orange)" stop-opacity="0.2"/>
-            <stop offset="50%" stop-color="var(--orange)" stop-opacity="0.8"/>
-            <stop offset="100%" stop-color="var(--orange)" stop-opacity="0.2"/>
-          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
         </defs>
         <g class="data-flow-paths"></g>
         <g class="data-dots"></g>
       </svg>
     `;
+    heroPhoneEl.style.position = 'relative';
     heroPhoneEl.insertBefore(svgContainer, heroPhoneEl.firstChild);
 
-    // Animate data dots flowing along paths
-    function createFlowingDot(pathElement, isOrange = false) {
-      const svg = svgContainer.querySelector('.data-flow-svg');
-      const dotsGroup = svg.querySelector('.data-dots');
+    const svg = svgContainer.querySelector('.data-flow-svg');
+    const pathsGroup = svg.querySelector('.data-flow-paths');
+    const dotsGroup = svg.querySelector('.data-dots');
 
+    // Create flowing dot animation
+    function createFlowingDot(pathElement, colorClass) {
       const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      dot.setAttribute('r', '3');
-      dot.setAttribute('class', isOrange ? 'data-dot-orange' : 'data-dot');
+      dot.setAttribute('r', '4');
+      dot.setAttribute('class', `data-dot ${colorClass}`);
+      dot.setAttribute('filter', 'url(#glow)');
       dotsGroup.appendChild(dot);
 
       const pathLength = pathElement.getTotalLength();
-      const duration = 2 + Math.random();
+      const duration = 2.5 + Math.random() * 1.5;
+      const delay = Math.random() * 2;
 
-      gsap.to({ progress: 0 }, {
-        progress: 1,
-        duration: duration,
-        ease: 'none',
-        repeat: -1,
-        onUpdate: function() {
-          const point = pathElement.getPointAtLength(this.targets()[0].progress * pathLength);
-          dot.setAttribute('cx', point.x);
-          dot.setAttribute('cy', point.y);
-        }
-      });
+      function animateDot() {
+        gsap.fromTo({ progress: 0 },
+          { progress: 0 },
+          {
+            progress: 1,
+            duration: duration,
+            delay: delay,
+            ease: 'none',
+            repeat: -1,
+            onUpdate: function() {
+              const point = pathElement.getPointAtLength(this.targets()[0].progress * pathLength);
+              dot.setAttribute('cx', point.x);
+              dot.setAttribute('cy', point.y);
+              // Fade in and out at ends
+              const progress = this.targets()[0].progress;
+              const opacity = progress < 0.1 ? progress * 10 : progress > 0.9 ? (1 - progress) * 10 : 1;
+              dot.setAttribute('opacity', opacity * 0.9);
+            }
+          }
+        );
+      }
+
+      animateDot();
     }
 
-    // Create paths after widgets are positioned
+    // Calculate path from widget to phone edge
+    function createPath(widgetEl, colorClass, phoneRect, containerRect) {
+      const widgetRect = widgetEl.getBoundingClientRect();
+
+      // Widget center
+      const wx = widgetRect.left - containerRect.left + widgetRect.width / 2;
+      const wy = widgetRect.top - containerRect.top + widgetRect.height / 2;
+
+      // Phone bounds relative to container
+      const phoneLeft = phoneRect.left - containerRect.left;
+      const phoneRight = phoneLeft + phoneRect.width;
+      const phoneTop = phoneRect.top - containerRect.top;
+      const phoneBottom = phoneTop + phoneRect.height;
+      const phoneCenterY = phoneTop + phoneRect.height / 2;
+
+      // Determine which edge of the phone to connect to
+      let targetX, targetY, controlX, controlY;
+
+      if (wx < phoneLeft) {
+        // Widget is on the left - connect to left edge
+        targetX = phoneLeft - 10;
+        targetY = Math.max(phoneTop + 50, Math.min(phoneBottom - 50, wy));
+        controlX = (wx + targetX) / 2;
+        controlY = wy + (targetY - wy) * 0.3;
+      } else if (wx > phoneRight) {
+        // Widget is on the right - connect to right edge
+        targetX = phoneRight + 10;
+        targetY = Math.max(phoneTop + 50, Math.min(phoneBottom - 50, wy));
+        controlX = (wx + targetX) / 2;
+        controlY = wy + (targetY - wy) * 0.3;
+      } else if (wy < phoneTop) {
+        // Widget is above - connect to top edge
+        targetX = Math.max(phoneLeft + 50, Math.min(phoneRight - 50, wx));
+        targetY = phoneTop - 10;
+        controlX = wx + (targetX - wx) * 0.3;
+        controlY = (wy + targetY) / 2;
+      } else {
+        // Widget is below - connect to bottom edge
+        targetX = Math.max(phoneLeft + 50, Math.min(phoneRight - 50, wx));
+        targetY = phoneBottom + 10;
+        controlX = wx + (targetX - wx) * 0.3;
+        controlY = (wy + targetY) / 2;
+      }
+
+      // Create smooth bezier curve
+      const pathD = `M ${wx} ${wy} Q ${controlX} ${controlY} ${targetX} ${targetY}`;
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', pathD);
+      path.setAttribute('class', `data-flow-path ${colorClass}`);
+
+      return path;
+    }
+
+    // Create all paths after widgets are positioned
     setTimeout(() => {
-      const pathsGroup = svgContainer.querySelector('.data-flow-paths');
-      const widgets = heroPhoneEl.querySelectorAll('.floating-widget');
-      const phoneRect = iphoneEl.getBoundingClientRect();
       const containerRect = heroPhoneEl.getBoundingClientRect();
+      const phoneRect = iphoneEl.getBoundingClientRect();
 
-      const phoneCenterX = phoneRect.left - containerRect.left + phoneRect.width / 2;
-      const phoneCenterY = phoneRect.top - containerRect.top + phoneRect.height / 2;
+      // Update SVG size
+      svg.style.width = containerRect.width + 'px';
+      svg.style.height = containerRect.height + 'px';
 
-      widgets.forEach((widget, index) => {
-        const widgetRect = widget.getBoundingClientRect();
-        const widgetCenterX = widgetRect.left - containerRect.left + widgetRect.width / 2;
-        const widgetCenterY = widgetRect.top - containerRect.top + widgetRect.height / 2;
+      // Widget configurations: element selector, color class
+      const widgetConfigs = [
+        { selector: '.floating-hrv', color: 'turquoise' },
+        { selector: '.floating-hr', color: 'orange' },
+        { selector: '.floating-sleep', color: 'purple' },
+        { selector: '.floating-steps', color: 'turquoise' },
+        { selector: '.floating-calories', color: 'orange' },
+        { selector: '.floating-stress', color: 'turquoise' },
+        { selector: '.smartwatch-float', color: 'turquoise' }
+      ];
 
-        // Create curved path
-        const midX = (widgetCenterX + phoneCenterX) / 2;
-        const midY = (widgetCenterY + phoneCenterY) / 2;
-        const curve = (Math.random() - 0.5) * 80;
+      widgetConfigs.forEach((config, index) => {
+        const widget = heroPhoneEl.querySelector(config.selector);
+        if (!widget) return;
 
-        const pathD = `M ${widgetCenterX} ${widgetCenterY} Q ${midX + curve} ${midY - curve} ${phoneCenterX} ${phoneCenterY}`;
-
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', pathD);
-        path.setAttribute('class', 'data-flow-path');
-        path.style.animationDelay = `${index * 0.3}s`;
-
-        // Alternate colors
-        if (index % 2 === 1) {
-          path.style.stroke = 'url(#data-flow-gradient-orange)';
-        }
-
+        const path = createPath(widget, config.color, phoneRect, containerRect);
+        path.style.animationDelay = `${index * 0.2}s`;
         pathsGroup.appendChild(path);
 
-        // Add flowing dots
+        // Fade in path
         setTimeout(() => {
-          createFlowingDot(path, index % 2 === 1);
-        }, 500 + index * 200);
+          path.classList.add('visible');
+
+          // Add flowing dots (2 per path for more visual interest)
+          createFlowingDot(path, config.color);
+          setTimeout(() => createFlowingDot(path, config.color), 1200);
+        }, 300 + index * 150);
       });
     }, 2500);
   }
