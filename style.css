@@ -29,7 +29,7 @@
   --border: rgba(255, 255, 255, 0.08);
   --border-light: rgba(255, 255, 255, 0.12);
 
-  --font-display: 'Space Grotesk', sans-serif;
+  --font-display: 'Syne', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
@@ -992,25 +992,25 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
     /* Moving glare spot */
     radial-gradient(
       ellipse 80% 50% at var(--glare-x) var(--glare-y),
-      rgba(255,255,255,0.2) 0%,
-      rgba(255,255,255,0.08) 30%,
+      rgba(255,255,255,0.15) 0%,
+      rgba(255,255,255,0.05) 30%,
       transparent 60%
     ),
     /* Static top reflection */
     linear-gradient(
       165deg,
-      rgba(255,255,255,0.12) 0%,
-      rgba(255,255,255,0.03) 15%,
+      rgba(255,255,255,0.08) 0%,
+      rgba(255,255,255,0.02) 15%,
       transparent 40%
     );
   pointer-events: none;
-  z-index: 100;
+  z-index: 50;
   border-radius: 38px;
-  opacity: 0.6;
+  opacity: 0.5;
   transition: opacity 0.4s ease;
 }
 .iphone-wrapper:hover .iphone-screen::before {
-  opacity: 1;
+  opacity: 0.8;
 }
 
 /* Ambient light reflection on edges */
@@ -1020,10 +1020,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   inset: 0;
   border-radius: 38px;
   box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.1),
-    inset 0 -1px 0 rgba(255,255,255,0.05);
+    inset 0 1px 1px rgba(255,255,255,0.08),
+    inset 0 -1px 0 rgba(255,255,255,0.03);
   pointer-events: none;
-  z-index: 101;
+  z-index: 51;
 }
 
 /* Dynamic Island */
