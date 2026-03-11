@@ -31,3 +31,6 @@ migrations/versions/__pycache__/
 
 # Redis
 dump.rdb
+
+# Local Netlify folder
+.netlify

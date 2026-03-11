@@ -34,8 +34,8 @@ export const handler = async (event, context) => {
       };
     }
 
-    // Connect to Neon
-    const sql = neon(process.env.DATABASE_URL);
+    // Connect to Neon (Netlify integration provides NETLIFY_DATABASE_URL)
+    const sql = neon(process.env.NETLIFY_DATABASE_URL);
 
     // Insert subscriber
     await sql`
