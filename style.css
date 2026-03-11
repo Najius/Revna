@@ -637,7 +637,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .waitlist-form {
   display: flex;
   gap: 0.5rem;
-  max-width: 420px;
+  max-width: 500px;
 }
 .input-wrapper {
   position: relative;
@@ -707,7 +707,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 /* Success state - elegant card */
 .waitlist-form.submitted {
   display: block;
-  max-width: 420px;
+  max-width: 500px;
 }
 .waitlist-form.submitted input,
 .waitlist-form.submitted button {
@@ -2199,7 +2199,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   margin-bottom: 2.5rem;
 }
 .cta .waitlist-form {
-  max-width: 420px;
+  max-width: 500px;
   margin: 0 auto;
 }
 
