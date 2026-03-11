@@ -12,112 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
   gsap.registerPlugin(ScrollTrigger);
 
   // ═══════════════════════════════════════════════════
-  // Navigation Interactions
-  // ═══════════════════════════════════════════════════
-
-  const nav = document.querySelector('.nav');
-  const navProgress = document.querySelector('.nav-progress');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  const hamburger = document.querySelector('.nav-hamburger');
-  const mobileMenu = document.querySelector('.mobile-menu');
-  const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
-
-  let lastScrollY = 0;
-  let ticking = false;
-
-  // Scroll handler for nav effects
-  const updateNav = () => {
-    const scrollY = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = (scrollY / docHeight) * 100;
-
-    // Progress bar
-    if (navProgress) {
-      navProgress.style.width = `${scrollPercent}%`;
-    }
-
-    // Scrolled state (blur effect)
-    if (scrollY > 50) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
-    }
-
-    // Hide/show on scroll direction
-    if (scrollY > 200) {
-      if (scrollY > lastScrollY && scrollY - lastScrollY > 5) {
-        nav.classList.add('hidden');
-      } else if (lastScrollY - scrollY > 5) {
-        nav.classList.remove('hidden');
-      }
-    } else {
-      nav.classList.remove('hidden');
-    }
-
-    lastScrollY = scrollY;
-    ticking = false;
-  };
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(updateNav);
-      ticking = true;
-    }
-  });
-
-  // Active section indicator
-  const navSectionIds = ['how', 'features'];
-  const observerOptions = {
-    root: null,
-    rootMargin: '-50% 0px -50% 0px',
-    threshold: 0
-  };
-
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        navLinks.forEach(link => {
-          if (link.getAttribute('data-section') === id) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
-        });
-      }
-    });
-  }, observerOptions);
-
-  navSectionIds.forEach(id => {
-    const section = document.getElementById(id);
-    if (section) sectionObserver.observe(section);
-  });
-
-  // Hamburger menu
-  if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      mobileMenu.classList.toggle('open');
-      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-    });
-
-    mobileMenuLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
-      });
-    });
-  }
-
-  // Sync nav spots with hero spots
-  const heroSpots = document.getElementById('spots-left');
-  const navSpots = document.getElementById('nav-spots');
-  if (heroSpots && navSpots) {
-    navSpots.textContent = heroSpots.textContent;
-  }
-
-  // ═══════════════════════════════════════════════════
   // Hero Title Word-by-Word Animation (keeps words intact)
   // ═══════════════════════════════════════════════════
 
@@ -166,33 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Clone children to avoid live collection issues
       Array.from(line.childNodes).forEach(child => processNode(child));
     });
-  }
-
-  // ═══════════════════════════════════════════════════
-  // Badge Countdown (Places Left)
-  // ═══════════════════════════════════════════════════
-
-  const spotsElement = document.getElementById('spots-left');
-  if (spotsElement) {
-    let spots = 47;
-
-    // Randomly decrease spots occasionally
-    setInterval(() => {
-      if (Math.random() > 0.7 && spots > 12) {
-        spots--;
-        gsap.to(spotsElement, {
-          scale: 1.3,
-          color: '#EF4444',
-          duration: 0.15,
-          yoyo: true,
-          repeat: 1,
-          ease: 'power2.out',
-          onStart: () => {
-            spotsElement.textContent = spots;
-          }
-        });
-      }
-    }, 8000);
   }
 
   // ═══════════════════════════════════════════════════
@@ -1197,9 +1064,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // ═══════════════════════════════════════════════════
 
   const heroPhoneEl = document.querySelector('.hero-phone');
-  const iphoneEl = document.querySelector('.iphone-frame');
+  const iphoneFrameEl = document.querySelector('.iphone-frame');
 
-  if (heroPhoneEl && iphoneEl) {
+  if (heroPhoneEl && iphoneFrameEl) {
     // Create SVG container for data flow lines
     const svgContainer = document.createElement('div');
     svgContainer.className = 'data-flow-container';
@@ -1218,7 +1085,6 @@ document.addEventListener('DOMContentLoaded', () => {
         <g class="data-dots"></g>
       </svg>
     `;
-    heroPhoneEl.style.position = 'relative';
     heroPhoneEl.insertBefore(svgContainer, heroPhoneEl.firstChild);
 
     const svg = svgContainer.querySelector('.data-flow-svg');
@@ -1263,45 +1129,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Calculate path from widget to phone edge
-    function createPath(widgetEl, colorClass, phoneRect, containerRect) {
+    function createPath(widgetEl, colorClass, phoneRect, offsetX, offsetY) {
       const widgetRect = widgetEl.getBoundingClientRect();
 
-      // Widget center
-      const wx = widgetRect.left - containerRect.left + widgetRect.width / 2;
-      const wy = widgetRect.top - containerRect.top + widgetRect.height / 2;
+      // Widget center (relative to SVG origin with offset)
+      const wx = widgetRect.left + widgetRect.width / 2 - offsetX;
+      const wy = widgetRect.top + widgetRect.height / 2 - offsetY;
 
-      // Phone bounds relative to container
-      const phoneLeft = phoneRect.left - containerRect.left;
+      // Phone bounds (relative to SVG origin with offset)
+      const phoneLeft = phoneRect.left - offsetX;
       const phoneRight = phoneLeft + phoneRect.width;
-      const phoneTop = phoneRect.top - containerRect.top;
+      const phoneTop = phoneRect.top - offsetY;
       const phoneBottom = phoneTop + phoneRect.height;
-      const phoneCenterY = phoneTop + phoneRect.height / 2;
 
       // Determine which edge of the phone to connect to
       let targetX, targetY, controlX, controlY;
 
       if (wx < phoneLeft) {
         // Widget is on the left - connect to left edge
-        targetX = phoneLeft - 10;
-        targetY = Math.max(phoneTop + 50, Math.min(phoneBottom - 50, wy));
+        targetX = phoneLeft + 5;
+        targetY = Math.max(phoneTop + 80, Math.min(phoneBottom - 80, wy));
         controlX = (wx + targetX) / 2;
         controlY = wy + (targetY - wy) * 0.3;
       } else if (wx > phoneRight) {
         // Widget is on the right - connect to right edge
-        targetX = phoneRight + 10;
-        targetY = Math.max(phoneTop + 50, Math.min(phoneBottom - 50, wy));
+        targetX = phoneRight - 5;
+        targetY = Math.max(phoneTop + 80, Math.min(phoneBottom - 80, wy));
         controlX = (wx + targetX) / 2;
         controlY = wy + (targetY - wy) * 0.3;
       } else if (wy < phoneTop) {
         // Widget is above - connect to top edge
         targetX = Math.max(phoneLeft + 50, Math.min(phoneRight - 50, wx));
-        targetY = phoneTop - 10;
+        targetY = phoneTop + 5;
         controlX = wx + (targetX - wx) * 0.3;
         controlY = (wy + targetY) / 2;
       } else {
         // Widget is below - connect to bottom edge
         targetX = Math.max(phoneLeft + 50, Math.min(phoneRight - 50, wx));
-        targetY = phoneBottom + 10;
+        targetY = phoneBottom - 5;
         controlX = wx + (targetX - wx) * 0.3;
         controlY = (wy + targetY) / 2;
       }
@@ -1318,12 +1183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Create all paths after widgets are positioned
     setTimeout(() => {
-      const containerRect = heroPhoneEl.getBoundingClientRect();
-      const phoneRect = iphoneEl.getBoundingClientRect();
-
-      // Update SVG size
-      svg.style.width = containerRect.width + 'px';
-      svg.style.height = containerRect.height + 'px';
+      const phoneRect = iphoneFrameEl.getBoundingClientRect();
 
       // Widget configurations: element selector, color class
       const widgetConfigs = [
@@ -1336,11 +1196,53 @@ document.addEventListener('DOMContentLoaded', () => {
         { selector: '.smartwatch-float', color: 'turquoise' }
       ];
 
-      widgetConfigs.forEach((config, index) => {
-        const widget = heroPhoneEl.querySelector(config.selector);
-        if (!widget) return;
+      // Get all widget elements that exist
+      const widgets = widgetConfigs
+        .map(config => ({ el: heroPhoneEl.querySelector(config.selector), config }))
+        .filter(item => item.el);
 
-        const path = createPath(widget, config.color, phoneRect, containerRect);
+      if (widgets.length === 0) return;
+
+      // Calculate bounding box that contains all widgets AND the phone
+      let minX = phoneRect.left;
+      let minY = phoneRect.top;
+      let maxX = phoneRect.right;
+      let maxY = phoneRect.bottom;
+
+      widgets.forEach(({ el }) => {
+        const rect = el.getBoundingClientRect();
+        minX = Math.min(minX, rect.left);
+        minY = Math.min(minY, rect.top);
+        maxX = Math.max(maxX, rect.right);
+        maxY = Math.max(maxY, rect.bottom);
+      });
+
+      // Add padding
+      const padding = 20;
+      minX -= padding;
+      minY -= padding;
+      maxX += padding;
+      maxY += padding;
+
+      const svgWidth = maxX - minX;
+      const svgHeight = maxY - minY;
+
+      // Position the SVG container to cover the full bounding box
+      const heroRect = heroPhoneEl.getBoundingClientRect();
+      svgContainer.style.position = 'absolute';
+      svgContainer.style.left = (minX - heroRect.left) + 'px';
+      svgContainer.style.top = (minY - heroRect.top) + 'px';
+      svgContainer.style.width = svgWidth + 'px';
+      svgContainer.style.height = svgHeight + 'px';
+
+      // Set SVG size
+      svg.setAttribute('width', svgWidth);
+      svg.setAttribute('height', svgHeight);
+      svg.setAttribute('viewBox', `0 0 ${svgWidth} ${svgHeight}`);
+
+      // Create paths for each widget
+      widgets.forEach(({ el, config }, index) => {
+        const path = createPath(el, config.color, phoneRect, minX, minY);
         path.style.animationDelay = `${index * 0.2}s`;
         pathsGroup.appendChild(path);
 
