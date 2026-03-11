@@ -880,8 +880,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 }
 .wearable-logos img[alt="Garmin"] {
   height: 18px;
-  transform: scale(2.8);
-  margin: 0 1.5rem;
+  transform: scale(3.5);
+  margin: 0 2rem;
 }
 .wearable-logos img:hover {
   opacity: 0.9;
