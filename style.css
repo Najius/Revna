@@ -406,6 +406,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   top: 100px;
   align-self: flex-start;
   perspective: 1000px;
+  /* Container for floating widgets */
+  position: relative;
 }
 
 .iphone-wrapper {
@@ -2086,10 +2088,10 @@ footer {
   pointer-events: none;
 }
 
-/* HRV floating widget */
+/* HRV floating widget - top right of phone */
 .floating-hrv {
-  right: 5%;
-  top: 20%;
+  right: -140px;
+  top: 20px;
   animation: float-widget 6s ease-in-out infinite;
 }
 .floating-hrv .widget-label {
@@ -2140,10 +2142,10 @@ footer {
   50% { transform: translateY(-12px) rotate(-1deg); }
 }
 
-/* Sleep score floating widget */
+/* Sleep score floating widget - bottom left of phone */
 .floating-sleep {
-  left: 3%;
-  bottom: 25%;
+  left: -160px;
+  bottom: 80px;
   animation: float-widget-alt 7s ease-in-out infinite;
 }
 .floating-sleep .sleep-ring-mini {
@@ -2244,10 +2246,10 @@ footer {
   color: var(--text-tertiary);
 }
 
-/* Heart rate floating widget */
+/* Heart rate floating widget - top left of phone */
 .floating-hr {
-  left: 10%;
-  top: 40%;
+  left: -130px;
+  top: 40px;
   animation: float-widget-alt 6s ease-in-out infinite 0.5s;
   display: flex;
   align-items: center;
@@ -2294,10 +2296,10 @@ footer {
   text-transform: uppercase;
 }
 
-/* Steps floating widget */
+/* Steps floating widget - right middle of phone */
 .floating-steps {
-  right: 12%;
-  top: 15%;
+  right: -130px;
+  top: 180px;
   animation: float-widget 8s ease-in-out infinite 2s;
 }
 .floating-steps .steps-row {
@@ -2334,10 +2336,10 @@ footer {
   margin-top: 4px;
 }
 
-/* Calories floating widget */
+/* Calories floating widget - bottom right of phone */
 .floating-calories {
-  left: 6%;
-  bottom: 15%;
+  right: -120px;
+  bottom: 100px;
   animation: float-widget-alt 7s ease-in-out infinite 1.5s;
 }
 .floating-calories .cal-row {
@@ -2379,10 +2381,10 @@ footer {
   color: var(--text-tertiary);
 }
 
-/* Stress floating widget */
+/* Stress floating widget - left middle of phone */
 .floating-stress {
-  right: 4%;
-  top: 55%;
+  left: -100px;
+  top: 220px;
   animation: float-widget 6s ease-in-out infinite 3s;
 }
 .floating-stress .stress-meter {
@@ -2435,20 +2437,20 @@ footer {
   }
 }
 
-@media (max-width: 900px) {
-  .floating-hrv,
-  .floating-sleep,
-  .floating-battery,
-  .floating-hr,
-  .floating-calories,
-  .floating-stress {
-    display: none;
+@media (max-width: 1100px) {
+  .floating-widget {
+    transform: scale(0.8);
   }
-  .floating-steps {
-    position: relative;
-    right: auto;
-    top: auto;
-    margin: 1rem auto;
-    width: fit-content;
+  .floating-hrv { right: -110px; }
+  .floating-sleep { left: -130px; }
+  .floating-hr { left: -100px; }
+  .floating-steps { right: -100px; }
+  .floating-calories { right: -90px; }
+  .floating-stress { left: -80px; }
+}
+
+@media (max-width: 900px) {
+  .floating-widget {
+    display: none;
   }
 }
