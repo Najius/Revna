@@ -556,6 +556,21 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   gap: 4rem;
   align-items: center;
 }
+/* Hero Badge New */
+.hero-badge-new {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+}
+
 /* Hero Logo */
 .hero-logo {
   display: inline-flex;
@@ -826,6 +841,52 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .hero-proof-text {
   font-size: 0.85rem;
   color: var(--text-secondary);
+}
+
+/* Hero Reassurance */
+.hero-reassurance {
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  margin-top: 1rem;
+}
+
+/* Hero Wearables */
+.hero-wearables {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.hero-wearables > span {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.wearable-logos {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.wearable-logos img {
+  height: 20px;
+  width: auto;
+  opacity: 0.6;
+  filter: brightness(0) invert(1);
+  transition: opacity 0.2s ease;
+}
+.wearable-logos img:hover {
+  opacity: 1;
+}
+.wearable-more {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--turquoise);
+  padding: 0.25rem 0.5rem;
+  background: var(--turquoise-glow);
+  border-radius: 4px;
 }
 
 /* ═══════════════════════════════════════════════════
