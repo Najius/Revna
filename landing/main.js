@@ -180,78 +180,142 @@ const chatMessages = [
       </div>
     `,
     time: '19:32',
-    delay: 800
+    delay: 600
   },
   {
     type: 'bot',
     content: `
       <p class="section-label">📊 Ce qu'il faut retenir</p>
       <ul class="insight-list">
-        <li><strong>Bonne allure</strong> — zone 3 bien tenue</li>
+        <li><strong>Bonne allure</strong> — zone 3 maîtrisée</li>
         <li><strong>Cadence stable</strong> — 174 spm</li>
         <li><strong>Charge +12%</strong> cette semaine</li>
       </ul>
     `,
     time: '19:32',
-    delay: 1500
+    delay: 1200
+  },
+  {
+    type: 'bot',
+    content: `
+      <p class="section-label">💡 Point d'amélioration</p>
+      <p>Ta FC monte vite dans les côtes. Travaille des intervalles en dénivelé pour progresser.</p>
+    `,
+    time: '19:32',
+    delay: 1000
   },
   {
     type: 'user',
-    content: `<p>Nickel ! Je fais quoi demain du coup ?</p>`,
+    content: `<p>Nickel ! Je fais quoi demain ?</p>`,
     time: '19:34',
+    delay: 1800
+  },
+  {
+    type: 'bot',
+    content: `
+      <p>Ton <strong>Body Battery est à 35</strong> et ta VFC est 15% sous ta baseline. Je te conseille :</p>
+      <div class="suggestion-cards">
+        <div class="suggestion-card">
+          <span class="suggestion-icon">🧘</span>
+          <span>Yoga 20min</span>
+        </div>
+        <div class="suggestion-card">
+          <span class="suggestion-icon">🚶</span>
+          <span>Marche 30min</span>
+        </div>
+      </div>
+    `,
+    time: '19:34',
+    delay: 1400
+  },
+  {
+    type: 'user',
+    content: `<p>Et si je veux courir quand même ?</p>`,
+    time: '19:35',
+    delay: 1600
+  },
+  {
+    type: 'bot',
+    content: `
+      <p>OK, mais <strong>zone 2 max</strong> — 30 min pas plus.</p>
+      <p class="tip">Je surveillerai ta FC et t'alerterai si tu dépasses.</p>
+    `,
+    time: '19:35',
+    delay: 1200
+  },
+  {
+    type: 'user',
+    content: `<p>D'accord ! Et pour mon sommeil cette nuit ?</p>`,
+    time: '19:36',
+    delay: 1800
+  },
+  {
+    type: 'bot',
+    class: 'sleep-insight',
+    content: `
+      <p class="section-label">😴 Analyse sommeil (nuit dernière)</p>
+      <div class="sleep-bars">
+        <div class="sleep-stage"><span class="sleep-label">Profond</span><div class="sleep-bar-track"><div class="sleep-bar" style="width: 22%"></div></div><span class="sleep-val">1h28</span></div>
+        <div class="sleep-stage"><span class="sleep-label">Léger</span><div class="sleep-bar-track"><div class="sleep-bar light" style="width: 55%"></div></div><span class="sleep-val">3h42</span></div>
+        <div class="sleep-stage"><span class="sleep-label">REM</span><div class="sleep-bar-track"><div class="sleep-bar rem" style="width: 23%"></div></div><span class="sleep-val">1h32</span></div>
+      </div>
+      <p class="tip">Ton sommeil profond est un peu court. Évite les écrans 1h avant de dormir.</p>
+    `,
+    time: '19:36',
+    delay: 1600
+  },
+  {
+    type: 'user',
+    content: `<p>Comment améliorer mon sommeil profond ?</p>`,
+    time: '19:38',
     delay: 2000
   },
   {
     type: 'bot',
     content: `
-      <p>Ton <strong>Body Battery est à 35</strong> et ta VFC est basse. Je te conseille :</p>
-      <div class="suggestion-cards">
-        <div class="suggestion-card">
-          <span class="suggestion-icon">🧘</span>
-          <span>Yoga ou mobilité</span>
-        </div>
-        <div class="suggestion-card">
-          <span class="suggestion-icon">🚶</span>
-          <span>Marche active 30min</span>
-        </div>
-      </div>
+      <p>Quelques conseils basés sur tes données :</p>
+      <ul class="insight-list">
+        <li><strong>Température</strong> — chambre à 18°C max</li>
+        <li><strong>Régularité</strong> — couche-toi à heure fixe</li>
+        <li><strong>Pas de sport</strong> après 20h</li>
+        <li><strong>Caféine</strong> — stop après 14h</li>
+      </ul>
     `,
-    time: '19:34',
-    delay: 1800
+    time: '19:38',
+    delay: 1400
   },
   {
     type: 'user',
-    content: `<p>Et si je veux quand même courir ?</p>`,
-    time: '19:35',
-    delay: 2200
+    content: `<p>Top, je teste ce soir !</p>`,
+    time: '19:39',
+    delay: 1400
   },
   {
     type: 'bot',
     content: `
-      <p>OK, mais reste en <strong>zone 2 max</strong> — 30 min, pas plus.</p>
-      <p class="tip">Je surveillerai ta FC en temps réel et t'alerterai si tu dépasses.</p>
+      <p>Parfait ! Je comparerai ta nuit avec tes précédentes. 📊</p>
       <div class="quick-actions">
-        <span class="quick-btn active">✓ Compris</span>
-        <span class="quick-btn">📅 Reporter à jeudi</span>
+        <span class="quick-btn active">🔔 Rappel 22h</span>
+        <span class="quick-btn">📖 En savoir plus</span>
       </div>
     `,
-    time: '19:35',
+    time: '19:39',
+    delay: 1200
+  },
+  {
+    type: 'user',
+    content: `<p>Merci Revna, t'es au top 🙌</p>`,
+    time: '19:40',
     delay: 1600
   },
   {
-    type: 'user',
-    content: `<p>Parfait, merci Revna 🙏</p>`,
-    time: '19:36',
-    delay: 1500
-  },
-  {
     type: 'bot',
     content: `
-      <p>De rien ! Bonne récup ce soir. 😊</p>
-      <p class="tip">Je t'envoie ton bilan sommeil demain matin.</p>
+      <p>Toujours là pour toi ! 💪</p>
+      <p class="tip">Bilan matinal demain à 7h30. Bonne soirée !</p>
     `,
-    time: '19:36',
-    delay: 1200
+    time: '19:40',
+    delay: 1000
   }
 ];
 

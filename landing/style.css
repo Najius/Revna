@@ -154,8 +154,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .hero {
   position: relative;
   min-height: 100vh;
-  padding: 8rem 2rem 4rem;
-  overflow: hidden;
+  padding: 8rem 2rem 6rem;
+  overflow: visible;
 }
 .hero-bg {
   position: absolute;
@@ -317,6 +317,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .hero-phone {
   display: flex;
   justify-content: center;
+  position: sticky;
+  top: 100px;
+  align-self: flex-start;
 }
 .phone {
   width: 300px;
@@ -387,7 +390,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-height: 380px;
+  max-height: 420px;
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -610,6 +613,54 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
     opacity: 1;
     transform: translateX(0) scale(1);
   }
+}
+
+/* ─── Sleep Visualization ─── */
+.sleep-insight {
+  background: linear-gradient(135deg, rgba(139, 111, 192, 0.15), rgba(255,255,255,0.08)) !important;
+  border: 1px solid rgba(139, 111, 192, 0.3);
+}
+.sleep-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 10px 0;
+}
+.sleep-stage {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+}
+.sleep-label {
+  width: 50px;
+  color: rgba(255,255,255,0.6);
+}
+.sleep-bar-track {
+  flex: 1;
+  height: 8px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.sleep-bar {
+  height: 100%;
+  background: var(--purple);
+  border-radius: 4px;
+  transition: width 0.8s ease-out;
+}
+.sleep-bar.light {
+  background: #A8D8EA;
+}
+.sleep-bar.rem {
+  background: var(--coral-light);
+}
+.sleep-val {
+  width: 35px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.7);
 }
 
 /* ═══════════════════════════════════════════════════
