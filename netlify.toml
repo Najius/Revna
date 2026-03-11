@@ -40,3 +40,5 @@
 # Netlify Functions directory (for database API)
 [functions]
   directory = "netlify/functions"
+  node_bundler = "esbuild"
+  included_files = ["node_modules/**"]
