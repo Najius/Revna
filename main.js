@@ -1,6 +1,6 @@
 /**
  * Revna — Landing Page Interactions
- * Lenis + GSAP + ScrollTrigger
+ * GSAP + ScrollTrigger (native scroll)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,21 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ═══════════════════════════════════════════════════
 
   gsap.registerPlugin(ScrollTrigger);
-
-  // ═══════════════════════════════════════════════════
-  // Lenis Smooth Scroll
-  // ═══════════════════════════════════════════════════
-
-  const lenis = new Lenis({
-    duration: 0.8,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smoothWheel: true,
-    wheelMultiplier: 1
-  });
-
-  // Connect Lenis to GSAP ticker (single update loop)
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
 
   // ═══════════════════════════════════════════════════
   // Split Text for H2 Titles
