@@ -611,4 +611,270 @@ document.addEventListener('DOMContentLoaded', () => {
     ease: 'none'
   });
 
+  // ═══════════════════════════════════════════════════
+  // How-it-works Icon Animations
+  // ═══════════════════════════════════════════════════
+
+  document.querySelectorAll('.how-card').forEach((card, index) => {
+    const icon = card.querySelector('.how-icon-wrap');
+    const svg = icon?.querySelector('svg');
+
+    if (icon && svg) {
+      // Floating animation for icons
+      gsap.to(icon, {
+        y: -5,
+        duration: 2 + index * 0.3,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        delay: index * 0.5
+      });
+
+      // Glow pulse effect
+      gsap.to(icon, {
+        boxShadow: '0 0 30px rgba(255, 107, 53, 0.4)',
+        duration: 1.5,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        delay: index * 0.3
+      });
+
+      // SVG path drawing on scroll
+      const paths = svg.querySelectorAll('path, rect, circle');
+      paths.forEach(path => {
+        if (path.getTotalLength) {
+          const length = path.getTotalLength();
+          gsap.set(path, {
+            strokeDasharray: length,
+            strokeDashoffset: length
+          });
+
+          ScrollTrigger.create({
+            trigger: card,
+            start: 'top 80%',
+            once: true,
+            onEnter: () => {
+              gsap.to(path, {
+                strokeDashoffset: 0,
+                duration: 1.5,
+                ease: 'power2.out',
+                delay: index * 0.2
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+
+  // ═══════════════════════════════════════════════════
+  // Bento Cards Enhanced Animations
+  // ═══════════════════════════════════════════════════
+
+  // Notification cards staggered animation
+  document.querySelectorAll('.notif-card').forEach((notif, index) => {
+    gsap.set(notif, { x: 50, opacity: 0 });
+
+    ScrollTrigger.create({
+      trigger: notif,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.to(notif, {
+          x: 0,
+          opacity: 1,
+          duration: 0.6,
+          delay: index * 0.15,
+          ease: 'power3.out'
+        });
+      }
+    });
+  });
+
+  // Readiness ring animation
+  const readinessRing = document.querySelector('.readiness-ring circle:last-child');
+  if (readinessRing) {
+    gsap.set(readinessRing, { strokeDashoffset: 314 });
+
+    ScrollTrigger.create({
+      trigger: '.readiness-display',
+      start: 'top 80%',
+      once: true,
+      onEnter: () => {
+        gsap.to(readinessRing, {
+          strokeDashoffset: 69,
+          duration: 1.5,
+          ease: 'power2.out'
+        });
+        // Animate the number
+        const readinessNum = document.querySelector('.readiness-num');
+        if (readinessNum) {
+          gsap.fromTo(readinessNum,
+            { textContent: 0 },
+            { textContent: 78, duration: 1.5, ease: 'power2.out', snap: { textContent: 1 } }
+          );
+        }
+      }
+    });
+  }
+
+  // HRV sparkline animation
+  const sparkline = document.querySelector('.hrv-sparkline polyline');
+  if (sparkline) {
+    const length = sparkline.getTotalLength();
+    gsap.set(sparkline, { strokeDasharray: length, strokeDashoffset: length });
+
+    ScrollTrigger.create({
+      trigger: '.hrv-sparkline',
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.to(sparkline, {
+          strokeDashoffset: 0,
+          duration: 2,
+          ease: 'power2.out'
+        });
+      }
+    });
+  }
+
+  // Training bars animation
+  document.querySelectorAll('.tmb').forEach((bar, index) => {
+    const targetHeight = bar.style.getPropertyValue('--h');
+    gsap.set(bar, { '--h': '0%' });
+
+    ScrollTrigger.create({
+      trigger: bar,
+      start: 'top 90%',
+      once: true,
+      onEnter: () => {
+        gsap.to(bar, {
+          '--h': targetHeight,
+          duration: 0.8,
+          delay: index * 0.1,
+          ease: 'power3.out'
+        });
+      }
+    });
+  });
+
+  // Sleep bars animation
+  document.querySelectorAll('.sbm').forEach((bar, index) => {
+    const targetWidth = bar.style.getPropertyValue('--w');
+    gsap.set(bar, { '--w': '0%' });
+
+    ScrollTrigger.create({
+      trigger: bar,
+      start: 'top 90%',
+      once: true,
+      onEnter: () => {
+        gsap.to(bar, {
+          '--w': targetWidth,
+          duration: 1,
+          delay: index * 0.2,
+          ease: 'power2.out'
+        });
+      }
+    });
+  });
+
+  // Empathy card animation
+  const empathyQ = document.querySelector('.empathy-q');
+  const empathyA = document.querySelector('.empathy-a');
+
+  if (empathyQ && empathyA) {
+    gsap.set(empathyA, { opacity: 0, y: 20 });
+
+    ScrollTrigger.create({
+      trigger: empathyQ,
+      start: 'top 80%',
+      once: true,
+      onEnter: () => {
+        gsap.to(empathyA, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: 0.4,
+          ease: 'power3.out'
+        });
+      }
+    });
+  }
+
+  // ═══════════════════════════════════════════════════
+  // Smartwatch Animation Enhancements
+  // ═══════════════════════════════════════════════════
+
+  const smartwatch = document.querySelector('.smartwatch');
+  if (smartwatch) {
+    // Data update simulation
+    const swValue = smartwatch.querySelector('.sw-value');
+    if (swValue) {
+      setInterval(() => {
+        const newValue = 75 + Math.floor(Math.random() * 8);
+        gsap.to(swValue, {
+          textContent: newValue,
+          duration: 0.3,
+          snap: { textContent: 1 }
+        });
+      }, 5000);
+    }
+  }
+
+  // ═══════════════════════════════════════════════════
+  // Testimonials Cards Parallax
+  // ═══════════════════════════════════════════════════
+
+  document.querySelectorAll('.testimonial-card').forEach((card, index) => {
+    gsap.to(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1
+      },
+      y: index % 2 === 0 ? -30 : 30,
+      ease: 'none'
+    });
+  });
+
+  // ═══════════════════════════════════════════════════
+  // Mouse Follower Glow Effect
+  // ═══════════════════════════════════════════════════
+
+  const glowFollower = document.createElement('div');
+  glowFollower.style.cssText = `
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 107, 53, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+    opacity: 0;
+  `;
+  document.body.appendChild(glowFollower);
+
+  let isInHero = false;
+  const heroSection = document.querySelector('.hero');
+
+  document.addEventListener('mousemove', (e) => {
+    if (heroSection) {
+      const heroRect = heroSection.getBoundingClientRect();
+      isInHero = e.clientY < heroRect.bottom;
+    }
+
+    gsap.to(glowFollower, {
+      x: e.clientX,
+      y: e.clientY,
+      duration: 0.5,
+      ease: 'power2.out'
+    });
+
+    glowFollower.style.opacity = isInHero ? '1' : '0';
+  });
+
 }); // End DOMContentLoaded

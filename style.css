@@ -50,6 +50,45 @@ body {
   overflow-x: hidden;
 }
 
+/* ─── Decorative Elements ─── */
+.dot-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+}
+.glow-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--turquoise), transparent);
+  opacity: 0.3;
+}
+.floating-shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.15;
+  animation: float-shape 20s ease-in-out infinite;
+}
+@keyframes float-shape {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(20px, -30px) rotate(90deg); }
+  50% { transform: translate(-10px, 20px) rotate(180deg); }
+  75% { transform: translate(30px, 10px) rotate(270deg); }
+}
+.pulse-ring {
+  position: absolute;
+  border: 1px solid var(--turquoise);
+  border-radius: 50%;
+  opacity: 0;
+  animation: pulse-ring 3s ease-out infinite;
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
 img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
@@ -1659,9 +1698,389 @@ footer {
   .testimonials-grid { grid-template-columns: 1fr; gap: 1.5rem; }
 }
 
+/* ═══════════════════════════════════════════════════
+   Smartwatch Visual
+   ═══════════════════════════════════════════════════ */
+.smartwatch-float {
+  position: absolute;
+  top: 30%;
+  left: -60px;
+  z-index: 10;
+  animation: float-watch 5s ease-in-out infinite;
+}
+@keyframes float-watch {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-15px) rotate(-3deg); }
+}
+.smartwatch {
+  width: 90px;
+  height: 110px;
+  background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 100%);
+  border-radius: 20px;
+  padding: 6px;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.4),
+    0 0 60px var(--turquoise-glow),
+    inset 0 1px 1px rgba(255,255,255,0.1);
+  position: relative;
+}
+.smartwatch::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 14px;
+  background: linear-gradient(180deg, #333 0%, #222 100%);
+  border-radius: 4px 4px 0 0;
+}
+.smartwatch::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 14px;
+  background: linear-gradient(180deg, #222 0%, #333 100%);
+  border-radius: 0 0 4px 4px;
+}
+.smartwatch-screen {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #0a0a0f 0%, #12121a 100%);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  gap: 4px;
+}
+.sw-time {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-tertiary);
+}
+.sw-metric {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sw-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.sw-value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+.sw-label {
+  font-size: 0.5rem;
+  color: var(--turquoise);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.sw-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 18px;
+  margin-top: 4px;
+}
+.sw-bars span {
+  width: 6px;
+  background: linear-gradient(180deg, var(--orange) 0%, var(--turquoise) 100%);
+  border-radius: 2px;
+  animation: sw-bar-pulse 2s ease-in-out infinite;
+}
+.sw-bars span:nth-child(1) { animation-delay: 0s; }
+.sw-bars span:nth-child(2) { animation-delay: 0.2s; }
+.sw-bars span:nth-child(3) { animation-delay: 0.4s; }
+.sw-bars span:nth-child(4) { animation-delay: 0.6s; }
+.sw-bars span:nth-child(5) { animation-delay: 0.8s; }
+@keyframes sw-bar-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+.sw-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 120px;
+  border: 1px solid var(--turquoise);
+  border-radius: 24px;
+  opacity: 0;
+  animation: sw-pulse-anim 3s ease-out infinite;
+}
+.sw-pulse-2 {
+  animation-delay: 1.5s;
+}
+@keyframes sw-pulse-anim {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════
+   Data Visualization Animations
+   ═══════════════════════════════════════════════════ */
+/* Animated gradient lines */
+.data-flow-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--turquoise), var(--orange), transparent);
+  background-size: 200% 100%;
+  animation: data-flow 3s linear infinite;
+}
+@keyframes data-flow {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Glowing dots */
+.glow-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--turquoise);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--turquoise), 0 0 20px var(--turquoise);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Animated icon wrapper */
+.icon-animated {
+  position: relative;
+}
+.icon-animated::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--orange-glow) 0%, transparent 70%);
+  opacity: 0;
+  animation: icon-glow 3s ease-in-out infinite;
+}
+@keyframes icon-glow {
+  0%, 100% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Floating particles */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--turquoise);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: particle-float 10s ease-in-out infinite;
+}
+@keyframes particle-float {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(30px, -20px); }
+  50% { transform: translate(10px, 30px); }
+  75% { transform: translate(-20px, 10px); }
+}
+
+/* Grid pattern animation */
+.grid-pattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: grid-shift 20s linear infinite;
+  pointer-events: none;
+}
+@keyframes grid-shift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(40px, 40px); }
+}
+
+/* Scanning line effect */
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--turquoise), transparent);
+  animation: scan 4s ease-in-out infinite;
+}
+@keyframes scan {
+  0%, 100% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Corner brackets decoration */
+.corner-bracket {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--turquoise);
+  opacity: 0.3;
+}
+.corner-bracket.top-left {
+  top: 0; left: 0;
+  border-right: none; border-bottom: none;
+}
+.corner-bracket.top-right {
+  top: 0; right: 0;
+  border-left: none; border-bottom: none;
+}
+.corner-bracket.bottom-left {
+  bottom: 0; left: 0;
+  border-right: none; border-top: none;
+}
+.corner-bracket.bottom-right {
+  bottom: 0; right: 0;
+  border-left: none; border-top: none;
+}
+
+/* ═══════════════════════════════════════════════════
+   Section Decorations
+   ═══════════════════════════════════════════════════ */
+.section-deco {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Stats section enhancements */
+.stats {
+  position: relative;
+  overflow: hidden;
+}
+.stats .floating-shape-1 {
+  position: absolute;
+  top: 20%;
+  left: -5%;
+  width: 200px;
+  height: 200px;
+  background: var(--orange);
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.1;
+}
+.stats .floating-shape-2 {
+  position: absolute;
+  bottom: 10%;
+  right: -5%;
+  width: 150px;
+  height: 150px;
+  background: var(--turquoise);
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.1;
+}
+
+/* How section decorations */
+.how {
+  position: relative;
+  overflow: hidden;
+}
+.how .grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+}
+.how-card .how-icon-wrap {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.how-card:hover .how-icon-wrap {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 0 30px var(--orange-glow);
+}
+
+/* Features section glow lines */
+.features {
+  position: relative;
+}
+.features::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--turquoise) 50%, transparent 100%);
+  opacity: 0.1;
+}
+.features::after {
+  content: '';
+  position: absolute;
+  bottom: 30%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--orange) 50%, transparent 100%);
+  opacity: 0.1;
+}
+
+/* Bento card enhancements */
+.bento-card {
+  position: relative;
+  overflow: hidden;
+}
+.bento-card .scan-effect {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+  animation: bento-scan 5s ease-in-out infinite;
+}
+@keyframes bento-scan {
+  0% { left: -100%; }
+  50%, 100% { left: 200%; }
+}
+
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .hero-gradient-orb { animation: none; }
   .iphone-wrapper { animation: none; }
   .typing-indicator span { animation: none; opacity: 0.5; }
+  .smartwatch-float { animation: none; transform: rotate(-5deg); }
+  .sw-bars span { animation: none; opacity: 0.8; }
+  .sw-pulse { animation: none; display: none; }
+  .particle { animation: none; }
+  .grid-pattern { animation: none; }
+  .scan-line { animation: none; display: none; }
+  .bento-card .scan-effect { animation: none; display: none; }
+}
+
+/* Smartwatch responsive */
+@media (max-width: 900px) {
+  .smartwatch-float {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: 0 auto 2rem;
+    transform: rotate(0deg);
+    animation: float-watch-mobile 4s ease-in-out infinite;
+  }
+  @keyframes float-watch-mobile {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+@media (max-width: 600px) {
+  .smartwatch-float { display: none; }
 }
