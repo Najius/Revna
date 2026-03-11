@@ -715,10 +715,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function runChatAnimation() {
     const chat = document.getElementById('hero-chat');
-    if (!chat) return;
+    if (!chat) {
+      console.error('Chat element not found');
+      return;
+    }
 
     let messageIndex = 0;
-    chat.innerHTML = '';
 
     function showNextMessage() {
       if (messageIndex >= chatMessages.length) {
@@ -756,7 +758,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    setTimeout(showNextMessage, 1500);
+    // Start after a short delay, don't clear initial content immediately
+    setTimeout(() => {
+      chat.innerHTML = '';
+      showNextMessage();
+    }, 2000);
   }
 
   runChatAnimation();
