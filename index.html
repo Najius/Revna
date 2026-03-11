@@ -367,6 +367,9 @@
           </div>
           <h3>Connecte ton wearable</h3>
           <p>Garmin, Apple Watch, Oura, Whoop&hellip; Connexion en 30 secondes via Terra API.</p>
+          <div class="how-connector" aria-hidden="true">
+            <svg viewBox="0 0 100 20"><path d="M0 10 H90 M85 5 L95 10 L85 15" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+          </div>
         </div>
         <div class="how-card reveal delay-2">
           <div class="how-num">02</div>
@@ -377,10 +380,13 @@
           </div>
           <h3>Revna analyse en continu</h3>
           <p>Sessions sport, sommeil, stress, récupération. Tes baselines se calibrent en 14 jours.</p>
+          <div class="how-connector" aria-hidden="true">
+            <svg viewBox="0 0 100 20"><path d="M0 10 H90 M85 5 L95 10 L85 15" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+          </div>
         </div>
         <div class="how-card reveal delay-3">
           <div class="how-num">03</div>
-          <div class="how-icon-wrap">
+          <div class="how-icon-wrap how-icon-final">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -534,11 +540,14 @@
       </div>
       <div class="testimonials-grid">
         <div class="testimonial-card reveal delay-1">
+          <div class="testimonial-quote" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
+          </div>
           <div class="testimonial-content">
             <p>"Avant, je checkais Garmin Connect 10 fois par jour sans rien comprendre. Maintenant <strong>Revna me dit exactement quoi faire</strong>. Game changer."</p>
           </div>
           <div class="testimonial-author">
-            <div class="testimonial-avatar" style="background: #E8B4B8;">M</div>
+            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #E8B4B8, #D4A5A5);">M</div>
             <div class="testimonial-info">
               <span class="testimonial-name">Mathieu L.</span>
               <span class="testimonial-role">Traileur, Garmin Fenix 7</span>
@@ -546,11 +555,14 @@
           </div>
         </div>
         <div class="testimonial-card reveal delay-2">
+          <div class="testimonial-quote" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
+          </div>
           <div class="testimonial-content">
             <p>"Le message sur mon sommeil m'a fait réaliser que mes insomnies venaient du sport trop tard. <strong>3 semaines plus tard, je dors enfin.</strong>"</p>
           </div>
           <div class="testimonial-author">
-            <div class="testimonial-avatar" style="background: #A8D8EA;">T</div>
+            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #A8D8EA, #87CEEB);">T</div>
             <div class="testimonial-info">
               <span class="testimonial-name">Thomas R.</span>
               <span class="testimonial-role">Développeur, Suunto 9</span>
@@ -558,11 +570,14 @@
           </div>
         </div>
         <div class="testimonial-card reveal delay-3">
+          <div class="testimonial-quote" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
+          </div>
           <div class="testimonial-content">
             <p>"J'adore recevoir mon bilan matinal. C'est comme avoir un <strong>coach perso qui connaît mes données</strong> mieux que moi."</p>
           </div>
           <div class="testimonial-author">
-            <div class="testimonial-avatar" style="background: #C3B1E1;">L</div>
+            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #C3B1E1, #A855F7);">L</div>
             <div class="testimonial-info">
               <span class="testimonial-name">Laura M.</span>
               <span class="testimonial-role">Triathlète, Coros Pace 3</span>
@@ -574,7 +589,12 @@
 
     <!-- ════ CTA ════ -->
     <section class="cta">
+      <div class="cta-bg" aria-hidden="true">
+        <div class="cta-orb cta-orb-1"></div>
+        <div class="cta-orb cta-orb-2"></div>
+      </div>
       <div class="cta-content reveal">
+        <div class="cta-badge">Places limitées</div>
         <p class="cta-origin">
           <span class="cta-em">Revna</span> &mdash; vieux norrois pour &laquo;&nbsp;corbeau&nbsp;&raquo;.<br>
           Les corbeaux d'Odin survolaient le monde et rapportaient ce qu'ils voyaient.
@@ -583,10 +603,17 @@
           Celui-ci surveille<br>
           <span class="accent">ton corps.</span>
         </h2>
-        <form class="waitlist-form" action="https://formspree.io/f/XXXXXXXX" method="POST">
-          <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email" aria-label="Email">
+        <form class="waitlist-form cta-form" action="https://formspree.io/f/XXXXXXXX" method="POST">
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <input type="email" name="email" placeholder="ton@email.com" required autocomplete="email" aria-label="Email">
+          </div>
           <button type="submit">Accéder à la beta</button>
         </form>
+        <p class="cta-reassurance">Gratuit pendant la beta • Aucune carte requise</p>
       </div>
     </section>
 
@@ -594,11 +621,32 @@
 
   <footer>
     <div class="footer-content">
-      <span class="footer-brand">
-        <img src="img/logo-revna.svg" alt="Revna" class="footer-logo">
-        Revna
-      </span>
-      <span class="footer-copy">&copy; 2026 Antigravity</span>
+      <div class="footer-main">
+        <span class="footer-brand">
+          <img src="img/logo-revna.svg" alt="Revna" class="footer-logo">
+          Revna
+        </span>
+        <p class="footer-tagline">Ton wearable, enfin utile.</p>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:hello@revna.app" class="footer-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          Contact
+        </a>
+        <a href="https://twitter.com/revna_app" target="_blank" rel="noopener" class="footer-link">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+          Twitter
+        </a>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2026 Antigravity</span>
+        <span class="footer-made">Fait avec 🧡 pour les athlètes</span>
+      </div>
     </div>
   </footer>
 
