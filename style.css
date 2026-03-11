@@ -413,17 +413,20 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .iphone-wrapper {
   position: relative;
   transform-style: preserve-3d;
-  animation: float-phone 6s ease-in-out infinite;
+  animation: float-phone 8s ease-in-out infinite;
   cursor: grab;
-  transition: transform 0.1s ease-out;
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .iphone-wrapper:active {
   cursor: grabbing;
 }
 
 @keyframes float-phone {
-  0%, 100% { transform: rotateY(-8deg) rotateX(2deg) translateY(0); }
-  50% { transform: rotateY(-8deg) rotateX(2deg) translateY(-10px); }
+  0% { transform: rotateY(-12deg) rotateX(4deg) translateY(0) translateZ(0); }
+  25% { transform: rotateY(-8deg) rotateX(2deg) translateY(-8px) translateZ(10px); }
+  50% { transform: rotateY(-5deg) rotateX(5deg) translateY(-12px) translateZ(20px); }
+  75% { transform: rotateY(-10deg) rotateX(3deg) translateY(-6px) translateZ(5px); }
+  100% { transform: rotateY(-12deg) rotateX(4deg) translateY(0) translateZ(0); }
 }
 
 .iphone {
@@ -434,19 +437,28 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .iphone-frame {
   width: 290px;
   height: 590px;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 40%, #0d0d0d 100%);
   border-radius: 46px;
   padding: 10px;
   position: relative;
   box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.1),
-    inset 0 -1px 1px rgba(0,0,0,0.3),
-    0 0 0 1px rgba(255,255,255,0.1),
-    -5px 5px 15px rgba(0,0,0,0.3),
-    -10px 10px 30px rgba(0,0,0,0.25),
-    -20px 20px 60px rgba(0,0,0,0.2),
-    0 0 100px var(--orange-glow);
+    /* Inner highlights */
+    inset 0 1px 2px rgba(255,255,255,0.15),
+    inset 0 -1px 2px rgba(0,0,0,0.4),
+    inset 1px 0 1px rgba(255,255,255,0.05),
+    /* Bezel edge */
+    0 0 0 1px rgba(255,255,255,0.08),
+    /* Layered shadows for depth */
+    -2px 2px 8px rgba(0,0,0,0.4),
+    -8px 8px 20px rgba(0,0,0,0.35),
+    -16px 16px 40px rgba(0,0,0,0.3),
+    -24px 24px 60px rgba(0,0,0,0.25),
+    -32px 32px 80px rgba(0,0,0,0.2),
+    /* Colored glow */
+    0 0 80px rgba(255, 107, 53, 0.15),
+    0 0 120px rgba(6, 182, 212, 0.1);
   transform-style: preserve-3d;
+  transform: translateZ(0);
 }
 
 .iphone-frame::before {
@@ -510,24 +522,47 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   --glare-x: 30%;
   --glare-y: 30%;
 }
+/* Screen reflection/glare effect */
 .iphone-screen::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at var(--glare-x) var(--glare-y),
-    rgba(255,255,255,0.15) 0%,
-    rgba(255,255,255,0.05) 20%,
-    transparent 50%
-  );
+  background:
+    /* Moving glare spot */
+    radial-gradient(
+      ellipse 80% 50% at var(--glare-x) var(--glare-y),
+      rgba(255,255,255,0.2) 0%,
+      rgba(255,255,255,0.08) 30%,
+      transparent 60%
+    ),
+    /* Static top reflection */
+    linear-gradient(
+      165deg,
+      rgba(255,255,255,0.12) 0%,
+      rgba(255,255,255,0.03) 15%,
+      transparent 40%
+    );
   pointer-events: none;
   z-index: 100;
   border-radius: 38px;
-  opacity: 0;
-  transition: opacity 0.3s;
+  opacity: 0.6;
+  transition: opacity 0.4s ease;
 }
 .iphone-wrapper:hover .iphone-screen::before {
   opacity: 1;
+}
+
+/* Ambient light reflection on edges */
+.iphone-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 38px;
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.1),
+    inset 0 -1px 0 rgba(255,255,255,0.05);
+  pointer-events: none;
+  z-index: 101;
 }
 
 /* Dynamic Island */
@@ -702,13 +737,28 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 /* 3D Shadow beneath phone */
 .iphone-shadow {
   position: absolute;
-  bottom: -30px;
+  bottom: -40px;
   left: 50%;
   transform: translateX(-50%) rotateX(80deg);
-  width: 200px;
-  height: 40px;
-  background: radial-gradient(ellipse, rgba(255, 107, 53, 0.3) 0%, transparent 70%);
-  filter: blur(15px);
+  width: 260px;
+  height: 60px;
+  background:
+    radial-gradient(ellipse 100% 100% at center, rgba(0, 0, 0, 0.5) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at center, rgba(255, 107, 53, 0.25) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 60% at center, rgba(6, 182, 212, 0.15) 0%, transparent 60%);
+  filter: blur(20px);
+  animation: shadow-pulse 8s ease-in-out infinite;
+}
+
+@keyframes shadow-pulse {
+  0%, 100% {
+    transform: translateX(-50%) rotateX(80deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) rotateX(80deg) scale(1.1);
+    opacity: 0.8;
+  }
 }
 .chat {
   flex: 1;

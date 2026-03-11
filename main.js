@@ -233,32 +233,97 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ═══════════════════════════════════════════════════
-  // 3D iPhone Mouse Tracking
+  // 3D iPhone Mouse Tracking (Enhanced)
   // ═══════════════════════════════════════════════════
 
   const iphoneWrapper = document.querySelector('.iphone-wrapper');
   const heroPhone = document.querySelector('.hero-phone');
   const iphoneScreen = document.querySelector('.iphone-screen');
+  const iphoneShadow = document.querySelector('.iphone-shadow');
 
   if (iphoneWrapper && heroPhone) {
     let isHovering = false;
+    let animationFrame;
+
+    // Smooth mouse tracking with lerp
+    let currentRotateX = 4;
+    let currentRotateY = -12;
+    let targetRotateX = 4;
+    let targetRotateY = -12;
+
+    function updatePhonePosition() {
+      // Lerp towards target
+      currentRotateX += (targetRotateX - currentRotateX) * 0.08;
+      currentRotateY += (targetRotateY - currentRotateY) * 0.08;
+
+      if (isHovering) {
+        iphoneWrapper.style.transform = `
+          rotateY(${currentRotateY}deg)
+          rotateX(${currentRotateX}deg)
+          translateZ(30px)
+        `;
+
+        // Move shadow based on rotation
+        if (iphoneShadow) {
+          const shadowX = -currentRotateY * 2;
+          const shadowScale = 1 + Math.abs(currentRotateY) * 0.01;
+          iphoneShadow.style.transform = `translateX(calc(-50% + ${shadowX}px)) rotateX(80deg) scale(${shadowScale})`;
+        }
+      }
+
+      animationFrame = requestAnimationFrame(updatePhonePosition);
+    }
 
     heroPhone.addEventListener('mouseenter', () => {
       isHovering = true;
       iphoneWrapper.style.animation = 'none';
+      updatePhonePosition();
     });
 
     heroPhone.addEventListener('mouseleave', () => {
       isHovering = false;
+      cancelAnimationFrame(animationFrame);
+
       gsap.to(iphoneWrapper, {
-        rotateY: -8,
-        rotateX: 2,
-        duration: 0.6,
-        ease: 'power3.out',
+        rotateY: -12,
+        rotateX: 4,
+        translateZ: 0,
+        duration: 0.8,
+        ease: 'elastic.out(1, 0.5)',
         onComplete: () => {
-          iphoneWrapper.style.animation = 'float-phone 6s ease-in-out infinite';
+          iphoneWrapper.style.animation = 'float-phone 8s ease-in-out infinite';
         }
       });
+
+      // Reset shadow
+      if (iphoneShadow) {
+        gsap.to(iphoneShadow, {
+          x: 0,
+          scale: 1,
+          duration: 0.8,
+          ease: 'elastic.out(1, 0.5)'
+        });
+        iphoneShadow.style.transform = '';
+        iphoneShadow.style.animation = 'shadow-pulse 8s ease-in-out infinite';
+      }
+
+      // Reset glare
+      if (iphoneScreen) {
+        gsap.to({}, {
+          duration: 0.5,
+          onUpdate: function() {
+            const progress = this.progress();
+            const glareX = (50 + targetRotateY * 2) + (50 - (50 + targetRotateY * 2)) * progress;
+            const glareY = (50 - targetRotateX * 2) + (30 - (50 - targetRotateX * 2)) * progress;
+            iphoneScreen.style.setProperty('--glare-x', `${glareX}%`);
+            iphoneScreen.style.setProperty('--glare-y', `${glareY}%`);
+          }
+        });
+      }
+
+      // Reset tracking
+      targetRotateX = 4;
+      targetRotateY = -12;
     });
 
     heroPhone.addEventListener('mousemove', (e) => {
@@ -271,20 +336,35 @@ document.addEventListener('DOMContentLoaded', () => {
       const mouseX = (e.clientX - centerX) / (rect.width / 2);
       const mouseY = (e.clientY - centerY) / (rect.height / 2);
 
-      gsap.to(iphoneWrapper, {
-        rotateY: mouseX * 15,
-        rotateX: -mouseY * 10,
-        duration: 0.3,
-        ease: 'power2.out'
-      });
+      // Set target rotation (more dramatic)
+      targetRotateY = mouseX * 25;
+      targetRotateX = -mouseY * 15;
 
+      // Update glare position
       if (iphoneScreen) {
-        const glareX = 50 + mouseX * 30;
-        const glareY = 50 + mouseY * 30;
+        const glareX = 50 + mouseX * 40;
+        const glareY = 50 + mouseY * 40;
         iphoneScreen.style.setProperty('--glare-x', `${glareX}%`);
         iphoneScreen.style.setProperty('--glare-y', `${glareY}%`);
       }
     });
+
+    // Add gyroscope support for mobile
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', (e) => {
+        if (!e.gamma || !e.beta) return;
+
+        const tiltX = Math.max(-30, Math.min(30, e.gamma)) / 30;
+        const tiltY = Math.max(-30, Math.min(30, e.beta - 45)) / 30;
+
+        gsap.to(iphoneWrapper, {
+          rotateY: tiltX * 15,
+          rotateX: tiltY * 10,
+          duration: 0.5,
+          ease: 'power2.out'
+        });
+      });
+    }
   }
 
   // ═══════════════════════════════════════════════════
