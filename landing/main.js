@@ -120,14 +120,63 @@ window.addEventListener('scroll', () => {
 
 document.querySelectorAll('.waitlist-form').forEach((form) => {
   const button = form.querySelector('button[type="submit"]');
-  if (button) {
-    button.addEventListener('click', () => {
-      button.style.pointerEvents = 'none';
+  const input = form.querySelector('input[type="email"]');
+  const originalButtonText = button ? button.textContent : '';
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!input.value || !input.validity.valid) {
+      input.classList.add('error');
+      input.focus();
+      setTimeout(() => input.classList.remove('error'), 1000);
+      return;
+    }
+
+    // Show loading state
+    button.disabled = true;
+    button.innerHTML = '<span class="btn-spinner"></span>';
+    button.classList.add('loading');
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        // Success state
+        button.classList.remove('loading');
+        button.classList.add('success');
+        button.innerHTML = '✓ Inscrit !';
+        input.value = '';
+        input.disabled = true;
+
+        // Show success message
+        const successMsg = document.createElement('div');
+        successMsg.className = 'form-success';
+        successMsg.innerHTML = '🎉 Bienvenue dans la beta ! Check tes emails.';
+        form.appendChild(successMsg);
+
+        // Animate in
+        setTimeout(() => successMsg.classList.add('visible'), 10);
+      } else {
+        throw new Error('Erreur serveur');
+      }
+    } catch (error) {
+      // Error state
+      button.classList.remove('loading');
+      button.classList.add('error');
+      button.textContent = 'Erreur, réessaie';
+
       setTimeout(() => {
-        button.style.pointerEvents = 'auto';
-      }, 2000);
-    });
-  }
+        button.classList.remove('error');
+        button.disabled = false;
+        button.textContent = originalButtonText;
+      }, 3000);
+    }
+  });
 });
 
 // ═══════════════════════════════════════════════════
