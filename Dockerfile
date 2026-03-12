@@ -18,5 +18,10 @@ COPY . .
 # Expose port
 EXPOSE 8000
 
-# Run migrations and start server
-CMD ["sh", "-c", "alembic upgrade head && uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# Run with verbose output
+CMD echo "=== Starting Revna ===" && \
+    echo "DATABASE_URL starts with: ${DATABASE_URL:0:30}" && \
+    echo "=== Running migrations ===" && \
+    alembic upgrade head 2>&1 && \
+    echo "=== Starting uvicorn ===" && \
+    uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}
