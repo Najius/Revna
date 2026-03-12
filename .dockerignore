@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# Environment files (use Railway variables instead)
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+.pytest_cache
+.ruff_cache
+*.egg-info
+dist
+build
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Node (frontend only)
+node_modules
+
+# Docs
+*.md
+!README.md
+
+# Tests
+tests
+*_test.py
+test_*.py
