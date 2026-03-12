@@ -7,7 +7,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.database import get_db
 from backend.models.user import User
-from backend.services.telegram import handle_start_command, process_reply, send_telegram
+from backend.services.telegram import (
+    handle_start_command,
+    handle_connect_command,
+    process_reply,
+    send_telegram,
+)
 from backend.services.wearable import process_terra_webhook, verify_terra_signature
 
 logger = structlog.get_logger()
@@ -39,6 +44,11 @@ async def telegram_webhook(request: Request, db: AsyncSession = Depends(get_db))
     # /start command — onboarding
     if text.startswith("/start"):
         await handle_start_command(db, chat_id, username)
+        return {"ok": True}
+
+    # /connect command — wearable connection
+    if text.startswith("/connect"):
+        await handle_connect_command(db, chat_id)
         return {"ok": True}
 
     # Look up user by chat_id

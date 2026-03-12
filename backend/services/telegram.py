@@ -41,6 +41,7 @@ from backend.services.tracking import (
     get_recent_conversations,
     can_reply_conversation,
 )
+from backend.services.wearable import generate_widget_session
 from backend.models.user import User
 from backend.models.feeling import Feeling
 
@@ -587,7 +588,8 @@ async def handle_start_command(
         await send_telegram(
             chat_id,
             f"Salut <b>{existing.name}</b> ! Je suis toujours la. "
-            f"Ecris-moi quand tu veux, je suis a l'ecoute.",
+            f"Ecris-moi quand tu veux, je suis a l'ecoute.\n\n"
+            f"Tape /connect pour connecter un wearable.",
         )
         return
 
@@ -606,9 +608,53 @@ async def handle_start_command(
         f"Bienvenue <b>{name}</b> ! Je suis Revna, ton coach sante personnel.\n\n"
         "Je vais t'accompagner au quotidien en analysant tes donnees de sante "
         "(sommeil, stress, activite) pour t'envoyer des conseils personnalises.\n\n"
-        "Pour commencer, connecte ton wearable (Garmin, Apple Watch, Oura...) "
-        "et je commencerai a t'envoyer des bilans chaque matin.\n\n"
+        "Pour commencer, tape /connect pour connecter ton wearable "
+        "(Garmin, Apple Watch, Oura, Whoop...).\n\n"
         "Tu peux m'ecrire a tout moment — je suis la pour toi."
     )
     await send_telegram(chat_id, welcome)
     logger.info("New user onboarded: %s (chat_id=%d)", name, chat_id)
+
+
+async def handle_connect_command(db: AsyncSession, chat_id: int) -> None:
+    """Handle /connect command — generate wearable connection link."""
+    result = await db.execute(
+        select(User).where(User.telegram_chat_id == chat_id)
+    )
+    user = result.scalar_one_or_none()
+
+    if not user:
+        await send_telegram(
+            chat_id,
+            "Je ne te connais pas encore ! Envoie /start pour commencer.",
+        )
+        return
+
+    # Check if already connected
+    if user.terra_user_id:
+        await send_telegram(
+            chat_id,
+            "Tu as deja un wearable connecte. "
+            "Si tu veux en ajouter un autre, utilise le lien ci-dessous.",
+        )
+
+    # Generate Terra widget session
+    session = await generate_widget_session(reference_id=str(user.id))
+    if not session or not session.get("url"):
+        await send_telegram(
+            chat_id,
+            "Desole, je n'ai pas pu generer le lien de connexion. "
+            "Reessaie dans quelques minutes.",
+        )
+        return
+
+    widget_url = session["url"]
+    await send_telegram(
+        chat_id,
+        f"Pour connecter ton wearable, clique sur ce lien:\n\n"
+        f"{widget_url}\n\n"
+        "Tu pourras choisir parmi 150+ appareils: Garmin, Apple Watch, "
+        "Oura, Whoop, Fitbit, Polar, Suunto...\n\n"
+        "Une fois connecte, je commencerai a recevoir tes donnees automatiquement.",
+    )
+    logger.info("Widget session created for user %s", user.name)

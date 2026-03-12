@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion — Revna</title>
+  <meta name="description" content="Connecte-toi à Revna pour configurer ton coach santé personnel.">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <meta name="theme-color" content="#0a0a0f">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card-hover: rgba(255, 255, 255, 0.06);
+      --text: #f5f5f7;
+      --text-secondary: rgba(255, 255, 255, 0.6);
+      --orange: #FF6B35;
+      --turquoise: #00D9C0;
+      --purple: #A855F7;
+      --coral: #FF7676;
+      --telegram-blue: #0088cc;
+      --border: rgba(255, 255, 255, 0.08);
+      --gradient: linear-gradient(135deg, var(--orange) 0%, var(--coral) 50%, var(--turquoise) 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Background */
+    .onboarding-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .onboarding-bg::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(255, 107, 53, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(0, 217, 192, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.04) 0%, transparent 50%);
+    }
+
+    /* Container */
+    .onboarding-container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .onboarding-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .onboarding-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      text-decoration: none;
+    }
+
+    .onboarding-logo img {
+      width: 48px;
+      height: 48px;
+    }
+
+    .onboarding-logo span {
+      font-size: 1.75rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .onboarding-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .onboarding-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    /* Progress Steps */
+    .progress-steps {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 48px;
+    }
+
+    .progress-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .progress-dot.active {
+      background: var(--gradient);
+      border-color: transparent;
+      color: white;
+    }
+
+    .progress-dot.completed {
+      background: var(--turquoise);
+      border-color: transparent;
+      color: white;
+    }
+
+    .progress-dot.completed svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .progress-line {
+      width: 40px;
+      height: 2px;
+      background: var(--border);
+      transition: background 0.3s ease;
+    }
+
+    .progress-line.completed {
+      background: var(--turquoise);
+    }
+
+    /* Step Cards */
+    .step-card {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .step-card.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .step-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 2rem;
+    }
+
+    .step-icon.orange { background: rgba(255, 107, 53, 0.15); }
+    .step-icon.telegram { background: rgba(0, 136, 204, 0.15); }
+    .step-icon.turquoise { background: rgba(0, 217, 192, 0.15); }
+    .step-icon.purple { background: rgba(168, 85, 247, 0.15); }
+
+    .step-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .step-description {
+      color: var(--text-secondary);
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 16px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--orange);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-telegram {
+      background: var(--telegram-blue);
+      color: white;
+    }
+
+    .btn-telegram:hover {
+      background: #006da3;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 136, 204, 0.3);
+    }
+
+    .btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Telegram Step */
+    .telegram-instructions {
+      background: rgba(0, 136, 204, 0.1);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .telegram-instructions ol {
+      padding-left: 24px;
+      color: var(--text-secondary);
+    }
+
+    .telegram-instructions li {
+      margin-bottom: 8px;
+    }
+
+    .telegram-instructions li::marker {
+      color: var(--telegram-blue);
+      font-weight: 600;
+    }
+
+    .telegram-code {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--turquoise);
+    }
+
+    /* Wearable Step */
+    .wearable-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .wearable-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .wearable-item:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--orange);
+    }
+
+    .wearable-item.selected {
+      border-color: var(--orange);
+      background: rgba(255, 107, 53, 0.1);
+    }
+
+    .wearable-item img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .wearable-item span {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .wearable-more {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 600;
+      font-size: 0.9rem !important;
+    }
+
+    /* Success Step */
+    .success-checkmark {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--turquoise), #00b3a0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .success-checkmark svg {
+      width: 40px;
+      height: 40px;
+      color: white;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0); }
+      to { transform: scale(1); }
+    }
+
+    .success-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 32px 0;
+    }
+
+    .success-feature {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--bg-card);
+      border-radius: 12px;
+    }
+
+    .success-feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .success-feature-icon.orange { background: rgba(255, 107, 53, 0.15); }
+    .success-feature-icon.purple { background: rgba(168, 85, 247, 0.15); }
+    .success-feature-icon.turquoise { background: rgba(0, 217, 192, 0.15); }
+
+    .success-feature-text {
+      font-size: 0.95rem;
+    }
+
+    .success-feature-text strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .success-feature-text span {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+
+    /* Messages */
+    .message {
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .message.error {
+      background: rgba(255, 76, 76, 0.1);
+      border: 1px solid rgba(255, 76, 76, 0.3);
+      color: #ff6b6b;
+    }
+
+    .message.success {
+      background: rgba(0, 217, 192, 0.1);
+      border: 1px solid rgba(0, 217, 192, 0.3);
+      color: var(--turquoise);
+    }
+
+    .message.info {
+      background: rgba(0, 136, 204, 0.1);
+      border: 1px solid rgba(0, 136, 204, 0.3);
+      color: #4da6ff;
+    }
+
+    /* Loading */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Skip Link */
+    .skip-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+
+    .skip-link:hover {
+      color: var(--text);
+    }
+
+    /* User Info Display */
+    .user-info {
+      background: rgba(0, 217, 192, 0.1);
+      border: 1px solid rgba(0, 217, 192, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .user-info-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--turquoise);
+    }
+
+    .user-info-email {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Footer */
+    .onboarding-footer {
+      margin-top: auto;
+      padding-top: 40px;
+      text-align: center;
+    }
+
+    .footer-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: var(--text);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .onboarding-container {
+        padding: 24px 16px;
+      }
+
+      .step-card {
+        padding: 24px;
+      }
+
+      .onboarding-title {
+        font-size: 1.5rem;
+      }
+
+      .wearable-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .progress-line {
+        width: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="onboarding-bg" aria-hidden="true"></div>
+
+  <div class="onboarding-container">
+    <!-- Header -->
+    <header class="onboarding-header">
+      <a href="/" class="onboarding-logo">
+        <img src="img/logo-revna.svg" alt="Revna">
+        <span>Revna</span>
+      </a>
+      <h1 class="onboarding-title">Configure ton coach</h1>
+      <p class="onboarding-subtitle">Connecte-toi pour commencer</p>
+    </header>
+
+    <!-- Progress Steps -->
+    <div class="progress-steps" id="progress-container">
+      <div class="progress-step">
+        <div class="progress-dot active" id="dot-1">1</div>
+      </div>
+      <div class="progress-line" id="line-1"></div>
+      <div class="progress-step">
+        <div class="progress-dot" id="dot-2">2</div>
+      </div>
+      <div class="progress-line" id="line-2"></div>
+      <div class="progress-step">
+        <div class="progress-dot" id="dot-3">3</div>
+      </div>
+    </div>
+
+    <!-- Step 1: Login -->
+    <div class="step-card active" id="step-1">
+      <div class="step-header">
+        <div class="step-icon orange">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <h2 class="step-title">Connexion</h2>
+        <p class="step-description">Entre ton email pour accéder à ton espace</p>
+      </div>
+
+      <div id="step1-message"></div>
+
+      <form id="step1-form">
+        <div class="form-group">
+          <label class="form-label" for="email">Ton email</label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="thomas@exemple.com" required autocomplete="email">
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="step1-btn">
+          <span>Continuer</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </form>
+
+      <p style="text-align: center; margin-top: 24px; color: var(--text-secondary); font-size: 0.85rem;">
+        Pas encore de compte ? <a href="mailto:hello@revna.app" style="color: var(--orange);">Contacte-nous</a>
+      </p>
+    </div>
+
+    <!-- Step 2: Connect Telegram -->
+    <div class="step-card" id="step-2">
+      <div class="step-header">
+        <div class="step-icon telegram">
+          <svg viewBox="0 0 24 24" fill="#0088cc">
+            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+          </svg>
+        </div>
+        <h2 class="step-title">Connecte Telegram</h2>
+        <p class="step-description">C'est là que tu recevras tes conseils</p>
+      </div>
+
+      <div class="user-info" id="user-info">
+        <div class="user-info-name" id="display-name">—</div>
+        <div class="user-info-email" id="display-email">—</div>
+      </div>
+
+      <div id="step2-message"></div>
+
+      <div class="telegram-instructions">
+        <ol>
+          <li>Clique sur le bouton ci-dessous pour ouvrir Telegram</li>
+          <li>Envoie <span class="telegram-code">/start</span> au bot Revna</li>
+          <li>Reviens ici et clique sur "J'ai connecté Telegram"</li>
+        </ol>
+      </div>
+
+      <a href="https://t.me/RevnaCoachBot" target="_blank" class="btn btn-telegram" id="telegram-link">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+        </svg>
+        <span>Ouvrir Telegram</span>
+      </a>
+
+      <button class="btn btn-primary" id="step2-btn" style="margin-top: 16px;">
+        <span>J'ai connecté Telegram</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+
+      <div class="skip-link" id="skip-telegram">Passer cette étape</div>
+    </div>
+
+    <!-- Step 3: Connect Wearable -->
+    <div class="step-card" id="step-3">
+      <div class="step-header">
+        <div class="step-icon turquoise">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="5" y="6" width="14" height="12" rx="2"/>
+            <path d="M8 6V3a1 1 0 011-1h6a1 1 0 011 1v3M8 18v3a1 1 0 001 1h6a1 1 0 001-1v-3"/>
+            <path d="M9 12h1.5l1-2 1.5 4 1-2H16" stroke="var(--orange)" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h2 class="step-title">Connecte ton wearable</h2>
+        <p class="step-description">Choisis ta montre ou ton tracker</p>
+      </div>
+
+      <div id="step3-message"></div>
+
+      <div class="wearable-grid" id="wearable-grid">
+        <div class="wearable-item" data-provider="GARMIN">
+          <img src="img/logos/garmin.svg" alt="Garmin">
+          <span>Garmin</span>
+        </div>
+        <div class="wearable-item" data-provider="APPLE">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <span>Apple</span>
+        </div>
+        <div class="wearable-item" data-provider="OURA">
+          <span style="font-size: 1.5rem;">💍</span>
+          <span>Oura</span>
+        </div>
+        <div class="wearable-item" data-provider="WHOOP">
+          <span style="font-size: 1.5rem;">⌚</span>
+          <span>Whoop</span>
+        </div>
+        <div class="wearable-item" data-provider="FITBIT">
+          <span style="font-size: 1.5rem;">⌚</span>
+          <span>Fitbit</span>
+        </div>
+        <div class="wearable-item" data-provider="ALL">
+          <span class="wearable-more">+150</span>
+          <span>Autres</span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="step3-btn">
+        <span>Connecter mon wearable</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+
+      <div class="skip-link" id="skip-wearable">Passer — je le ferai via /connect sur Telegram</div>
+    </div>
+
+    <!-- Step 4: Success -->
+    <div class="step-card" id="step-success">
+      <div class="step-header">
+        <div class="success-checkmark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+        </div>
+        <h2 class="step-title">Tu es prêt !</h2>
+        <p class="step-description">Revna va maintenant veiller sur toi</p>
+      </div>
+
+      <div class="success-features">
+        <div class="success-feature">
+          <div class="success-feature-icon orange">☀️</div>
+          <div class="success-feature-text">
+            <strong>Bilan matinal</strong>
+            <span>Chaque matin, un résumé de ta nuit et tes recommandations</span>
+          </div>
+        </div>
+        <div class="success-feature">
+          <div class="success-feature-icon turquoise">⚡</div>
+          <div class="success-feature-text">
+            <strong>Alertes intelligentes</strong>
+            <span>Stress élevé, batterie basse, sommeil insuffisant</span>
+          </div>
+        </div>
+        <div class="success-feature">
+          <div class="success-feature-icon purple">💬</div>
+          <div class="success-feature-text">
+            <strong>Coach disponible 24/7</strong>
+            <span>Pose tes questions à tout moment sur Telegram</span>
+          </div>
+        </div>
+      </div>
+
+      <a href="https://t.me/RevnaCoachBot" class="btn btn-telegram">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+        </svg>
+        <span>Ouvrir Telegram</span>
+      </a>
+
+      <a href="/" class="skip-link" style="margin-top: 24px;">
+        ← Retour à l'accueil
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="onboarding-footer">
+      <a href="mailto:hello@revna.app" class="footer-link">Besoin d'aide ? hello@revna.app</a>
+    </footer>
+  </div>
+
+  <script>
+    // ═══ Configuration ═══
+    // TODO: Set this to your backend URL when deployed
+    const API_BASE = ''; // e.g., 'https://revna-api.railway.app'
+    const TELEGRAM_BOT = 'RevnaCoachBot';
+
+    // ═══ State ═══
+    let currentStep = 1;
+    let userData = {
+      email: '',
+      name: '',
+      userId: null
+    };
+
+    // ═══ Demo users (for testing without backend) ═══
+    const DEMO_USERS = {
+      'demo@revna.app': { name: 'Demo User', userId: 'demo-001' },
+      'test@revna.app': { name: 'Test User', userId: 'demo-002' },
+      // Add your test users here
+    };
+
+    // ═══ DOM Elements ═══
+    const steps = {
+      1: document.getElementById('step-1'),
+      2: document.getElementById('step-2'),
+      3: document.getElementById('step-3'),
+      success: document.getElementById('step-success')
+    };
+
+    const dots = {
+      1: document.getElementById('dot-1'),
+      2: document.getElementById('dot-2'),
+      3: document.getElementById('dot-3')
+    };
+
+    const lines = {
+      1: document.getElementById('line-1'),
+      2: document.getElementById('line-2')
+    };
+
+    // ═══ Step Navigation ═══
+    function goToStep(step) {
+      Object.values(steps).forEach(s => s.classList.remove('active'));
+
+      if (step === 'success') {
+        steps.success.classList.add('active');
+        Object.values(dots).forEach(d => {
+          d.classList.add('completed');
+          d.classList.remove('active');
+          d.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>';
+        });
+        Object.values(lines).forEach(l => l.classList.add('completed'));
+      } else {
+        steps[step].classList.add('active');
+
+        for (let i = 1; i <= 3; i++) {
+          dots[i].classList.remove('active', 'completed');
+          if (i < step) {
+            dots[i].classList.add('completed');
+            dots[i].innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>';
+          } else if (i === step) {
+            dots[i].classList.add('active');
+            dots[i].textContent = i;
+          } else {
+            dots[i].textContent = i;
+          }
+        }
+
+        for (let i = 1; i <= 2; i++) {
+          lines[i].classList.toggle('completed', i < step);
+        }
+      }
+
+      currentStep = step;
+    }
+
+    function showMessage(stepNum, message, type = 'error') {
+      const container = document.getElementById(`step${stepNum}-message`);
+      if (container) {
+        container.innerHTML = `<div class="message ${type}">${message}</div>`;
+      }
+    }
+
+    function clearMessage(stepNum) {
+      const container = document.getElementById(`step${stepNum}-message`);
+      if (container) container.innerHTML = '';
+    }
+
+    // ═══ Step 1: Login ═══
+    document.getElementById('step1-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearMessage(1);
+
+      const btn = document.getElementById('step1-btn');
+      const originalContent = btn.innerHTML;
+      btn.innerHTML = '<div class="loading"></div>';
+      btn.disabled = true;
+
+      const email = document.getElementById('email').value.trim().toLowerCase();
+
+      try {
+        let user = null;
+
+        if (API_BASE) {
+          // Production: call backend API
+          const response = await fetch(`${API_BASE}/api/users/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+
+          if (!response.ok) {
+            if (response.status === 404) {
+              throw new Error('Aucun compte trouvé avec cet email. Contacte-nous pour créer ton compte.');
+            }
+            throw new Error('Erreur de connexion');
+          }
+
+          user = await response.json();
+        } else {
+          // Demo mode: check local users
+          if (DEMO_USERS[email]) {
+            user = { ...DEMO_USERS[email], email };
+          } else {
+            throw new Error('Aucun compte trouvé avec cet email. Contacte-nous pour créer ton compte.');
+          }
+        }
+
+        userData = {
+          email: user.email || email,
+          name: user.name,
+          userId: user.userId || user.user_id
+        };
+
+        // Update display
+        document.getElementById('display-name').textContent = userData.name;
+        document.getElementById('display-email').textContent = userData.email;
+
+        // Store in localStorage
+        localStorage.setItem('revna_user', JSON.stringify(userData));
+
+        goToStep(2);
+      } catch (error) {
+        showMessage(1, error.message);
+      } finally {
+        btn.innerHTML = originalContent;
+        btn.disabled = false;
+      }
+    });
+
+    // ═══ Step 2: Telegram ═══
+    document.getElementById('step2-btn').addEventListener('click', () => {
+      goToStep(3);
+    });
+
+    document.getElementById('skip-telegram').addEventListener('click', () => {
+      goToStep(3);
+    });
+
+    // ═══ Step 3: Wearable ═══
+    let selectedProvider = null;
+
+    document.querySelectorAll('.wearable-item').forEach(item => {
+      item.addEventListener('click', () => {
+        selectedProvider = item.dataset.provider;
+        document.querySelectorAll('.wearable-item').forEach(i => i.classList.remove('selected'));
+        item.classList.add('selected');
+      });
+    });
+
+    document.getElementById('step3-btn').addEventListener('click', async () => {
+      clearMessage(3);
+
+      if (!selectedProvider) {
+        showMessage(3, 'Sélectionne d\'abord ton wearable', 'info');
+        return;
+      }
+
+      const btn = document.getElementById('step3-btn');
+      const originalContent = btn.innerHTML;
+      btn.innerHTML = '<div class="loading"></div>';
+      btn.disabled = true;
+
+      try {
+        if (API_BASE && userData.userId) {
+          const response = await fetch(`${API_BASE}/api/users/${userData.userId}/connect-wearable`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ provider: selectedProvider })
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.widget_url) {
+              window.open(data.widget_url, '_blank');
+              showMessage(3, 'Termine la connexion dans l\'onglet qui vient de s\'ouvrir', 'info');
+
+              btn.innerHTML = '<span>Terminé</span>';
+              btn.onclick = () => goToStep('success');
+              btn.disabled = false;
+              return;
+            }
+          }
+        }
+
+        // Demo mode or fallback
+        showMessage(3, 'Tu pourras connecter ton wearable via /connect sur Telegram', 'info');
+        setTimeout(() => goToStep('success'), 2000);
+
+      } catch (error) {
+        showMessage(3, 'Erreur — tu pourras connecter via /connect sur Telegram', 'info');
+        setTimeout(() => goToStep('success'), 2000);
+      }
+
+      btn.innerHTML = originalContent;
+      btn.disabled = false;
+    });
+
+    document.getElementById('skip-wearable').addEventListener('click', () => {
+      goToStep('success');
+    });
+
+    // ═══ Check for existing session ═══
+    const savedUser = localStorage.getItem('revna_user');
+    if (savedUser) {
+      try {
+        const parsed = JSON.parse(savedUser);
+        if (parsed.userId) {
+          userData = parsed;
+          document.getElementById('email').value = userData.email;
+        }
+      } catch (e) {
+        localStorage.removeItem('revna_user');
+      }
+    }
+  </script>
+
+</body>
+</html>
