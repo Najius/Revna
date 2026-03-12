@@ -2115,6 +2115,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   gap: 0;
   width: 100%;
   max-width: 100%;
+  padding: 1rem;
 }
 
 .flow-step {
@@ -3448,7 +3449,7 @@ footer {
 /* How section decorations */
 .how {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 .how .grid-bg {
   position: absolute;
