@@ -97,16 +97,16 @@ input { font-family: inherit; }
 /* ─── Typography ─── */
 h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.1; }
 .accent {
-  background: linear-gradient(135deg, var(--orange) 0%, var(--turquoise) 50%, var(--orange) 100%);
-  background-size: 300% 100%;
+  background: linear-gradient(90deg, var(--orange) 0%, var(--turquoise) 25%, var(--orange) 50%, var(--turquoise) 75%, var(--orange) 100%);
+  background-size: 400% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient-shift 3s ease-in-out infinite;
+  animation: gradient-shift 4s linear infinite;
 }
 @keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
 .section-tag {
   font-family: var(--font-mono);
@@ -1663,7 +1663,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .scroll-column {
   display: flex;
   flex-direction: column;
-  padding-top: 8rem;
+  padding-top: 4rem;
   padding-bottom: 4rem;
 }
 
@@ -1794,14 +1794,15 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   z-index: 1;
 }
 
-/* Scroll indicator positioning */
-.sticky-phone-container .scroll-indicator {
-  position: absolute;
+/* Scroll indicator positioning in hero */
+.hero-section .scroll-indicator {
+  position: relative;
   bottom: auto;
-  top: calc(85vh + 6rem);
-  left: 25%;
-  transform: translateX(-50%);
+  top: auto;
+  left: 0;
+  transform: none;
   z-index: 10;
+  margin-top: 3rem;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -2720,7 +2721,7 @@ footer {
   }
 
   .scroll-column {
-    padding-top: 6rem;
+    padding-top: 3rem;
   }
 
   .hero-section {
@@ -2751,9 +2752,8 @@ footer {
     display: none;
   }
 
-  .sticky-phone-container .scroll-indicator {
-    left: 50%;
-    top: calc(60vh + 4rem);
+  .hero-section .scroll-indicator {
+    margin-top: 2rem;
   }
 
   .scroll-column .stats,
@@ -2807,7 +2807,7 @@ footer {
   }
 
   .scroll-column {
-    padding-top: 5rem;
+    padding-top: 3rem;
   }
 
   .hero-section {
