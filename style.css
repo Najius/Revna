@@ -97,14 +97,12 @@ input { font-family: inherit; }
 /* ─── Typography ─── */
 h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.1; }
 .accent {
-  background: linear-gradient(90deg, var(--orange) 0%, var(--turquoise) 50%, var(--orange) 100%) !important;
-  background-size: 200% 100% !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  color: transparent !important;
-  animation: gradient-flow 3s ease-in-out infinite alternate !important;
-  will-change: background-position;
+  background: linear-gradient(90deg, var(--orange) 0%, var(--turquoise) 50%, var(--orange) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 @keyframes gradient-flow {
   0% { background-position: 0% 50%; }
@@ -830,9 +828,11 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   transform: translateY(30px);
   animation: word-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-/* Accent words: combine gradient animation with word reveal */
+/* Accent words: gradient animation starts after word reveal */
 .hero-title .word.accent {
-  animation: word-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards, gradient-flow 3s ease-in-out infinite alternate;
+  animation:
+    word-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+    gradient-flow 3s ease-in-out 0.8s infinite alternate;
 }
 @keyframes word-reveal {
   0% {
