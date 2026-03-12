@@ -1947,6 +1947,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   padding: 2rem;
   transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
   position: relative;
+  overflow: hidden;
 }
 .how-card::before {
   content: '';
@@ -1958,7 +1959,6 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   background: linear-gradient(90deg, var(--orange), var(--turquoise));
   opacity: 0;
   transition: opacity 0.3s;
-  border-radius: var(--radius) var(--radius) 0 0;
 }
 .how-card:hover {
   transform: translateY(-4px);
