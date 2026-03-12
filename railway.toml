@@ -6,8 +6,8 @@ builder = "nixpacks"
 
 [deploy]
 # Run migrations first, then start the server
-startCommand = "alembic upgrade head && uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}"
+startCommand = "echo '=== Starting Revna ===' && python -c 'from backend.config import settings; print(f\"DB URL prefix: {settings.database_url[:20]}...\")' && alembic upgrade head && echo '=== Migrations done ===' && uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}"
 healthcheckPath = "/health"
-healthcheckTimeout = 30
+healthcheckTimeout = 120
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
