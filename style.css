@@ -2129,9 +2129,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 .flow-step:hover {
-  transform: translateX(8px);
+  transform: scale(1.02);
   border-color: var(--border-light);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--border-light);
 }
 
 .flow-step-main {
@@ -2139,8 +2139,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   border-color: rgba(255, 107, 53, 0.2);
 }
 .flow-step-main:hover {
+  transform: scale(1.02);
   border-color: var(--orange);
-  box-shadow: 0 8px 40px rgba(255, 107, 53, 0.15);
+  box-shadow: 0 8px 40px rgba(255, 107, 53, 0.2), 0 0 0 1px var(--orange);
 }
 
 /* Wearable icon (single smartwatch) */
