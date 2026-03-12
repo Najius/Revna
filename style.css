@@ -97,16 +97,17 @@ input { font-family: inherit; }
 /* ─── Typography ─── */
 h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.1; }
 .accent {
-  background: linear-gradient(90deg, var(--orange) 0%, var(--turquoise) 25%, var(--orange) 50%, var(--turquoise) 75%, var(--orange) 100%);
-  background-size: 400% 100%;
+  background: linear-gradient(90deg, var(--orange), var(--turquoise), var(--orange));
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient-shift 4s linear infinite;
+  animation: gradient-flow 3s ease infinite;
 }
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
+@keyframes gradient-flow {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
 }
 .section-tag {
   font-family: var(--font-mono);
