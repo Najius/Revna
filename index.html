@@ -27,16 +27,19 @@
   <!-- Theme color -->
   <meta name="theme-color" content="#0a0a0f">
 
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
   <style>
-    .accent .word {
+    .hero-title .accent .word,
+    .section-title .accent .word {
       background: inherit;
       background-size: inherit;
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
       color: transparent;
-      animation: gradient-flow 3s ease-in-out infinite alternate;
+      animation:
+        word-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+        gradient-flow 3s ease-in-out 0.8s infinite alternate;
     }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
