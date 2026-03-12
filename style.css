@@ -97,12 +97,26 @@ input { font-family: inherit; }
 /* ─── Typography ─── */
 h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.1; }
 .accent {
+  color: var(--orange);
+}
+
+/* Accent with direct text (no children) */
+.accent:not(:has(.word)) {
   background: linear-gradient(90deg, var(--orange) 0%, var(--turquoise) 50%, var(--orange) 100%);
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: transparent;
+}
+
+/* Accent with .word children - apply gradient to children */
+.accent > .word {
+  background: linear-gradient(90deg, var(--orange) 0%, var(--turquoise) 50%, var(--orange) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-flow 3s ease-in-out infinite alternate;
 }
 
 @keyframes gradient-flow {
