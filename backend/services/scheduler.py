@@ -34,6 +34,7 @@ from backend.services.tracking import (
     update_advice_outcomes,
 )
 from backend.services.wearable import sync_all_active_users
+from backend.services.garmin import sync_garmin_data
 from backend.services.ai import call_claude_api
 
 logger = logging.getLogger(__name__)
@@ -189,21 +190,61 @@ async def job_sync_wearables():
         logger.info("Wearable sync done: %d snapshots across %d users", total, len(results))
 
 
+async def job_sync_garmin():
+    """Every 2 hours — Sync Garmin data for users with Garmin credentials."""
+    logger.info("JOB: sync_garmin started")
+
+    async with async_session() as db:
+        # Get users with Garmin credentials
+        result = await db.execute(
+            select(User).where(
+                User.is_active.is_(True),
+                User.garmin_email.isnot(None),
+                User.garmin_password.isnot(None),
+            )
+        )
+        users = list(result.scalars().all())
+
+        total_snapshots = 0
+        for user in users:
+            try:
+                snapshots = await sync_garmin_data(db, user, days_back=1)
+                total_snapshots += len(snapshots)
+                logger.info("Garmin sync for %s: %d snapshots", user.name, len(snapshots))
+            except Exception:
+                logger.exception("Garmin sync failed for user %s", user.name)
+
+        logger.info("Garmin sync done: %d snapshots across %d users", total_snapshots, len(users))
+
+
 async def job_daily_audit():
     """03:00 — System audit (data freshness, API health)."""
     logger.info("JOB: daily_audit started")
 
     async with async_session() as db:
+        # Check Terra users
         result = await db.execute(
             select(User).where(
                 User.is_active.is_(True),
                 User.terra_user_id.isnot(None),
             )
         )
-        users = list(result.scalars().all())
+        terra_users = list(result.scalars().all())
+
+        # Check Garmin users
+        result = await db.execute(
+            select(User).where(
+                User.is_active.is_(True),
+                User.garmin_email.isnot(None),
+            )
+        )
+        garmin_users = list(result.scalars().all())
+
+        # Combine and deduplicate
+        all_users = {u.id: u for u in terra_users + garmin_users}.values()
 
         stale_users = []
-        for user in users:
+        for user in all_users:
             snapshot = await get_latest_snapshot(db, user.id)
             if not snapshot:
                 stale_users.append(f"{user.name}: no data")
@@ -216,6 +257,8 @@ async def job_daily_audit():
             logger.warning("Stale data users: %s", ", ".join(stale_users))
         else:
             logger.info("Daily audit: all users have fresh data")
+
+        logger.info("Audit: %d Terra users, %d Garmin users", len(terra_users), len(garmin_users))
 
 
 # ─── Scheduler setup ───────────────────────────────────────────────────────
@@ -250,9 +293,13 @@ def setup_scheduler() -> AsyncIOScheduler:
     scheduler.add_job(job_monday_activity, CronTrigger(day_of_week="mon", hour=9, minute=0),
                       id="monday_activity", replace_existing=True)
 
-    # Wearable sync (every 30 min)
+    # Wearable sync (every 30 min for Terra)
     scheduler.add_job(job_sync_wearables, CronTrigger(minute="*/30"),
                       id="sync_wearables", replace_existing=True)
+
+    # Garmin sync (every 2 hours — less frequent to avoid rate limits)
+    scheduler.add_job(job_sync_garmin, CronTrigger(hour="*/2", minute=15),
+                      id="sync_garmin", replace_existing=True)
 
     # System audit (nightly)
     scheduler.add_job(job_daily_audit, CronTrigger(hour=3, minute=0),

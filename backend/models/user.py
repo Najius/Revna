@@ -19,6 +19,8 @@ class User(Base):
     telegram_username: Mapped[str | None] = mapped_column(String(100))
     terra_user_id: Mapped[str | None] = mapped_column(String(255))
     wearable_type: Mapped[str | None] = mapped_column(String(50))
+    garmin_email: Mapped[str | None] = mapped_column(String(255))
+    garmin_password: Mapped[str | None] = mapped_column(String(255))  # TODO: encrypt in production
     timezone: Mapped[str] = mapped_column(String(50), default="Europe/Paris")
     language: Mapped[str] = mapped_column(String(5), default="fr")
     coaching_type: Mapped[str] = mapped_column(String(50), default="wellness")

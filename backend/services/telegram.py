@@ -42,10 +42,15 @@ from backend.services.tracking import (
     can_reply_conversation,
 )
 from backend.services.wearable import generate_widget_session
+from backend.services.garmin import test_garmin_credentials, sync_garmin_data
 from backend.models.user import User
 from backend.models.feeling import Feeling
 
 logger = logging.getLogger(__name__)
+
+# ─── Garmin connection flow state ────────────────────────────────────────────
+# Simple in-memory state for MVP (use Redis in production)
+_garmin_flow_state: dict[int, dict] = {}
 
 # ─── Prompt injection patterns ──────────────────────────────────────────────
 
@@ -617,7 +622,7 @@ async def handle_start_command(
 
 
 async def handle_connect_command(db: AsyncSession, chat_id: int) -> None:
-    """Handle /connect command — generate wearable connection link."""
+    """Handle /connect command — start Garmin connection flow."""
     result = await db.execute(
         select(User).where(User.telegram_chat_id == chat_id)
     )
@@ -630,31 +635,120 @@ async def handle_connect_command(db: AsyncSession, chat_id: int) -> None:
         )
         return
 
-    # Check if already connected
-    if user.terra_user_id:
+    # Check if already connected to Garmin
+    if user.garmin_email:
         await send_telegram(
             chat_id,
-            "Tu as deja un wearable connecte. "
-            "Si tu veux en ajouter un autre, utilise le lien ci-dessous.",
+            f"Tu es deja connecte a Garmin ({user.garmin_email}).\n\n"
+            "Si tu veux changer de compte, envoie ton nouvel email Garmin Connect.",
         )
-
-    # Generate Terra widget session
-    session = await generate_widget_session(reference_id=str(user.id))
-    if not session or not session.get("url"):
-        await send_telegram(
-            chat_id,
-            "Desole, je n'ai pas pu generer le lien de connexion. "
-            "Reessaie dans quelques minutes.",
-        )
+        _garmin_flow_state[chat_id] = {"step": "email", "user_id": str(user.id)}
         return
 
-    widget_url = session["url"]
+    # Start Garmin connection flow
+    _garmin_flow_state[chat_id] = {"step": "email", "user_id": str(user.id)}
     await send_telegram(
         chat_id,
-        f"Pour connecter ton wearable, clique sur ce lien:\n\n"
-        f"{widget_url}\n\n"
-        "Tu pourras choisir parmi 150+ appareils: Garmin, Apple Watch, "
-        "Oura, Whoop, Fitbit, Polar, Suunto...\n\n"
-        "Une fois connecte, je commencerai a recevoir tes donnees automatiquement.",
+        "Pour connecter ta montre Garmin, j'ai besoin de tes identifiants "
+        "Garmin Connect.\n\n"
+        "<b>Etape 1/2</b>: Envoie-moi ton <b>email</b> Garmin Connect.",
     )
-    logger.info("Widget session created for user %s", user.name)
+    logger.info("Started Garmin flow for user %s", user.name)
+
+
+def is_in_garmin_flow(chat_id: int) -> bool:
+    """Check if user is in Garmin connection flow."""
+    return chat_id in _garmin_flow_state
+
+
+async def handle_garmin_flow(db: AsyncSession, chat_id: int, text: str) -> None:
+    """Handle Garmin connection flow steps."""
+    state = _garmin_flow_state.get(chat_id)
+    if not state:
+        return
+
+    step = state.get("step")
+    user_id = state.get("user_id")
+
+    if step == "email":
+        # Validate email format
+        if "@" not in text or "." not in text:
+            await send_telegram(
+                chat_id,
+                "Cet email ne semble pas valide. Envoie ton email Garmin Connect.",
+            )
+            return
+
+        state["email"] = text.strip()
+        state["step"] = "password"
+        await send_telegram(
+            chat_id,
+            "<b>Etape 2/2</b>: Maintenant, envoie-moi ton <b>mot de passe</b> "
+            "Garmin Connect.\n\n"
+            "<i>(Le message sera supprime apres verification)</i>",
+        )
+
+    elif step == "password":
+        email = state.get("email")
+        password = text.strip()
+
+        await send_telegram(chat_id, "Verification en cours...")
+
+        # Test credentials
+        if await test_garmin_credentials(email, password):
+            # Save to database
+            result = await db.execute(
+                select(User).where(User.telegram_chat_id == chat_id)
+            )
+            user = result.scalar_one_or_none()
+
+            if user:
+                user.garmin_email = email
+                user.garmin_password = password
+                user.wearable_type = "garmin"
+                await db.commit()
+
+                # Clear flow state
+                del _garmin_flow_state[chat_id]
+
+                await send_telegram(
+                    chat_id,
+                    "Connexion reussie ! Ta montre Garmin est maintenant connectee.\n\n"
+                    "Je vais synchroniser tes donnees... Un instant.",
+                )
+
+                # Initial sync
+                try:
+                    snapshots = await sync_garmin_data(db, user, days_back=3)
+                    if snapshots:
+                        await send_telegram(
+                            chat_id,
+                            f"J'ai recupere {len(snapshots)} jour(s) de donnees !\n\n"
+                            "Je vais maintenant t'envoyer des conseils personnalises "
+                            "bases sur ton sommeil, ton stress et ton activite.\n\n"
+                            "A demain matin pour ton premier check-in !",
+                        )
+                    else:
+                        await send_telegram(
+                            chat_id,
+                            "Connexion etablie ! Les donnees seront synchronisees "
+                            "dans les prochaines heures.",
+                        )
+                except Exception as e:
+                    logger.error("Initial Garmin sync failed: %s", e)
+                    await send_telegram(
+                        chat_id,
+                        "Connexion etablie ! Je synchroniserai tes donnees bientot.",
+                    )
+
+                logger.info("Garmin connected for user %s", user.name)
+        else:
+            await send_telegram(
+                chat_id,
+                "Identifiants incorrects. Verifie ton email et mot de passe "
+                "Garmin Connect et reessaie.\n\n"
+                "Envoie ton <b>email</b> Garmin Connect.",
+            )
+            state["step"] = "email"
+            if "email" in state:
+                del state["email"]

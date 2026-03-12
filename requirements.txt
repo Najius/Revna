@@ -12,3 +12,4 @@ python-dotenv>=1.0
 structlog>=24.4
 redis>=5.2
 anthropic>=0.40
+garminconnect>=0.2

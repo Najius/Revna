@@ -10,6 +10,8 @@ from backend.models.user import User
 from backend.services.telegram import (
     handle_start_command,
     handle_connect_command,
+    handle_garmin_flow,
+    is_in_garmin_flow,
     process_reply,
     send_telegram,
 )
@@ -49,6 +51,11 @@ async def telegram_webhook(request: Request, db: AsyncSession = Depends(get_db))
     # /connect command — wearable connection
     if text.startswith("/connect"):
         await handle_connect_command(db, chat_id)
+        return {"ok": True}
+
+    # Check if user is in Garmin connection flow
+    if is_in_garmin_flow(chat_id):
+        await handle_garmin_flow(db, chat_id, text)
         return {"ok": True}
 
     # Look up user by chat_id
