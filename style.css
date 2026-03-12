@@ -1999,6 +1999,87 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   line-height: 1.6;
 }
 
+/* How Card Logos */
+.how-logos-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+}
+.how-logo {
+  height: 24px;
+  width: auto;
+  opacity: 0.8;
+  filter: grayscale(100%) brightness(2);
+  transition: opacity 0.3s, filter 0.3s;
+}
+.how-card:hover .how-logo {
+  opacity: 1;
+  filter: grayscale(0%) brightness(1);
+}
+.how-logo-more {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  padding: 0.25rem 0.5rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-xs);
+}
+
+.how-revna-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1.25rem;
+  background: linear-gradient(135deg, var(--orange-glow), var(--turquoise-glow));
+  border-radius: var(--radius-sm);
+  position: relative;
+}
+.how-revna-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, var(--orange), var(--turquoise));
+  border-radius: var(--radius-sm);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.how-card:hover .how-revna-wrap::before {
+  opacity: 0.5;
+}
+.how-revna-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.how-telegram-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1.25rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  color: #26A5E4;
+  transition: background 0.3s, transform 0.3s;
+}
+.how-card:hover .how-telegram-wrap {
+  background: #26A5E4;
+  color: white;
+  transform: scale(1.05);
+}
+.how-telegram-logo {
+  width: 32px;
+  height: 32px;
+}
+
 /* How Connectors */
 .how-connector {
   position: absolute;
