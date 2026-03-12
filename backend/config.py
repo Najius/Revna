@@ -43,9 +43,25 @@ class Settings(BaseSettings):
         return self.app_env == "production"
 
     @property
+    def async_database_url(self) -> str:
+        """Async URL for SQLAlchemy (converts Railway's postgres:// to postgresql+asyncpg://)."""
+        url = self.database_url
+        if url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql+asyncpg://", 1)
+        elif url.startswith("postgresql://") and "+asyncpg" not in url:
+            url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return url
+
+    @property
     def sync_database_url(self) -> str:
         """Synchronous URL for Alembic migrations."""
-        return self.database_url.replace("+asyncpg", "")
+        url = self.database_url
+        # Convert to standard postgresql:// format for psycopg2
+        if url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql://", 1)
+        elif "+asyncpg" in url:
+            url = url.replace("+asyncpg", "")
+        return url
 
 
 settings = Settings()
