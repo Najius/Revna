@@ -3533,7 +3533,7 @@ footer {
 /* Calories floating widget - left bottom of phone */
 .floating-calories {
   left: -130px;
-  bottom: 180px;
+  bottom: 60px;
   animation: float-widget-alt 7s ease-in-out infinite 1.5s;
 }
 .floating-calories .cal-row {
@@ -3577,8 +3577,8 @@ footer {
 
 /* Stress floating widget - left of phone, below heart rate */
 .floating-stress {
-  left: -125px;
-  top: 340px;
+  left: -120px;
+  top: 320px;
   animation: float-widget 6s ease-in-out infinite 3s;
 }
 .floating-stress .stress-meter {
