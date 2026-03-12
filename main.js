@@ -186,7 +186,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         node.parentNode.replaceChild(fragment, node);
       } else if (node.nodeType === Node.ELEMENT_NODE) {
-        Array.from(node.childNodes).forEach(child => wrapWords(child));
+        // Don't split words inside .accent - treat it as a single unit
+        if (node.classList && node.classList.contains('accent')) {
+          node.classList.add('word');
+          node.style.display = 'inline-block';
+        } else {
+          Array.from(node.childNodes).forEach(child => wrapWords(child));
+        }
       }
     }
 
