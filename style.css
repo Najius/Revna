@@ -123,7 +123,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 }
 .section-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -2831,7 +2831,7 @@ footer {
 
   .how, .features, .testimonials { padding: 4rem 1.25rem; }
   .scroll-column .how { padding: 3rem 0; }
-  .section-header { margin-bottom: 2.5rem; }
+  .section-header { margin-bottom: 1.25rem; }
 
   .bento-grid {
     grid-template-columns: 1fr;
