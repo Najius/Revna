@@ -1947,7 +1947,6 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   padding: 2rem;
   transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
   position: relative;
-  overflow: hidden;
 }
 .how-card::before {
   content: '';
@@ -1963,6 +1962,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .how-card:hover {
   transform: translateY(-4px);
   border-color: var(--border-light);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
 .how-card:hover::before {
   opacity: 1;
