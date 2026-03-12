@@ -2113,8 +2113,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   flex-direction: column;
   align-items: center;
   gap: 0;
-  max-width: 400px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
 }
 
 .flow-step {
@@ -2143,14 +2143,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   box-shadow: 0 8px 40px rgba(255, 107, 53, 0.15);
 }
 
-/* Icon group (wearables) */
-.flow-icon-group {
-  display: flex;
-  gap: 0.5rem;
-}
-.flow-icon {
-  width: 42px;
-  height: 42px;
+/* Wearable icon (single smartwatch) */
+.flow-wearable-icon {
+  width: 56px;
+  height: 56px;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
@@ -2158,16 +2154,18 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   align-items: center;
   justify-content: center;
   color: var(--text-secondary);
-  transition: transform 0.3s, color 0.3s, border-color 0.3s;
+  transition: transform 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  flex-shrink: 0;
 }
-.flow-icon svg {
-  width: 22px;
-  height: 22px;
+.flow-wearable-icon svg {
+  width: 32px;
+  height: 32px;
 }
-.flow-step:hover .flow-icon {
-  color: var(--orange);
-  border-color: var(--orange);
-  transform: scale(1.05);
+.flow-step:hover .flow-wearable-icon {
+  color: var(--turquoise);
+  border-color: var(--turquoise);
+  transform: scale(1.08);
+  box-shadow: 0 0 20px var(--turquoise-glow);
 }
 
 /* Revna logo */
@@ -2194,6 +2192,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .flow-revna-logo {
   width: 36px;
   height: 36px;
+  filter: invert(1);
 }
 
 /* Telegram logo */
