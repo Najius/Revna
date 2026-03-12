@@ -2106,6 +2106,182 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 }
 
 /* ═══════════════════════════════════════════════════
+   How Flow Diagram (Vertical)
+   ═══════════════════════════════════════════════════ */
+.how-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.flow-step {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: 100%;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.flow-step:hover {
+  transform: translateX(8px);
+  border-color: var(--border-light);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.flow-step-main {
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.08), rgba(6, 182, 212, 0.08));
+  border-color: rgba(255, 107, 53, 0.2);
+}
+.flow-step-main:hover {
+  border-color: var(--orange);
+  box-shadow: 0 8px 40px rgba(255, 107, 53, 0.15);
+}
+
+/* Icon group (wearables) */
+.flow-icon-group {
+  display: flex;
+  gap: 0.5rem;
+}
+.flow-icon {
+  width: 42px;
+  height: 42px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: transform 0.3s, color 0.3s, border-color 0.3s;
+}
+.flow-icon svg {
+  width: 22px;
+  height: 22px;
+}
+.flow-step:hover .flow-icon {
+  color: var(--orange);
+  border-color: var(--orange);
+  transform: scale(1.05);
+}
+
+/* Revna logo */
+.flow-revna {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--orange-glow-strong), var(--turquoise-glow));
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.flow-revna::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, var(--orange), var(--turquoise));
+  border-radius: var(--radius-sm);
+  z-index: -1;
+  opacity: 0.4;
+}
+.flow-revna-logo {
+  width: 36px;
+  height: 36px;
+}
+
+/* Telegram logo */
+.flow-telegram {
+  width: 56px;
+  height: 56px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #26A5E4;
+  transition: background 0.3s, transform 0.3s;
+  flex-shrink: 0;
+}
+.flow-telegram svg {
+  width: 28px;
+  height: 28px;
+}
+.flow-step:hover .flow-telegram {
+  background: #26A5E4;
+  color: white;
+  transform: scale(1.08);
+}
+
+/* Text content */
+.flow-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.flow-label {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.flow-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Animated connectors */
+.flow-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 0;
+  position: relative;
+}
+.flow-line {
+  width: 2px;
+  height: 24px;
+  background: linear-gradient(180deg, var(--orange) 0%, var(--turquoise) 100%);
+  border-radius: 2px;
+  opacity: 0.4;
+}
+.flow-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--turquoise);
+  border-radius: 50%;
+  opacity: 0;
+  animation: flow-dot-pulse 2s ease-in-out infinite;
+}
+.flow-dot:nth-child(2) {
+  animation-delay: 0s;
+}
+.flow-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.flow-dot:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+@keyframes flow-dot-pulse {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ═══════════════════════════════════════════════════
    Features — Bento Grid
    ═══════════════════════════════════════════════════ */
 .features {
