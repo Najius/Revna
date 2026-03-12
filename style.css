@@ -832,10 +832,16 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 }
 /* Accent words: gradient animation starts after word reveal */
 .hero-title .word.accent,
-.section-title .word.accent {
+.section-title .word.accent,
+.section-title .accent.word {
+  background: linear-gradient(90deg, var(--orange) 0%, var(--turquoise) 50%, var(--orange) 100%) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
   animation:
     word-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-    gradient-flow 3s ease-in-out 0.8s infinite alternate;
+    gradient-flow 3s ease-in-out 0.8s infinite alternate !important;
 }
 @keyframes word-reveal {
   0% {
