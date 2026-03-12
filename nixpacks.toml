@@ -1,5 +1,0 @@
-# Force Python provider (ignore package.json)
-providers = ["python"]
-
-[phases.build]
-cmds = ["pip install -r requirements.txt"]
