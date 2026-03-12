@@ -27,36 +27,7 @@
   <!-- Theme color -->
   <meta name="theme-color" content="#0a0a0f">
 
-  <link rel="stylesheet" href="style.css?v=4">
-  <style>
-    /* Fix: gradient on .word children, not on parent .accent */
-    .accent {
-      -webkit-text-fill-color: inherit !important;
-      background: none !important;
-    }
-    .accent .word {
-      background: linear-gradient(90deg, #FF6B35 0%, #06B6D4 50%, #FF6B35 100%) !important;
-      background-size: 200% 100% !important;
-      -webkit-background-clip: text !important;
-      background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-      color: transparent !important;
-      animation: gradient-flow 3s ease-in-out infinite alternate !important;
-    }
-    /* Fallback for .accent without .word children */
-    .accent:not(:has(.word)) {
-      background: linear-gradient(90deg, #FF6B35 0%, #06B6D4 50%, #FF6B35 100%) !important;
-      background-size: 200% 100% !important;
-      -webkit-background-clip: text !important;
-      background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-      animation: gradient-flow 3s ease-in-out infinite alternate !important;
-    }
-    @keyframes gradient-flow {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css?v=5">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
