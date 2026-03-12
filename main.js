@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ═══════════════════════════════════════════════════
 
   const sections = [
-    { selector: '.hero', children: '.hero-badge, .hero-title, .hero-sub, .waitlist-form, .hero-proof, .hero-phone' },
+    { selector: '.hero-section', children: '.hero-badge, .hero-title, .hero-sub, .waitlist-form, .hero-proof, .hero-phone' },
     { selector: '.logos', children: '.logos-label, .logo-item, .logo-more' },
     { selector: '.stats', children: '.stat-block' },
     { selector: '.how', children: '.section-header, .how-card' },
@@ -744,7 +744,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   gsap.to('.hero-orb-1', {
     scrollTrigger: {
-      trigger: '.hero',
+      trigger: '.hero-bg',
       start: 'top top',
       end: 'bottom top',
       scrub: 1
@@ -755,7 +755,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   gsap.to('.hero-orb-2', {
     scrollTrigger: {
-      trigger: '.hero',
+      trigger: '.hero-bg',
       start: 'top top',
       end: 'bottom top',
       scrub: 1
@@ -766,7 +766,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   gsap.to('.hero-orb-3', {
     scrollTrigger: {
-      trigger: '.hero',
+      trigger: '.hero-bg',
       start: 'top top',
       end: 'bottom top',
       scrub: 1
@@ -1390,7 +1390,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.appendChild(glowFollower);
 
   let isInHero = false;
-  const heroSection = document.querySelector('.hero');
+  const heroSection = document.querySelector('.hero-section');
 
   document.addEventListener('mousemove', (e) => {
     if (heroSection) {
