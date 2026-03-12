@@ -110,11 +110,12 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 
 /* 2. Propagate gradient to .word children (fix for inline-block breaking clip) */
 .accent .word {
-  background-image: inherit;
+  background: inherit;
   background-size: inherit;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 @keyframes gradient-flow {
