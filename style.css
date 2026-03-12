@@ -2010,15 +2010,13 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   border-radius: var(--radius-sm);
 }
 .how-logo {
-  height: 24px;
+  height: 28px;
   width: auto;
-  opacity: 0.8;
-  filter: grayscale(100%) brightness(2);
-  transition: opacity 0.3s, filter 0.3s;
+  opacity: 1;
+  transition: transform 0.3s;
 }
 .how-card:hover .how-logo {
-  opacity: 1;
-  filter: grayscale(0%) brightness(1);
+  transform: scale(1.1);
 }
 .how-logo-more {
   font-family: var(--font-mono);
