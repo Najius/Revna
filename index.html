@@ -27,10 +27,24 @@
   <!-- Theme color -->
   <meta name="theme-color" content="#0a0a0f">
 
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
   <style>
-    /* Critical fix for accent text - inline to bypass cache */
-    .accent > .word {
+    /* Fix: gradient on .word children, not on parent .accent */
+    .accent {
+      -webkit-text-fill-color: inherit !important;
+      background: none !important;
+    }
+    .accent .word {
+      background: linear-gradient(90deg, #FF6B35 0%, #06B6D4 50%, #FF6B35 100%) !important;
+      background-size: 200% 100% !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      color: transparent !important;
+      animation: gradient-flow 3s ease-in-out infinite alternate !important;
+    }
+    /* Fallback for .accent without .word children */
+    .accent:not(:has(.word)) {
       background: linear-gradient(90deg, #FF6B35 0%, #06B6D4 50%, #FF6B35 100%) !important;
       background-size: 200% 100% !important;
       -webkit-background-clip: text !important;
