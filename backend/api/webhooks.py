@@ -19,6 +19,7 @@ from backend.services.telegram import (
     is_in_garmin_flow,
     process_reply,
     send_telegram,
+    answer_callback_query,
 )
 from backend.services.google_fit import exchange_code_for_tokens, sync_google_fit_data
 from backend.services.wearable import process_terra_webhook, verify_terra_signature
@@ -33,6 +34,23 @@ async def telegram_webhook(request: Request, db: AsyncSession = Depends(get_db))
     """Receive inbound Telegram messages and route to bot logic."""
     body = await request.json()
     update_id = body.get("update_id")
+
+    # Handle inline button callbacks
+    callback_query = body.get("callback_query")
+    if callback_query:
+        cb_id = callback_query.get("id")
+        chat_id = callback_query.get("message", {}).get("chat", {}).get("id")
+        data = callback_query.get("data", "")
+
+        await answer_callback_query(cb_id)
+
+        if data == "connect_garmin" and chat_id:
+            await handle_garmin_command(db, chat_id)
+        elif data == "connect_pixelwatch" and chat_id:
+            await handle_pixelwatch_command(db, chat_id)
+
+        return {"ok": True}
+
     message = body.get("message")
 
     if not message:

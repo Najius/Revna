@@ -79,6 +79,7 @@ async def send_telegram(
     user_id: uuid.UUID | None = None,
     msg_type: str = "notification",
     log_conversation: bool = True,
+    reply_markup: dict | None = None,
 ) -> bool:
     """Send a message via Telegram bot API. Returns True on success."""
     if not settings.telegram_bot_token:
@@ -90,6 +91,8 @@ async def send_telegram(
         "text": message,
         "parse_mode": "HTML",
     }
+    if reply_markup:
+        payload["reply_markup"] = reply_markup
 
     try:
         async with httpx.AsyncClient(timeout=15) as client:
@@ -108,6 +111,23 @@ async def send_telegram(
     return True
 
 
+async def answer_callback_query(callback_query_id: str) -> bool:
+    """Acknowledge a callback query (removes the loading spinner on the button)."""
+    if not settings.telegram_bot_token:
+        return False
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            resp = await client.post(
+                f"https://api.telegram.org/bot{settings.telegram_bot_token}/answerCallbackQuery",
+                json={"callback_query_id": callback_query_id},
+            )
+            resp.raise_for_status()
+            return True
+    except httpx.HTTPError as e:
+        logger.error("answerCallbackQuery failed: %s", e)
+        return False
+
+
 async def set_webhook(webhook_url: str) -> bool:
     """Register webhook URL with Telegram Bot API."""
     if not settings.telegram_bot_token:
@@ -117,7 +137,7 @@ async def set_webhook(webhook_url: str) -> bool:
         async with httpx.AsyncClient(timeout=10) as client:
             resp = await client.post(
                 f"https://api.telegram.org/bot{settings.telegram_bot_token}/setWebhook",
-                json={"url": webhook_url, "allowed_updates": ["message"]},
+                json={"url": webhook_url, "allowed_updates": ["message", "callback_query"]},
             )
             resp.raise_for_status()
             result = resp.json()
@@ -613,11 +633,18 @@ async def handle_start_command(
         f"Bienvenue <b>{name}</b> ! Je suis Revna, ton coach sante personnel.\n\n"
         "Je vais t'accompagner au quotidien en analysant tes donnees de sante "
         "(sommeil, stress, activite) pour t'envoyer des conseils personnalises.\n\n"
-        "Pour commencer, tape /connect pour connecter ta montre "
-        "(Garmin ou Pixel Watch).\n\n"
+        "Pour commencer, connecte ta montre !\n\n"
         "Tu peux m'ecrire a tout moment — je suis la pour toi."
     )
-    await send_telegram(chat_id, welcome)
+    connect_buttons = {
+        "inline_keyboard": [
+            [
+                {"text": "Garmin", "callback_data": "connect_garmin"},
+                {"text": "Pixel Watch", "callback_data": "connect_pixelwatch"},
+            ]
+        ]
+    }
+    await send_telegram(chat_id, welcome, reply_markup=connect_buttons)
     logger.info("New user onboarded: %s (chat_id=%d)", name, chat_id)
 
 
@@ -636,22 +663,37 @@ async def handle_connect_command(db: AsyncSession, chat_id: int) -> None:
         return
 
     # Check if already connected
-    if user.garmin_email or user.terra_user_id:
+    if user.garmin_email or user.google_refresh_token:
         connected = "Garmin" if user.garmin_email else "Pixel Watch"
         await send_telegram(
             chat_id,
             f"Tu es deja connecte ({connected}).\n\n"
-            "Pour changer de montre, tape:\n"
-            "• /garmin — connecter une Garmin\n"
-            "• /pixelwatch — connecter une Pixel Watch",
+            "Pour changer de montre :",
+            reply_markup={
+                "inline_keyboard": [
+                    [
+                        {"text": "Garmin", "callback_data": "connect_garmin"},
+                        {"text": "Pixel Watch", "callback_data": "connect_pixelwatch"},
+                    ]
+                ]
+            },
         )
         return
 
+    connect_buttons = {
+        "inline_keyboard": [
+            [
+                {"text": "Garmin (Fenix, Venu, Forerunner...)", "callback_data": "connect_garmin"},
+            ],
+            [
+                {"text": "Google Pixel Watch", "callback_data": "connect_pixelwatch"},
+            ],
+        ]
+    }
     await send_telegram(
         chat_id,
-        "Quelle montre veux-tu connecter ?\n\n"
-        "• /garmin — Garmin (Fenix, Venu, Forerunner...)\n"
-        "• /pixelwatch — Google Pixel Watch",
+        "Quelle montre veux-tu connecter ?",
+        reply_markup=connect_buttons,
     )
     logger.info("Connect menu shown for user %s", user.name)
 
