@@ -320,10 +320,83 @@
       text-align: center;
       padding: 20px;
     }
+
+    /* Login */
+    .login-overlay {
+      position: fixed; inset: 0;
+      background: var(--bg-primary);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000;
+    }
+    .login-overlay.hidden { display: none; }
+    .login-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      max-width: 360px;
+      width: 100%;
+    }
+    .login-box h2 {
+      font-family: var(--font-display);
+      margin-bottom: 8px;
+    }
+    .login-box p {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+    }
+    .login-box input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border-light);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+      outline: none;
+    }
+    .login-box input:focus { border-color: var(--orange); }
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: var(--orange);
+      color: white;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .login-box button:hover { opacity: 0.9; }
+    .login-error {
+      color: var(--red);
+      font-size: 0.85rem;
+      margin-top: 12px;
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
+  <!-- Login -->
+  <div class="login-overlay" id="login-overlay">
+    <div class="login-box">
+      <img src="img/logo-revna.svg" alt="Revna" style="width:48px;margin-bottom:16px">
+      <h2>Admin</h2>
+      <p>Mot de passe requis</p>
+      <form id="login-form" onsubmit="return handleLogin(event)">
+        <input type="password" id="login-password" placeholder="Mot de passe" autofocus>
+        <button type="submit">Connexion</button>
+      </form>
+      <p class="login-error" id="login-error">Mot de passe incorrect</p>
+    </div>
+  </div>
+
+  <div class="container" id="admin-content" style="display:none">
 
     <header class="header">
       <div class="header-inner">
@@ -415,6 +488,48 @@
 
   <script>
     const API = 'https://revna-production.up.railway.app';
+    let AUTH_TOKEN = sessionStorage.getItem('revna_admin_token') || '';
+
+    function authHeaders() {
+      return { 'Authorization': `Bearer ${AUTH_TOKEN}` };
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const pwd = document.getElementById('login-password').value;
+      // Test the password against the API
+      try {
+        const res = await fetch(`${API}/admin/stats`, {
+          headers: { 'Authorization': `Bearer ${pwd}` }
+        });
+        if (res.ok) {
+          AUTH_TOKEN = pwd;
+          sessionStorage.setItem('revna_admin_token', pwd);
+          document.getElementById('login-overlay').classList.add('hidden');
+          document.getElementById('admin-content').style.display = '';
+          loadAll();
+        } else {
+          document.getElementById('login-error').style.display = 'block';
+        }
+      } catch {
+        document.getElementById('login-error').style.display = 'block';
+      }
+      return false;
+    }
+
+    // Auto-login if token in session
+    if (AUTH_TOKEN) {
+      fetch(`${API}/admin/stats`, { headers: authHeaders() }).then(res => {
+        if (res.ok) {
+          document.getElementById('login-overlay').classList.add('hidden');
+          document.getElementById('admin-content').style.display = '';
+          loadAll();
+        } else {
+          AUTH_TOKEN = '';
+          sessionStorage.removeItem('revna_admin_token');
+        }
+      });
+    }
 
     function formatDate(dateStr) {
       if (!dateStr || dateStr === 'None') return '-';
@@ -451,7 +566,7 @@
 
     async function loadStats() {
       try {
-        const res = await fetch(`${API}/admin/stats`);
+        const res = await fetch(`${API}/admin/stats`, { headers: authHeaders() });
         const data = await res.json();
         document.getElementById('stat-users').textContent = data.total_users;
         document.getElementById('stat-connected').textContent = data.connected_garmin + data.connected_google_fit;
@@ -465,7 +580,7 @@
 
     async function loadUsers() {
       try {
-        const res = await fetch(`${API}/admin/users`);
+        const res = await fetch(`${API}/admin/users`, { headers: authHeaders() });
         const data = await res.json();
         const tbody = document.getElementById('users-body');
         document.getElementById('user-count').textContent = data.total;
@@ -500,7 +615,7 @@
       document.getElementById('detail-name').textContent = name;
 
       try {
-        const res = await fetch(`${API}/admin/users/${userId}/detail`);
+        const res = await fetch(`${API}/admin/users/${userId}/detail`, { headers: authHeaders() });
         const data = await res.json();
 
         // Snapshots
@@ -568,7 +683,7 @@
 
     async function loadNotifications() {
       try {
-        const res = await fetch(`${API}/admin/notifications/recent`);
+        const res = await fetch(`${API}/admin/notifications/recent`, { headers: authHeaders() });
         const data = await res.json();
         const feed = document.getElementById('notif-feed');
 
@@ -598,9 +713,8 @@
       updateRefreshInfo();
     }
 
-    // Initial load + auto-refresh every 60s
-    loadAll();
-    setInterval(loadAll, 60000);
+    // Auto-refresh every 60s (only when authenticated)
+    setInterval(() => { if (AUTH_TOKEN) loadAll(); }, 60000);
   </script>
 </body>
 </html>

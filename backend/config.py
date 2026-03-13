@@ -38,6 +38,9 @@ class Settings(BaseSettings):
     google_client_secret: str = ""
     google_redirect_uri: str = ""  # e.g. https://your-domain/webhooks/google/callback
 
+    # ─── Admin ────────────────────────────────────────────────
+    admin_password: str = ""  # required — protects /admin/* endpoints
+
     # ─── Notification limits ────────────────────────────────────
     max_daily_notifications: int = 5
     max_burst_notifications: int = 2

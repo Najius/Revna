@@ -1,9 +1,10 @@
 """Health check and admin endpoints."""
 
 import datetime
+import hmac
 import uuid
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException
 from sqlalchemy import func as sa_func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -19,6 +20,16 @@ from backend.services.telegram import set_webhook
 router = APIRouter(tags=["health"])
 
 
+async def require_admin(authorization: str = Header("")):
+    """Check Bearer token matches ADMIN_PASSWORD."""
+    if not settings.admin_password:
+        raise HTTPException(status_code=503, detail="Admin not configured")
+    token = authorization.removeprefix("Bearer ").strip()
+    if not token or not hmac.compare_digest(token, settings.admin_password):
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    return True
+
+
 @router.get("/health")
 async def healthcheck():
     return {"status": "ok", "service": "revna"}
@@ -27,7 +38,7 @@ async def healthcheck():
 # ─── Admin endpoints ──────────────────────────────────────────────────────
 
 
-@router.get("/admin/stats")
+@router.get("/admin/stats", dependencies=[Depends(require_admin)])
 async def admin_stats(db: AsyncSession = Depends(get_db)):
     """Global dashboard summary."""
     # Total users
@@ -92,7 +103,7 @@ async def admin_stats(db: AsyncSession = Depends(get_db)):
     }
 
 
-@router.get("/admin/users")
+@router.get("/admin/users", dependencies=[Depends(require_admin)])
 async def list_users(db: AsyncSession = Depends(get_db)):
     """List all users with connection status and latest data."""
     result = await db.execute(
@@ -147,7 +158,7 @@ async def list_users(db: AsyncSession = Depends(get_db)):
     return {"users": output, "total": len(output)}
 
 
-@router.get("/admin/users/{user_id}/detail")
+@router.get("/admin/users/{user_id}/detail", dependencies=[Depends(require_admin)])
 async def user_detail(user_id: uuid.UUID, db: AsyncSession = Depends(get_db)):
     """Detailed view of a single user."""
     result = await db.execute(select(User).where(User.id == user_id))
@@ -253,7 +264,7 @@ async def user_detail(user_id: uuid.UUID, db: AsyncSession = Depends(get_db)):
     }
 
 
-@router.get("/admin/notifications/recent")
+@router.get("/admin/notifications/recent", dependencies=[Depends(require_admin)])
 async def recent_notifications(db: AsyncSession = Depends(get_db)):
     """Last 20 notifications across all users."""
     result = await db.execute(
