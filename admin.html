@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revna Admin</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: #1a1a24;
+      --bg-elevated: #22222e;
+      --orange: #FF6B35;
+      --turquoise: #06B6D4;
+      --green: #10B981;
+      --purple: #A855F7;
+      --red: #EF4444;
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255,255,255,0.6);
+      --text-tertiary: rgba(255,255,255,0.4);
+      --border: rgba(255,255,255,0.08);
+      --border-light: rgba(255,255,255,0.12);
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    .header {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .header-inner {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .header img { width: 32px; height: 32px; }
+    .header h1 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .header .badge {
+      background: var(--orange);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+    .header .refresh-info {
+      margin-left: auto;
+      color: var(--text-tertiary);
+      font-size: 0.8rem;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .stat-card .stat-value {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .stat-card .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+    .stat-value.orange { color: var(--orange); }
+    .stat-value.turquoise { color: var(--turquoise); }
+    .stat-value.green { color: var(--green); }
+    .stat-value.purple { color: var(--purple); }
+
+    /* Section */
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title .count {
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+    }
+
+    /* Users Table */
+    .users-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 32px;
+    }
+    .users-table th {
+      text-align: left;
+      color: var(--text-tertiary);
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .users-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .users-table tr:hover td {
+      background: var(--bg-card);
+    }
+    .users-table tr { cursor: pointer; }
+
+    .user-name {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .status-dot.green { background: var(--green); }
+    .status-dot.orange { background: var(--orange); }
+    .status-dot.red { background: var(--red); }
+    .status-dot.gray { background: var(--text-tertiary); }
+
+    .badge-sm {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+    }
+    .badge-garmin { background: rgba(6,182,212,0.15); color: var(--turquoise); }
+    .badge-pixel { background: rgba(168,85,247,0.15); color: var(--purple); }
+    .badge-none { background: rgba(255,255,255,0.05); color: var(--text-tertiary); }
+
+    .data-val {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+    .data-val.muted { color: var(--text-tertiary); }
+
+    /* Detail Panel */
+    .detail-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+      display: none;
+    }
+    .detail-panel.active { display: block; }
+    .detail-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .detail-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+    }
+    .detail-close {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      border-radius: 8px;
+      padding: 4px 12px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .detail-close:hover { background: var(--bg-elevated); }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+
+    .detail-section h4 {
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .detail-list {
+      list-style: none;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .detail-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .detail-list li:last-child { border-bottom: none; }
+    .detail-list .time {
+      color: var(--text-tertiary);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+    .detail-list .role-coach { color: var(--turquoise); }
+    .detail-list .role-user { color: var(--orange); }
+
+    /* Snapshots mini table */
+    .snap-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+    .snap-table th {
+      color: var(--text-tertiary);
+      font-weight: 500;
+      padding: 4px 6px;
+      text-align: center;
+      font-size: 0.7rem;
+    }
+    .snap-table td {
+      padding: 4px 6px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Notifications Feed */
+    .notif-feed {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+    .notif-feed li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .notif-feed .notif-time {
+      color: var(--text-tertiary);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      white-space: nowrap;
+      min-width: 80px;
+    }
+    .notif-feed .notif-user {
+      font-weight: 600;
+      font-size: 0.85rem;
+      min-width: 100px;
+    }
+    .notif-feed .notif-type {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      background: rgba(255,107,53,0.15);
+      color: var(--orange);
+      white-space: nowrap;
+    }
+    .notif-feed .notif-msg {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .empty-state {
+      color: var(--text-tertiary);
+      text-align: center;
+      padding: 40px;
+      font-size: 0.9rem;
+    }
+
+    .loading {
+      color: var(--text-tertiary);
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header class="header">
+      <div class="header-inner">
+        <img src="img/logo-revna.svg" alt="Revna">
+        <h1>Revna</h1>
+        <span class="badge">Admin</span>
+        <span class="refresh-info" id="refresh-info"></span>
+      </div>
+    </header>
+
+    <!-- Stats -->
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value orange" id="stat-users">-</div>
+        <div class="stat-label">Utilisateurs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value turquoise" id="stat-connected">-</div>
+        <div class="stat-label">Montres connectees</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value green" id="stat-active">-</div>
+        <div class="stat-label">Actifs (7j)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value purple" id="stat-notifs">-</div>
+        <div class="stat-label">Notifs aujourd'hui</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-messages">-</div>
+        <div class="stat-label">Messages total</div>
+      </div>
+    </div>
+
+    <!-- Users -->
+    <h2 class="section-title">Utilisateurs <span class="count" id="user-count">0</span></h2>
+    <table class="users-table" id="users-table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Montre</th>
+          <th>Messages</th>
+          <th>Sommeil</th>
+          <th>BB</th>
+          <th>FC</th>
+          <th>Stress</th>
+          <th>Pas</th>
+          <th>Inscrit</th>
+        </tr>
+      </thead>
+      <tbody id="users-body">
+        <tr><td colspan="9" class="loading">Chargement...</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Detail panel -->
+    <div class="detail-panel" id="detail-panel">
+      <div class="detail-header">
+        <h3 id="detail-name">-</h3>
+        <button class="detail-close" onclick="closeDetail()">Fermer</button>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-section">
+          <h4>Snapshots (7 derniers jours)</h4>
+          <div id="detail-snapshots"><p class="empty-state">Aucune donnee</p></div>
+        </div>
+        <div class="detail-section">
+          <h4>Conversations recentes</h4>
+          <ul class="detail-list" id="detail-conversations"></ul>
+        </div>
+        <div class="detail-section">
+          <h4>Notifications envoyees</h4>
+          <ul class="detail-list" id="detail-notifications"></ul>
+        </div>
+        <div class="detail-section">
+          <h4>Ressentis</h4>
+          <ul class="detail-list" id="detail-feelings"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications Feed -->
+    <h2 class="section-title">Notifications recentes</h2>
+    <ul class="notif-feed" id="notif-feed">
+      <li class="loading">Chargement...</li>
+    </ul>
+
+  </div>
+
+  <script>
+    const API = 'https://revna-production.up.railway.app';
+
+    function formatDate(dateStr) {
+      if (!dateStr || dateStr === 'None') return '-';
+      const d = new Date(dateStr);
+      return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
+    }
+
+    function formatTime(dateStr) {
+      if (!dateStr || dateStr === 'None') return '-';
+      const d = new Date(dateStr);
+      return d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function val(v) {
+      if (v === null || v === undefined) return '<span class="data-val muted">-</span>';
+      return `<span class="data-val">${v}</span>`;
+    }
+
+    function wearableBadge(user) {
+      if (user.has_garmin) return '<span class="badge-sm badge-garmin">Garmin</span>';
+      if (user.has_google_fit) return '<span class="badge-sm badge-pixel">Pixel Watch</span>';
+      return '<span class="badge-sm badge-none">Non connecte</span>';
+    }
+
+    function statusDot(user) {
+      if (!user.latest_snapshot) return '<span class="status-dot gray"></span>';
+      const snapDate = new Date(user.latest_snapshot.date);
+      const now = new Date();
+      const days = (now - snapDate) / (1000 * 60 * 60 * 24);
+      if (days <= 1) return '<span class="status-dot green"></span>';
+      if (days <= 7) return '<span class="status-dot orange"></span>';
+      return '<span class="status-dot red"></span>';
+    }
+
+    async function loadStats() {
+      try {
+        const res = await fetch(`${API}/admin/stats`);
+        const data = await res.json();
+        document.getElementById('stat-users').textContent = data.total_users;
+        document.getElementById('stat-connected').textContent = data.connected_garmin + data.connected_google_fit;
+        document.getElementById('stat-active').textContent = data.active_with_data;
+        document.getElementById('stat-notifs').textContent = data.notifications_today;
+        document.getElementById('stat-messages').textContent = data.total_messages;
+      } catch (e) {
+        console.error('Stats error:', e);
+      }
+    }
+
+    async function loadUsers() {
+      try {
+        const res = await fetch(`${API}/admin/users`);
+        const data = await res.json();
+        const tbody = document.getElementById('users-body');
+        document.getElementById('user-count').textContent = data.total;
+
+        if (data.users.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="9" class="empty-state">Aucun utilisateur</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = data.users.map(u => {
+          const s = u.latest_snapshot;
+          return `<tr onclick="loadDetail('${u.id}', '${u.name}')">
+            <td><span class="user-name">${statusDot(u)} ${u.telegram_username || u.name}</span></td>
+            <td>${wearableBadge(u)}</td>
+            <td>${val(u.message_count)}</td>
+            <td>${s ? val(s.sleep_score) : val(null)}</td>
+            <td>${s ? val(s.body_battery) : val(null)}</td>
+            <td>${s ? val(s.resting_heart_rate) : val(null)}</td>
+            <td>${s ? val(s.avg_stress) : val(null)}</td>
+            <td>${s ? val(s.total_steps) : val(null)}</td>
+            <td><span class="data-val muted">${formatDate(u.created_at)}</span></td>
+          </tr>`;
+        }).join('');
+      } catch (e) {
+        console.error('Users error:', e);
+      }
+    }
+
+    async function loadDetail(userId, name) {
+      const panel = document.getElementById('detail-panel');
+      panel.classList.add('active');
+      document.getElementById('detail-name').textContent = name;
+
+      try {
+        const res = await fetch(`${API}/admin/users/${userId}/detail`);
+        const data = await res.json();
+
+        // Snapshots
+        const snapDiv = document.getElementById('detail-snapshots');
+        if (data.snapshots.length === 0) {
+          snapDiv.innerHTML = '<p class="empty-state">Aucune donnee</p>';
+        } else {
+          snapDiv.innerHTML = `<table class="snap-table">
+            <thead><tr><th>Date</th><th>Sommeil</th><th>BB</th><th>FC</th><th>HRV</th><th>Stress</th><th>Pas</th></tr></thead>
+            <tbody>${data.snapshots.map(s => `<tr>
+              <td>${formatDate(s.date)}</td>
+              <td>${s.sleep_score ?? '-'}</td>
+              <td>${s.body_battery ?? '-'}</td>
+              <td>${s.resting_heart_rate ?? '-'}</td>
+              <td>${s.hrv_status ? Math.round(s.hrv_status) : '-'}</td>
+              <td>${s.avg_stress ?? '-'}</td>
+              <td>${s.total_steps ?? '-'}</td>
+            </tr>`).join('')}</tbody></table>`;
+        }
+
+        // Conversations
+        const convList = document.getElementById('detail-conversations');
+        if (data.conversations.length === 0) {
+          convList.innerHTML = '<li class="empty-state">Aucune conversation</li>';
+        } else {
+          convList.innerHTML = data.conversations.map(c => `<li>
+            <span class="role-${c.role}">${c.role === 'coach' ? 'Revna' : 'User'}</span>:
+            ${c.text}
+            <br><span class="time">${formatTime(c.created_at)}</span>
+          </li>`).join('');
+        }
+
+        // Notifications
+        const notifList = document.getElementById('detail-notifications');
+        if (data.notifications.length === 0) {
+          notifList.innerHTML = '<li class="empty-state">Aucune notification</li>';
+        } else {
+          notifList.innerHTML = data.notifications.map(n => `<li>
+            <strong>${n.type}</strong>: ${n.message}
+            <br><span class="time">${formatTime(n.sent_at)} ${n.success ? '' : '(echec)'}</span>
+          </li>`).join('');
+        }
+
+        // Feelings
+        const feelList = document.getElementById('detail-feelings');
+        if (data.feelings.length === 0) {
+          feelList.innerHTML = '<li class="empty-state">Aucun ressenti</li>';
+        } else {
+          feelList.innerHTML = data.feelings.map(f => `<li>
+            Humeur: ${f.mood || '-'} | Energie: ${f.energy || '-'} | Douleur: ${f.pain || '-'}
+            <br>${f.raw_text}
+            <br><span class="time">${formatTime(f.created_at)} — ${f.sentiment}</span>
+          </li>`).join('');
+        }
+
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (e) {
+        console.error('Detail error:', e);
+      }
+    }
+
+    function closeDetail() {
+      document.getElementById('detail-panel').classList.remove('active');
+    }
+
+    async function loadNotifications() {
+      try {
+        const res = await fetch(`${API}/admin/notifications/recent`);
+        const data = await res.json();
+        const feed = document.getElementById('notif-feed');
+
+        if (data.notifications.length === 0) {
+          feed.innerHTML = '<li class="empty-state">Aucune notification</li>';
+          return;
+        }
+
+        feed.innerHTML = data.notifications.map(n => `<li>
+          <span class="notif-time">${formatTime(n.sent_at)}</span>
+          <span class="notif-user">${n.user_name}</span>
+          <span class="notif-type">${n.type}</span>
+          <span class="notif-msg">${n.message}</span>
+        </li>`).join('');
+      } catch (e) {
+        console.error('Notifications error:', e);
+      }
+    }
+
+    function updateRefreshInfo() {
+      document.getElementById('refresh-info').textContent =
+        'Mis a jour: ' + new Date().toLocaleTimeString('fr-FR');
+    }
+
+    async function loadAll() {
+      await Promise.all([loadStats(), loadUsers(), loadNotifications()]);
+      updateRefreshInfo();
+    }
+
+    // Initial load + auto-refresh every 60s
+    loadAll();
+    setInterval(loadAll, 60000);
+  </script>
+</body>
+</html>
