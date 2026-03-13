@@ -15,6 +15,8 @@ from backend.models.feeling import Feeling
 from backend.models.health_data import HealthSnapshot
 from backend.models.notification import NotificationSent
 from backend.models.user import User
+from backend.services.garmin import sync_garmin_data
+from backend.services.google_fit import sync_google_fit_data
 from backend.services.telegram import set_webhook
 
 router = APIRouter(tags=["health"])
@@ -287,6 +289,56 @@ async def recent_notifications(db: AsyncSession = Depends(get_db)):
     ]
 
     return {"notifications": notifications}
+
+
+@router.post("/admin/test-sync/{user_id}", dependencies=[Depends(require_admin)])
+async def test_sync(user_id: uuid.UUID, db: AsyncSession = Depends(get_db)):
+    """Force a data sync for a user and return results."""
+    result = await db.execute(select(User).where(User.id == user_id))
+    user = result.scalar_one_or_none()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    snapshots = []
+    errors = []
+    source = None
+
+    if user.google_refresh_token:
+        source = "google_fit"
+        try:
+            snapshots = await sync_google_fit_data(db, user, days_back=3)
+        except Exception as e:
+            errors.append(f"Google Fit sync error: {e}")
+    elif user.garmin_email:
+        source = "garmin"
+        try:
+            snapshots = await sync_garmin_data(db, user, days_back=3)
+        except Exception as e:
+            errors.append(f"Garmin sync error: {e}")
+    else:
+        errors.append("No wearable connected for this user")
+
+    return {
+        "user": user.name,
+        "source": source,
+        "snapshots_synced": len(snapshots),
+        "snapshots": [
+            {
+                "date": str(s.date),
+                "total_steps": s.total_steps,
+                "resting_heart_rate": s.resting_heart_rate,
+                "total_sleep_minutes": s.total_sleep_minutes,
+                "sleep_score": s.sleep_score,
+                "body_battery": s.body_battery,
+                "hrv_status": s.hrv_status,
+                "avg_stress": s.avg_stress,
+                "active_minutes": s.active_minutes,
+                "spo2_avg": s.spo2_avg,
+            }
+            for s in snapshots
+        ],
+        "errors": errors,
+    }
 
 
 @router.post("/setup/telegram-webhook")
