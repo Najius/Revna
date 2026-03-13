@@ -35,6 +35,7 @@ from backend.services.tracking import (
 )
 from backend.services.wearable import sync_all_active_users
 from backend.services.garmin import sync_garmin_data
+from backend.services.google_fit import sync_google_fit_data
 from backend.services.ai import call_claude_api
 
 logger = logging.getLogger(__name__)
@@ -217,6 +218,31 @@ async def job_sync_garmin():
         logger.info("Garmin sync done: %d snapshots across %d users", total_snapshots, len(users))
 
 
+async def job_sync_google_fit():
+    """Every 2 hours — Sync Google Fit data for Pixel Watch users."""
+    logger.info("JOB: sync_google_fit started")
+
+    async with async_session() as db:
+        result = await db.execute(
+            select(User).where(
+                User.is_active.is_(True),
+                User.google_refresh_token.isnot(None),
+            )
+        )
+        users = list(result.scalars().all())
+
+        total_snapshots = 0
+        for user in users:
+            try:
+                snapshots = await sync_google_fit_data(db, user, days_back=1)
+                total_snapshots += len(snapshots)
+                logger.info("Google Fit sync for %s: %d snapshots", user.name, len(snapshots))
+            except Exception:
+                logger.exception("Google Fit sync failed for user %s", user.name)
+
+        logger.info("Google Fit sync done: %d snapshots across %d users", total_snapshots, len(users))
+
+
 async def job_daily_audit():
     """03:00 — System audit (data freshness, API health)."""
     logger.info("JOB: daily_audit started")
@@ -240,8 +266,17 @@ async def job_daily_audit():
         )
         garmin_users = list(result.scalars().all())
 
+        # Check Google Fit users
+        result = await db.execute(
+            select(User).where(
+                User.is_active.is_(True),
+                User.google_refresh_token.isnot(None),
+            )
+        )
+        google_users = list(result.scalars().all())
+
         # Combine and deduplicate
-        all_users = {u.id: u for u in terra_users + garmin_users}.values()
+        all_users = {u.id: u for u in terra_users + garmin_users + google_users}.values()
 
         stale_users = []
         for user in all_users:
@@ -258,7 +293,8 @@ async def job_daily_audit():
         else:
             logger.info("Daily audit: all users have fresh data")
 
-        logger.info("Audit: %d Terra users, %d Garmin users", len(terra_users), len(garmin_users))
+        logger.info("Audit: %d Terra users, %d Garmin users, %d Google Fit users",
+                     len(terra_users), len(garmin_users), len(google_users))
 
 
 # ─── Scheduler setup ───────────────────────────────────────────────────────
@@ -300,6 +336,10 @@ def setup_scheduler() -> AsyncIOScheduler:
     # Garmin sync (every 2 hours — less frequent to avoid rate limits)
     scheduler.add_job(job_sync_garmin, CronTrigger(hour="*/2", minute=15),
                       id="sync_garmin", replace_existing=True)
+
+    # Google Fit sync (every 2 hours for Pixel Watch users)
+    scheduler.add_job(job_sync_google_fit, CronTrigger(hour="*/2", minute=30),
+                      id="sync_google_fit", replace_existing=True)
 
     # System audit (nightly)
     scheduler.add_job(job_daily_audit, CronTrigger(hour=3, minute=0),

@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.database import get_db
 from backend.models.user import User
-from backend.services.wearable import generate_widget_session
+from backend.services.google_fit import build_oauth_url
 
 router = APIRouter(tags=["users"])
 
@@ -28,7 +28,7 @@ class UserResponse(BaseModel):
 
 
 class ConnectWearableRequest(BaseModel):
-    provider: str | None = None  # e.g., "GARMIN", "APPLE", "OURA"
+    provider: str | None = None  # "garmin" or "pixel_watch"
 
 
 # ─── Registration ─────────────────────────────────────────────────────────────
@@ -96,7 +96,8 @@ async def user_status(user_id: uuid.UUID, db: AsyncSession = Depends(get_db)):
         "name": user.name,
         "is_active": user.is_active,
         "wearable_type": user.wearable_type,
-        "has_terra": user.terra_user_id is not None,
+        "has_garmin": user.garmin_email is not None,
+        "has_google_fit": user.google_refresh_token is not None,
     }
 
 
@@ -106,27 +107,30 @@ async def connect_wearable(
     data: ConnectWearableRequest | None = None,
     db: AsyncSession = Depends(get_db),
 ):
-    """Generate a Terra widget session URL for connecting a wearable."""
+    """Return connection instructions for Garmin or Pixel Watch."""
     result = await db.execute(select(User).where(User.id == user_id))
     user = result.scalar_one_or_none()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    # Build provider filter
-    providers = None
-    if data and data.provider and data.provider != "ALL":
-        providers = data.provider
+    provider = (data.provider or "").lower() if data else ""
 
-    session = await generate_widget_session(
-        reference_id=str(user.id),
-        providers=providers,
-    )
-    if not session:
-        raise HTTPException(status_code=500, detail="Failed to create widget session")
-
-    return {
-        "user_id": str(user.id),
-        "widget_url": session.get("url"),
-        "session_id": session.get("session_id"),
-        "expires_in": session.get("expires_in"),
-    }
+    if provider == "pixel_watch":
+        return {
+            "user_id": str(user.id),
+            "provider": "pixel_watch",
+            "oauth_url": build_oauth_url(user.id),
+        }
+    elif provider == "garmin":
+        return {
+            "user_id": str(user.id),
+            "provider": "garmin",
+            "method": "telegram",
+            "instructions": "Use /garmin command in the Telegram bot to connect.",
+        }
+    else:
+        return {
+            "user_id": str(user.id),
+            "supported_providers": ["garmin", "pixel_watch"],
+            "instructions": "Use /connect in the Telegram bot, or specify a provider.",
+        }

@@ -33,6 +33,11 @@ class Settings(BaseSettings):
     terra_dev_id: str = ""
     terra_webhook_secret: str = ""
 
+    # ─── Google Fit / Pixel Watch ─────────────────────────────
+    google_client_id: str = ""
+    google_client_secret: str = ""
+    google_redirect_uri: str = ""  # e.g. https://your-domain/webhooks/google/callback
+
     # ─── Notification limits ────────────────────────────────────
     max_daily_notifications: int = 5
     max_burst_notifications: int = 2

@@ -38,7 +38,7 @@ def _terra_headers() -> dict[str, str]:
 
 async def generate_widget_session(
     reference_id: str,
-    providers: str = "GARMIN,FITBIT,OURA,WITHINGS,APPLE,GOOGLE,WHOOP,POLAR,SUUNTO",
+    providers: str = "",
     language: str = "fr",
     success_url: str = "",
     failure_url: str = "",

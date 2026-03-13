@@ -41,8 +41,8 @@ from backend.services.tracking import (
     get_recent_conversations,
     can_reply_conversation,
 )
-from backend.services.wearable import generate_widget_session
 from backend.services.garmin import test_garmin_credentials, sync_garmin_data
+from backend.services.google_fit import build_oauth_url, sync_google_fit_data
 from backend.models.user import User
 from backend.models.feeling import Feeling
 
@@ -613,8 +613,8 @@ async def handle_start_command(
         f"Bienvenue <b>{name}</b> ! Je suis Revna, ton coach sante personnel.\n\n"
         "Je vais t'accompagner au quotidien en analysant tes donnees de sante "
         "(sommeil, stress, activite) pour t'envoyer des conseils personnalises.\n\n"
-        "Pour commencer, tape /connect pour connecter ton wearable "
-        "(Garmin, Apple Watch, Oura, Whoop...).\n\n"
+        "Pour commencer, tape /connect pour connecter ta montre "
+        "(Garmin ou Pixel Watch).\n\n"
         "Tu peux m'ecrire a tout moment — je suis la pour toi."
     )
     await send_telegram(chat_id, welcome)
@@ -622,7 +622,7 @@ async def handle_start_command(
 
 
 async def handle_connect_command(db: AsyncSession, chat_id: int) -> None:
-    """Handle /connect command — start Garmin connection flow."""
+    """Handle /connect command — offer Garmin or Pixel Watch connection."""
     result = await db.execute(
         select(User).where(User.telegram_chat_id == chat_id)
     )
@@ -635,17 +635,41 @@ async def handle_connect_command(db: AsyncSession, chat_id: int) -> None:
         )
         return
 
-    # Check if already connected to Garmin
-    if user.garmin_email:
+    # Check if already connected
+    if user.garmin_email or user.terra_user_id:
+        connected = "Garmin" if user.garmin_email else "Pixel Watch"
         await send_telegram(
             chat_id,
-            f"Tu es deja connecte a Garmin ({user.garmin_email}).\n\n"
-            "Si tu veux changer de compte, envoie ton nouvel email Garmin Connect.",
+            f"Tu es deja connecte ({connected}).\n\n"
+            "Pour changer de montre, tape:\n"
+            "• /garmin — connecter une Garmin\n"
+            "• /pixelwatch — connecter une Pixel Watch",
         )
-        _garmin_flow_state[chat_id] = {"step": "email", "user_id": str(user.id)}
         return
 
-    # Start Garmin connection flow
+    await send_telegram(
+        chat_id,
+        "Quelle montre veux-tu connecter ?\n\n"
+        "• /garmin — Garmin (Fenix, Venu, Forerunner...)\n"
+        "• /pixelwatch — Google Pixel Watch",
+    )
+    logger.info("Connect menu shown for user %s", user.name)
+
+
+async def handle_garmin_command(db: AsyncSession, chat_id: int) -> None:
+    """Handle /garmin command — start Garmin connection flow."""
+    result = await db.execute(
+        select(User).where(User.telegram_chat_id == chat_id)
+    )
+    user = result.scalar_one_or_none()
+
+    if not user:
+        await send_telegram(
+            chat_id,
+            "Je ne te connais pas encore ! Envoie /start pour commencer.",
+        )
+        return
+
     _garmin_flow_state[chat_id] = {"step": "email", "user_id": str(user.id)}
     await send_telegram(
         chat_id,
@@ -654,6 +678,31 @@ async def handle_connect_command(db: AsyncSession, chat_id: int) -> None:
         "<b>Etape 1/2</b>: Envoie-moi ton <b>email</b> Garmin Connect.",
     )
     logger.info("Started Garmin flow for user %s", user.name)
+
+
+async def handle_pixelwatch_command(db: AsyncSession, chat_id: int) -> None:
+    """Handle /pixelwatch command — connect via Google Fit OAuth."""
+    result = await db.execute(
+        select(User).where(User.telegram_chat_id == chat_id)
+    )
+    user = result.scalar_one_or_none()
+
+    if not user:
+        await send_telegram(
+            chat_id,
+            "Je ne te connais pas encore ! Envoie /start pour commencer.",
+        )
+        return
+
+    oauth_url = build_oauth_url(user.id)
+    await send_telegram(
+        chat_id,
+        "Pour connecter ta Pixel Watch, clique sur ce lien pour "
+        "autoriser l'acces a Google Fit :\n\n"
+        f"{oauth_url}\n\n"
+        "<i>Tu seras redirige apres l'autorisation.</i>",
+    )
+    logger.info("Google Fit OAuth link sent to user %s", user.name)
 
 
 def is_in_garmin_flow(chat_id: int) -> bool:

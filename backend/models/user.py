@@ -21,6 +21,7 @@ class User(Base):
     wearable_type: Mapped[str | None] = mapped_column(String(50))
     garmin_email: Mapped[str | None] = mapped_column(String(255))
     garmin_password: Mapped[str | None] = mapped_column(String(255))  # TODO: encrypt in production
+    google_refresh_token: Mapped[str | None] = mapped_column(String(512))
     timezone: Mapped[str] = mapped_column(String(50), default="Europe/Paris")
     language: Mapped[str] = mapped_column(String(5), default="fr")
     coaching_type: Mapped[str] = mapped_column(String(50), default="wellness")
