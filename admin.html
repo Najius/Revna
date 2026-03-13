@@ -404,6 +404,7 @@
         <h1>Revna</h1>
         <span class="badge">Admin</span>
         <span class="refresh-info" id="refresh-info"></span>
+        <button class="detail-close" onclick="logout()" style="margin-left:12px">Deconnexion</button>
       </div>
     </header>
 
@@ -529,6 +530,15 @@
           sessionStorage.removeItem('revna_admin_token');
         }
       });
+    }
+
+    function logout() {
+      AUTH_TOKEN = '';
+      sessionStorage.removeItem('revna_admin_token');
+      document.getElementById('admin-content').style.display = 'none';
+      document.getElementById('login-overlay').classList.remove('hidden');
+      document.getElementById('login-password').value = '';
+      document.getElementById('login-error').style.display = 'none';
     }
 
     function formatDate(dateStr) {
