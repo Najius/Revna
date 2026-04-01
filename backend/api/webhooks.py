@@ -8,6 +8,7 @@ from fastapi.responses import HTMLResponse
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from backend.config import settings
 from backend.database import get_db
 from backend.models.user import User
 from backend.services.telegram import (
@@ -111,6 +112,9 @@ async def telegram_webhook(request: Request, db: AsyncSession = Depends(get_db))
         return {"ok": True}
 
     # Route to main message processor
+    if settings.pause_ai:
+        await send_telegram(chat_id, "Je suis en pause pour le moment. A bientot !")
+        return {"ok": True}
     await process_reply(db, user.id, user, text)
     return {"ok": True}
 

@@ -40,6 +40,7 @@ class Settings(BaseSettings):
 
     # ─── Admin ────────────────────────────────────────────────
     admin_password: str = ""  # required — protects /admin/* endpoints
+    pause_ai: bool = True  # set to False to re-enable Claude API calls
 
     # ─── Notification limits ────────────────────────────────────
     max_daily_notifications: int = 5

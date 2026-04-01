@@ -36,6 +36,7 @@ from backend.services.tracking import (
 from backend.services.wearable import sync_all_active_users
 from backend.services.garmin import sync_garmin_data
 from backend.services.google_fit import sync_google_fit_data
+from backend.config import settings
 from backend.services.ai import call_claude_api
 
 logger = logging.getLogger(__name__)
@@ -74,6 +75,9 @@ async def _for_each_user(func, *args, **kwargs):
 
 async def job_morning_adapt():
     """07:30 — AI adapt + morning report for each active user."""
+    if settings.pause_ai:
+        logger.info("JOB: morning_adapt skipped (AI paused)")
+        return
     logger.info("JOB: morning_adapt started")
 
     async def _run(db, user):
@@ -107,6 +111,8 @@ async def job_morning_adapt():
 
 async def job_morning_fallback():
     """09:30 — Fallback if morning_adapt didn't run for some users."""
+    if settings.pause_ai:
+        return
     logger.info("JOB: morning_fallback started")
 
     async def _run(db, user):
@@ -120,6 +126,8 @@ async def job_morning_fallback():
 
 async def job_health_monitor():
     """11h, 14h, 17h, 20h — Multi-signal health scan."""
+    if settings.pause_ai:
+        return
     logger.info("JOB: health_monitor started")
 
     async def _run(db, user):
@@ -130,6 +138,8 @@ async def job_health_monitor():
 
 async def job_steps_evening():
     """18:00 — Evening steps summary."""
+    if settings.pause_ai:
+        return
     logger.info("JOB: steps_evening started")
 
     async def _run(db, user):
@@ -140,6 +150,8 @@ async def job_steps_evening():
 
 async def job_evening_report():
     """20:00 — Full day report (or weekly summary on Sunday)."""
+    if settings.pause_ai:
+        return
     logger.info("JOB: evening_report started")
 
     async def _run(db, user):
@@ -154,6 +166,8 @@ async def job_evening_report():
 
 async def job_morning_checkin():
     """07:45 — Morning check-in."""
+    if settings.pause_ai:
+        return
     logger.info("JOB: morning_checkin started")
 
     async def _run(db, user):
@@ -164,6 +178,8 @@ async def job_morning_checkin():
 
 async def job_evening_checkin():
     """22:00 — Evening check-in."""
+    if settings.pause_ai:
+        return
     logger.info("JOB: evening_checkin started")
 
     async def _run(db, user):
@@ -174,6 +190,8 @@ async def job_evening_checkin():
 
 async def job_monday_activity():
     """Monday 09:00 — Weekly activity motivation."""
+    if settings.pause_ai:
+        return
     logger.info("JOB: monday_activity started")
 
     async def _run(db, user):
